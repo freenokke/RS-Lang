@@ -11,7 +11,7 @@
   <div class="wrapper">
     <header id="header" class="header">
       <h2>General header</h2>
-			<a href="#auth" class="header__auth">Auth</a>
+			<a href="#auth" class="header__auth"><img class="header__auth-img" src="./assets/auth.svg" alt="Authorize" width="50" height="50"></a>
     </header>
     <main class="main">
       <div id="auth" class="auth">
@@ -27,12 +27,32 @@
 							<button class="form-auth__button" type="submit">Войти</button>
 							<div class="form-auth__bottom">
 								<div class="form-auth__forget-password">
-									<a class="form-auth__forget-password-link" href="#">Забыли пароль?</a>
+									<a class="form-auth__forget-password-link" href="#reg">Забыли пароль?</a>
 								</div>
 								<div class="form-auth__break">&#124;</div>
 								<div class="form-auth__registration">
-									<a class="form-auth__registration-link" href="#">Регистрация</a>
+									<a class="form-auth__registration-link" href="#reg">Регистрация</a>
 								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+      <div id="reg" class="reg">
+				<a href="#header" class="reg__area"></a>
+				<div class="reg__body">
+					<div class="reg__content">
+						<a href="#header" class="reg__close">&times;</a>
+						<div class="reg__title">Регистрация</div>
+						<div class="reg__text">Для авторизированных пользователей доступны "Сложные слова", прогресс изучения слов, изученные слова и статистика</div>
+						<form class="reg__form form-reg" id="form-reg" action="#">
+							<input class="form-reg__name" name="login" type="text" placeholder="Имя" required autofocus
+								autocomplete="off">
+							<input class="form-reg__email" name="email" type="email" placeholder="Электронная почта" required autocomplete="off">
+							<input class="form-reg__password" name="password" type="password" placeholder="Пароль" required minlength="5">
+							<button class="form-reg__button" type="submit">Зарегистрироваться</button>
+							<div class="form-reg__bottom">
+								<a class="form-reg__back-to-existing-account" href="#auth">Войти в существующий аккаунт</a>
 							</div>
 						</form>
 					</div>

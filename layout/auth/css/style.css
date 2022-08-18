@@ -350,6 +350,7 @@ template {
 html,
 body {
   height: 100%;
+  scroll-behavior: smooth;
 }
 
 a {
@@ -389,6 +390,11 @@ a {
   font-size: 1rem;
   text-decoration: none;
   color: #000;
+}
+
+.header__auth-img:hover {
+  color: yellow;
+  cursor: pointer;
 }
 
 /*-----------------Page Auth styles-------------------*/
@@ -511,6 +517,7 @@ a {
 }
 
 .form-auth__email {
+  padding: 0 0.5rem;
   width: 70%;
   border-radius: 0.3125rem;
   border: 1px solid grey;
@@ -518,6 +525,7 @@ a {
 }
 
 .form-auth__password {
+  padding: 0 0.5rem;
   width: 70%;
   border-radius: 0.3125rem;
   border: 1px solid grey;
@@ -556,6 +564,7 @@ a {
       -ms-flex-pack: center;
           justify-content: center;
   gap: 0.625rem;
+  font-size: 1rem;
 }
 
 .form-auth__forget-password-link {
@@ -563,8 +572,203 @@ a {
   text-decoration: none;
 }
 
+.form-auth__forget-password-link:hover {
+  text-decoration: underline;
+}
+
 .form-auth__registration-link {
   color: #000;
   text-decoration: none;
+}
+
+.form-auth__registration-link:hover {
+  text-decoration: underline;
+}
+
+/*-----------------Page Reg styles-------------------*/
+.reg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-transition: all 0.8s ease 0s;
+  transition: all 0.8s ease 0s;
+}
+
+.reg:target {
+  opacity: 1;
+  visibility: visible;
+}
+
+.reg:target .reg__content {
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+  opacity: 1;
+}
+
+.reg__area {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.reg__body {
+  min-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 1.875rem 0.625rem;
+}
+
+.reg__content {
+  background-color: #fff;
+  color: black;
+  max-width: 28.75rem;
+  padding: 1.875rem;
+  position: relative;
+  -webkit-transition: all 0.8s ease 0s;
+  transition: all 0.8s ease 0s;
+  opacity: 0;
+  -webkit-transform: translate(0, 100%);
+          transform: translate(0, 100%);
+  -webkit-box-shadow: 0.0625rem 0.0625rem 0.625rem 0.0625rem #000;
+          box-shadow: 0.0625rem 0.0625rem 0.625rem 0.0625rem #000;
+}
+
+.reg__close {
+  position: absolute;
+  top: 0;
+  right: 0.625rem;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
+.reg__close:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  color: red;
+}
+
+.reg__title {
+  margin: 0 0 1em 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-family: "Inter", sans-serif;
+  color: #323232;
+  text-align: center;
+}
+
+.reg__text {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 200;
+  color: grey;
+  text-align: center;
+}
+
+.reg__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 0.625rem;
+  padding: 1.25rem 0;
+  font-size: 1.2rem;
+}
+
+.form-reg__name {
+  padding: 0 0.5rem;
+  width: 70%;
+  border-radius: 0.3125rem;
+  border: 1px solid grey;
+  line-height: 2rem;
+}
+
+.form-reg__email {
+  padding: 0 0.5rem;
+  width: 70%;
+  border-radius: 0.3125rem;
+  border: 1px solid grey;
+  line-height: 2rem;
+}
+
+.form-reg__password {
+  padding: 0 0.5rem;
+  width: 70%;
+  border-radius: 0.3125rem;
+  border: 1px solid grey;
+  line-height: 2rem;
+}
+
+.form-reg__button {
+  width: 70%;
+  background-color: #ffff7c;
+  line-height: 2rem;
+  border: none;
+  border-radius: 0.3125rem;
+  -webkit-box-shadow: 0 2px 2px 0 #000;
+          box-shadow: 0 2px 2px 0 #000;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
+.form-reg__button:hover {
+  background-color: #ffff02;
+  cursor: pointer;
+}
+
+.form-reg__button:active {
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.form-reg__bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 0.625rem;
+  font-size: 1rem;
+}
+
+.form-reg__back-to-existing-account {
+  color: #000;
+  text-decoration: none;
+}
+
+.form-reg__back-to-existing-account:hover {
+  text-decoration: underline;
 }
 /*# sourceMappingURL=style.css.map */
