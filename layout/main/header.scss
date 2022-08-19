@@ -5,12 +5,13 @@
 }
 
 .overlay {
-  display: none;
-  // display: block;
+  // display: none;
+  display: block;
   background-color: rgba(41, 41, 41, 0.1);
   position: absolute;
   width: 100%;
   height: 100%;
+  z-index: 5;
 }
 
 // ========================= header start =======================================
@@ -147,6 +148,7 @@
   transition: 0.3s right ease-out;
   &_active {
     right: 0;
+    z-index: 10;
   }
   // burger-menu__list
   &__list {
