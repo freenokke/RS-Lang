@@ -28,3 +28,73 @@ a {
 }
 
 /*-----------------Games page styles-------------------*/
+
+.games {
+display: flex;
+flex-direction: column;
+align-items: center;
+outline: 1px solid black;
+
+	&__savanna {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		outline: 1px solid red;
+	}
+
+	&__controls {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		outline: 1px solid blue;
+	}
+
+	&__audio-call {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		outline: 1px solid red;
+	}
+}
+
+.savanna-games {
+
+	&__img {
+		max-width: 300px;
+	}
+
+	&__controls {}
+
+	&__title {}
+
+	&__button {
+		width: 50px
+	}
+}
+
+.controls-games {
+
+	&__select-level {}
+
+	&__select-level-input {}
+
+	&__select-level-label {}
+
+	&__select-level-subtitle {}
+}
+
+.audio-call-games {
+
+	&__controls {}
+
+	&__title {}
+
+	&__button {
+		width: 50px
+	}
+
+	&__img {
+		width: 300px
+	}
+}
