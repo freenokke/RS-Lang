@@ -435,7 +435,10 @@ a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  font-size: 1.2rem;
+  gap: 0.325rem;
+  font-size: 1rem;
+  line-height: 2.5em;
+  font-weight: normal;
   background: #F95A2C;
   border: 0.125rem solid #18191F;
   -webkit-box-shadow: 0 0.25rem 0 #18191F;
@@ -551,6 +554,66 @@ a {
 @media (max-width: 25em) {
   .savanna-games__title {
     font-size: 0.8rem;
+  }
+}
+
+.controls-games__header {
+  text-align: center;
+}
+
+.controls-games__description {
+  text-align: center;
+  line-height: 1;
+  font-weight: 300;
+  padding: 0 0.625rem;
+}
+
+.controls-games__select-level {
+  background-color: #FF89BB;
+  padding: 0 0.625rem;
+}
+
+.controls-games__select-level:hover {
+  -webkit-box-shadow: 0.0625rem 0.0625rem 0.0625rem 0.0625rem #000000;
+          box-shadow: 0.0625rem 0.0625rem 0.0625rem 0.0625rem #000000;
+  cursor: pointer;
+}
+
+.controls-games__select-level:nth-child(4) {
+  background-color: #e927af;
+}
+
+.controls-games__select-level:nth-child(5) {
+  background-color: #0ac0ee;
+}
+
+.controls-games__select-level:nth-child(6) {
+  background-color: #00fc4c;
+}
+
+.controls-games__select-level:nth-child(7) {
+  background-color: #f4f800;
+}
+
+.controls-games__select-level:nth-child(8) {
+  background-color: #ff9737;
+}
+
+@media (max-width: 40em) {
+  .controls-games {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    padding-bottom: 1.25rem;
+  }
+  .controls-games__header {
+    width: 100%;
+  }
+  .controls-games__select-level {
+    width: 40%;
   }
 }
 
