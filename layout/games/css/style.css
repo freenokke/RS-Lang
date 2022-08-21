@@ -398,7 +398,7 @@ a {
   gap: 1.25rem;
 }
 
-.games__savanna {
+.games__sprint {
   -ms-grid-column: 2;
       grid-column-start: 2;
   grid-column-end: 4;
@@ -467,7 +467,7 @@ a {
 }
 
 @media (max-width: 40em) {
-  .games__savanna {
+  .games__sprint {
     -ms-grid-column: 1;
         grid-column-start: 1;
     grid-column-end: 4;
@@ -503,12 +503,12 @@ a {
   }
 }
 
-.savanna-games__img {
+.sprint-games__img {
   max-width: 65%;
   border-radius: 0.875rem 0 0 0.875rem;
 }
 
-.savanna-games__controls {
+.sprint-games__controls {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -524,11 +524,11 @@ a {
   padding: 1.25rem 0;
 }
 
-.savanna-games__title {
+.sprint-games__title {
   font-size: 1.5rem;
 }
 
-.savanna-games__button {
+.sprint-games__button {
   max-width: 50%;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -537,7 +537,7 @@ a {
   border-radius: 1rem;
 }
 
-.savanna-games__button:hover {
+.sprint-games__button:hover {
   -webkit-transform: scale(1.2) translate(-0.625rem, -0.625rem);
           transform: scale(1.2) translate(-0.625rem, -0.625rem);
   cursor: pointer;
@@ -546,13 +546,13 @@ a {
 }
 
 @media (max-width: 50em) {
-  .savanna-games__title {
+  .sprint-games__title {
     font-size: 1.2rem;
   }
 }
 
 @media (max-width: 25em) {
-  .savanna-games__title {
+  .sprint-games__title {
     font-size: 0.8rem;
   }
 }
@@ -597,6 +597,10 @@ a {
 
 .controls-games__select-level:nth-child(8) {
   background-color: #ff9737;
+}
+
+.controls-games__select-level-label {
+  cursor: pointer;
 }
 
 @media (max-width: 40em) {
