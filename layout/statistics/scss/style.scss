@@ -1,0 +1,165 @@
+@import 'normalize';
+
+/*-----------------General styles-------------------*/
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+	font-size: 18px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
+	color: #323232;
+}
+
+a {
+	text-decoration: none;
+}
+
+.wrapper {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.main {
+	position: relative;
+	flex: 1 1 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/*-----------------Page Statistics styles-------------------*/
+.bread-crubs {
+position: absolute;
+top: 5%;
+left: 5%;
+display: flex;
+gap: 0.625rem;
+
+	&__main {
+		color: grey;
+	}
+
+	&__divide {}
+
+	&__actual {
+		color: #000000;
+	}
+}
+
+.statistics {
+max-width: 900px;
+
+	&__tabs {
+    max-width: 900px;
+    display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		row-gap: 0.625rem;
+		column-gap: 0.625rem;
+	}
+}
+
+.tabs-statistics {
+
+	&__input {
+		display: none;
+	}
+
+	&__label {
+		outline: 1px solid black;
+	}
+
+	&__label--words {
+		grid-column-start: 1;
+		grid-column-end: 2;
+		grid-row-start: 1;
+		grid-row-end: 2;
+	}
+
+	&__label--words:checked {
+		background-color: red;
+	}
+
+	&__label--sprint {
+		grid-column-start: 2;
+		grid-column-end: 3;
+		grid-row-start: 1;
+		grid-row-end: 2;
+	}
+
+	&__label--audio-call {
+		grid-column-start: 3;
+		grid-column-end: 4;
+		grid-row-start: 1;
+		grid-row-end: 2;
+	}
+
+	&__body {
+		display: none;
+		grid-column-start: 1;
+		grid-column-end: 4;
+		grid-row-start: 2;
+		grid-row-end: 3;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		outline: 1px solid red;
+		}
+
+	&__item {}
+
+	&__new-words {}
+
+	&__general-words {}
+
+	&__right-answers {}
+
+	&__new-words-sprint {}
+
+	&__right-answers-sprint {}
+
+	&__series-lenght-sprint {}
+
+	&__new-words-audio-call {}
+
+	&__right-answers-audio-call {}
+
+	&__series-lenght-audio-call {}
+}
+
+/* отобразить контент, связанный с вабранной радиокнопкой (input type="radio") */
+#tab-btn-1:checked~#content-1,
+#tab-btn-2:checked~#content-2,
+#tab-btn-3:checked~#content-3 {
+	display: flex;
+}
+
+#tab-btn-1:checked~#content-1 {
+	background-color: red;
+}
+
+#tab-btn-2:checked~#content-2 {
+	background-color: green;
+}
+
+#tab-btn-3:checked~#content-3{
+	background-color: blue;
+}
+
+#tab-btn-1:checked~.tabs-statistics__label--words {
+	background-color: red;
+}
+
+#tab-btn-2:checked~.tabs-statistics__label--sprint {
+	background-color: green;
+}
+
+#tab-btn-3:checked~.tabs-statistics__label--audio-call{
+	background-color: blue;
+}
