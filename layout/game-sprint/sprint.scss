@@ -27,6 +27,7 @@ img,svg {
 .fullscreen {
   min-height: 100vh;
   width: 100%;
+  position: relative;
   &__icon {
     position: absolute;
     display: block;
@@ -34,6 +35,21 @@ img,svg {
     top: 20px;
     right: 20px;
     color: white;
+    cursor: pointer;
+    &:hover::before {
+      position: absolute;
+      align-items: center;
+      content: "Полноэкранный режим";
+      font-weight: 400;
+      font-size: 12px;
+      padding: 5px;
+      color: white;
+      left: -160px;
+      top: -15px;
+      background-color: black;
+      display: flex;
+      transition: 0.2s all;
+    }
   }
 }
 
@@ -53,9 +69,16 @@ img,svg {
     display: flex;
     align-items: center;
     gap: 10px;
+    @media screen and (max-width: 425px) {
+      flex-direction: column;
+      padding: 10px;
+    }
     &__text {
       font-weight: 800;
       font-size: 25px;
+      @media screen and (max-width: 425px) {
+        margin: 0;
+      }
     }
     &__count {
       font-weight: 800;
@@ -67,7 +90,8 @@ img,svg {
   // .sprint-gamearea
   &-gamearea {
     background-color: rgba(157, 176, 204, 0.3);
-    width: 600px;
+    width: 80%;
+    max-width: 700px;
     height: 400px;
     border: 2px solid #18191F;
     box-shadow: 0px 4px 0px #18191F;
@@ -97,6 +121,7 @@ img,svg {
     align-items: center;
     justify-content: center;
     align-self: flex-end;
+    font-weight: 700;
   }
   &__bonus {
     position: absolute;
@@ -106,6 +131,8 @@ img,svg {
     align-items: center;
     justify-content: center;
     align-self: flex-end;
+    color: #FFBD12;
+    font-weight: 700;
   }
   &__word-container {
     display: flex;
