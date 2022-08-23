@@ -179,23 +179,23 @@
           </label>
           <label class="wordsbook-words__label">
             <input class="wordsbook-words__radiobutton" type="radio" name="word">
-            <div class="wordsbook-words__word-wrapper">
+            <div class="wordsbook-words__word-wrapper wordsbook-words__word-wrapper_difficult">
               <h3 class="wordsbook-words__h3">
-                capital
+                diffucult
               </h3>
               <p class="wordsbook-words__translation">
-                столица
+                сложный
               </p>
             </div>
           </label>
           <label class="wordsbook-words__label">
             <input class="wordsbook-words__radiobutton" type="radio" name="word">
-            <div class="wordsbook-words__word-wrapper">
+            <div class="wordsbook-words__word-wrapper wordsbook-words__word-wrapper_learned">
               <h3 class="wordsbook-words__h3">
-                capital
+                learned
               </h3>
               <p class="wordsbook-words__translation">
-                столица
+                изученный
               </p>
             </div>
           </label>
@@ -350,6 +350,10 @@
                 </svg>
               </button>
             </div>
+            <div class="wordsbook-description__buttons-container">
+              <button class="wordsbook-description__button">В сложные</button>
+              <button class="wordsbook-description__button">В изученные</button>
+            </div>
             <div class="wordsbook-description__meaning">
               <h3 class="wordsbook-description__h3">
                 Значение
@@ -394,6 +398,31 @@
           </li>
         </ul>
       </nav>
+      <div class="wordsbook-games">
+        <h2 class="wordsbook__h1">Игры</h2>
+        <div class="wordsbook-games__wrapper">
+          <div class="wordsbook-games__game">
+            <div class="wordsbook-games__left">
+              <button class="wordsbook-games__button">
+                <img class="wordsbook-games__img" src="./img/headphones-no-bg.png" alt="аудиовызов">
+              </button>
+            </div>
+            <div class="wordsbook-games__right">
+              Аудиовызов
+            </div>
+          </div>
+          <div class="wordsbook-games__game">
+            <div class="wordsbook-games__left">
+              <button class="wordsbook-games__button">
+                <img class="wordsbook-games__img" src="./img/cheetah-no-bg.png" alt="Спринт">
+              </button>
+            </div>
+            <div class="wordsbook-games__right">
+              Спринт
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
   <footer class="footer">

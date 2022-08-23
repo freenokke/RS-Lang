@@ -145,6 +145,32 @@ body {
     border-radius: 8px;
     width: 180px;
     height: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__word-wrapper_difficult::after {
+    content: "";
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    background-color: #000;
+    right: -9px;
+    bottom: -9px;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  &__word-wrapper_learned::after {
+    content: "";
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    background-color: #1947E6;
+    right: -9px;
+    bottom: -9px;
+    border-radius: 50%;
+    opacity: 0.5;
   }
 
   &__radiobutton:checked~.wordsbook-words__word-wrapper {
@@ -218,6 +244,19 @@ body {
     width: 20px;
   }
 
+  &__buttons-container {
+    margin-bottom: 15px;
+  }
+
+  &__button {
+    border: none;
+    outline: none;
+    background-color: #ffbd12;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+  }
+
   &__meaning {
     margin-bottom: 15px;
   }
@@ -263,4 +302,39 @@ body {
     background-color: $pagination-button-background;
   }
 
+}
+
+.wordsbook-games {
+
+  &__wrapper {
+    display: flex;
+    gap: 15px;
+  }
+
+  &__game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    background-color: $pagination-button-background;
+    border-radius: 16px;
+    cursor: pointer;
+    padding: 16px;
+  }
+
+  &__button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  &__img {
+    width: 40px;
+  }
+
+  &__right {
+    font-weight: 700;
+    font-size: 25px;
+  }
 }
