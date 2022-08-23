@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://kit.fontawesome.com/c757eb9657.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="./css/style.css">
 	<title>Games</title>
 </head>
@@ -15,46 +16,90 @@
     <main class="main">
 			<div class="games">
 				<div class="games__sprint sprint-games">
-					<img class="sprint-games__img" src="./assets/sprint.jpg" alt="sprint">
-					<div class="sprint-games__controls">
-						<h5 class="sprint-games__title">Спринт</h5>
-						<img class="sprint-games__button" src="./assets/cheetah-no-bg.png" alt="cheetah-button" >
+					<div class="sprint-games__complexity complexity-menu complexity-menu_left">
+						<div class="complexity-menu__trigger trigger">
+							<div class="trigger__text">Выбери уровень</div>
+							<svg class="trigger__icon" width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M2 14L8 8L2 2" stroke="#18191F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+						<div class="complexity-menu__menu level-selection">
+							<div class="level-selection__level a1">
+								<input class="level-selection__input" type="radio" id="sprint_A1" name="sprint-level-input" checked>
+								<label class="level-selection__label" for="sprint_A1">A1 <span class="level-selection__subtitle">Beginner</span></label>
+							</div>
+							<div class="level-selection__level a2">
+								<input class="level-selection__input" type="radio" id="sprint_A2" name="sprint-level-input">
+								<label class="level-selection__label" for="sprint_A2">A2 <span class="level-selection__subtitle">Elementary</span></label>
+							</div>
+							<div class="level-selection__level b1">
+								<input class="level-selection__input" type="radio" id="sprint_B1" name="sprint-level-input">
+								<label class="level-selection__label" for="sprint_B1">B1 <span class="level-selection__subtitle">Intermediate</span></label>
+							</div>
+							<div class="level-selection__level b2">
+								<input class="level-selection__input" type="radio" id="sprint_B2" name="sprint-level-input">
+								<label class="level-selection__label" for="sprint_B2">B2 <span class="level-selection__subtitle">Upper-Intermediate</span></label>
+							</div>
+							<div class="level-selection__level c1">
+								<input class="level-selection__input" type="radio" id="sprint_C1" name="sprint-level-input">
+								<label class="level-selection__label" for="sprint_C1">C1 <span class="level-selection__subtitle">Advanced</span></label>
+							</div>
+							<div class="level-selection__level c2">
+								<input class="level-selection__input" type="radio" id="sprint_C2" name="sprint-level-input">
+								<label class="level-selection__label" for="sprint_C2">C2 <span class="level-selection__subtitle">Proficient</span></label>
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="games__controls controls-games">
-					<h2 class="controls-games__header">Сложность</h2>
-					<h4 class="controls-games__description">Перед началом игры выберите уровень сложности</h4>
-					<div class="controls-games__select-level">
-						<input class="controls-games__select-level-input" type="radio" id="A1" name="game-input-A1" checked>
-						<label class="controls-games__select-level-label" for="A1">A1 <span class="controls-games__select-level-subtitle">Beginner</span></label>
-					</div>
-					<div class="controls-games__select-level">
-						<input class="controls-games__select-level-input" type="radio" id="A2" name="game-input-A2">
-						<label class="controls-games__select-level-label" for="A2">A2 <span class="controls-games__select-level-subtitle">Elementary</span></label>
-					</div>
-					<div class="controls-games__select-level">
-						<input class="controls-games__select-level-input" type="radio" id="B1" name="game-input-B1">
-						<label class="controls-games__select-level-label" for="B1">B1 <span class="controls-games__select-level-subtitle">Intermediate</span></label>
-					</div>
-					<div class="controls-games__select-level">
-						<input class="controls-games__select-level-input" type="radio" id="B2" name="game-input-B2">
-						<label class="controls-games__select-level-label" for="B2">B2 <span class="controls-games__select-level-subtitle">Upper-Intermediate</span></label>
-					</div>
-					<div class="controls-games__select-level">
-						<input class="controls-games__select-level-input" type="radio" id="C1" name="game-input-C1">
-						<label class="controls-games__select-level-label" for="C1">C1 <span class="controls-games__select-level-subtitle">Advanced</span></label>
-					</div>
-					<div class="controls-games__select-level">
-						<input class="controls-games__select-level-input" type="radio" id="C2" name="game-input-C2">
-						<label class="controls-games__select-level-label" for="C2">C2 <span class="controls-games__select-level-subtitle">Proficient</span></label>
+					<div class="sprint-games__content">
+						<img class="sprint-games__img" src="./assets/sprint.jpg" alt="sprint">
+						<div class="sprint-games__controls">
+							<h5 class="sprint-games__title">Спринт</h5>
+							<img class="sprint-games__button" src="./assets/cheetah-no-bg.png" alt="cheetah-button" >
+						</div>
 					</div>
 				</div>
 				<div class="games__audio-call audio-call-games">
-					<div class="audio-call-games__controls">
-						<h5 class="audio-call-games__title">Аудиовызов</h5>
-						<img class="audio-call-games__button" src="./assets/headphones-no-bg.png" alt="headphones" >
+					<div class="audio-call-games__complexity complexity-menu complexity-menu_right">
+						<div class="complexity-menu__trigger trigger">
+							<svg class="trigger__icon" width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M8 14L2 8L8 2" stroke="#18191F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<div class="trigger__text">Выбери уровень</div>
+						</div>
+						<div class="complexity-menu__menu level-selection">
+							<div class="level-selection__level a1">
+								<input class="level-selection__input" type="radio" id="audio_A1" name="audio-call-level-input" checked>
+								<label class="level-selection__label" for="audio_A1">A1 <span class="level-selection__subtitle">Beginner</span></label>
+							</div>
+							<div class="level-selection__level a2">
+								<input class="level-selection__input" type="radio" id="audio_A2" name="audio-call-level-input">
+								<label class="level-selection__label" for="audio_A2">A2 <span class="level-selection__subtitle">Elementary</span></label>
+							</div>
+							<div class="level-selection__level b1">
+								<input class="level-selection__input" type="radio" id="audio_B1" name="audio-call-level-input">
+								<label class="level-selection__label" for="audio_B1">B1 <span class="level-selection__subtitle">Intermediate</span></label>
+							</div>
+							<div class="level-selection__level b2">
+								<input class="level-selection__input" type="radio" id="audio_B2" name="audio-call-level-input">
+								<label class="level-selection__label" for="audio_B2">B2 <span class="level-selection__subtitle">Upper-Intermediate</span></label>
+							</div>
+							<div class="level-selection__level c1">
+								<input class="level-selection__input" type="radio" id="audio_C1" name="audio-call-level-input">
+								<label class="level-selection__label" for="audio_C1">C1 <span class="level-selection__subtitle">Advanced</span></label>
+							</div>
+							<div class="level-selection__level c2">
+								<input class="level-selection__input" type="radio" id="audio_C2" name="audio-call-level-input">
+								<label class="level-selection__label" for="audio_C2">C2 <span class="level-selection__subtitle">Proficient</span></label>
+							</div>
+						</div>
 					</div>
-					<img class="audio-call-games__img" src="./assets/female-listening.jpg" alt="female-listening">
+					<div class="audio-call-games__content">
+						<div class="audio-call-games__controls">
+							<h5 class="audio-call-games__title">Аудиовызов</h5>
+							<img class="audio-call-games__button" src="./assets/headphones-no-bg.png" alt="headphones" >
+						</div>
+						<img class="audio-call-games__img" src="./assets/female-listening.jpg" alt="female-listening">
+					</div>
 				</div>
 			</div>
     </main>
@@ -62,6 +107,5 @@
       <h2>General footer</h2>
     </footer>
 	</div>
-
 </body>
 </html>
