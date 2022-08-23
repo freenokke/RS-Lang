@@ -475,6 +475,23 @@ a {
   text-align: center;
 }
 
+@media (max-width: 31.25em) {
+  .sprint-rules__content {
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .sprint-rules__title {
+    font-size: 1.5rem;
+    margin: 0.8rem 0;
+  }
+  .sprint-rules__text {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+}
+
 /*----------------------Button styles--------------------*/
 .wave-btn {
   width: 280px;
