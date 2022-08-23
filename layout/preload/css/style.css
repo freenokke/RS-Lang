@@ -5,6 +5,7 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
+@import url(https://fonts.googleapis.com/css?family=Montserrat:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 html {
   line-height: 1.15;
   /* 1 */
@@ -350,6 +351,8 @@ template {
 html,
 body {
   height: 100%;
+  scroll-behavior: smooth;
+  font-family: 'Montserrat', sans-serif;
 }
 
 a {
@@ -368,84 +371,10 @@ a {
   overflow: hidden;
 }
 
-.team {
+.main {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
-}
-
-/*-----------------Page Team styles-------------------*/
-.team {
-  padding: 0 0 2.5rem 0;
-  color: rgba(0, 0, 0, 0.87);
-  margin: 0;
-  font-size: 0.875rem;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 400;
-  line-height: 1.43;
-  letter-spacing: 0.01071em;
-  background-color: #fafafa;
-}
-
-.team__header {
-  text-align: center;
-  font-size: 2.125rem;
-  font-weight: 400;
-  line-height: 1.235;
-  letter-spacing: 0.00735em;
-}
-
-.team__cards {
-  padding: 0 1.25rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: start;
-  gap: 5.625rem;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-
-@media (max-width: 74.0625rem) {
-  .team__cards {
-    gap: 2rem;
-  }
-}
-
-.team__card {
-  background-color: #ffffff;
-  border-radius: 0.625rem;
-  min-height: 35.625rem;
-  -webkit-box-shadow: 0.03125rem 0.03125rem 0.3125rem 0.03125rem grey;
-          box-shadow: 0.03125rem 0.03125rem 0.3125rem 0.03125rem grey;
-}
-
-.team__card:hover {
-  -webkit-box-shadow: 0.0625rem 0.0625rem 0.625rem 0.0625rem grey;
-          box-shadow: 0.0625rem 0.0625rem 0.625rem 0.0625rem grey;
-  background-color: #fafafa;
-}
-
-.card-team__img {
-  height: 18.75rem;
-  border-radius: 0.625rem 0.625rem 0 0;
-}
-
-.card-team__name {
-  margin: 0.625rem 0;
-  font-size: 1.25rem;
-  font-weight: 500;
-  line-height: 1.6;
-  letter-spacing: 0.0075em;
-  text-align: center;
-}
-
-.card-team__github {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -455,25 +384,39 @@ a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 0.625rem;
 }
 
-.card-team__github:hover {
-  cursor: pointer;
+/*-----------------Preload styles-------------------*/
+@-webkit-keyframes preloader-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes preloader-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
-.card-team__role {
-  margin: 0.625rem 0;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.43;
-  letter-spacing: 0.01071em;
-  color: rgba(0, 0, 0, 0.54);
-  text-align: center;
-}
-
-.github-card-team__img {
-  width: 1.5625rem;
-  height: 1.5625rem;
+.preloader {
+  display: inline-block;
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #7983ff;
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  -webkit-animation: preloader-spin 1.2s linear infinite;
+          animation: preloader-spin 1.2s linear infinite;
+  position: relative;
 }
 /*# sourceMappingURL=style.css.map */
