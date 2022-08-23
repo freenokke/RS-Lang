@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./normalize.css">
+  <link rel="stylesheet" href="./style.css">
+  <title>Results</title>
+</head>
+
+<body>
+  <div class="fullscreen">
+    <div class="fullscreen__icon">
+      <i class="fa-solid fa-expand fa-xl"></i>
+      <i style="display: none;" class="fa-solid fa-compress fa-xl"></i>
+    </div>
+    <div class="results">
+      <div class="results-points">
+        <h3 class="results-points__text">Поздравляем, отличный результат:</h3>
+        <span class="results-points__count">1200</span>
+      </div>
+      <div class="results-gamearea">
+        <div class="results-gamearea__game game">
+          <!-- <div class="game__bonus bonus">Комбо</div>
+          <div class="game__timer countdown">Время</div>
+          <div class="game__combo combo">
+            <div class="combo__item">
+              <input type="checkbox" class="combo__checkbox" checked>
+              <i class="fa-solid fa-star fa-lg"></i>
+            </div>
+            <div class="combo__item">
+              <input type="checkbox" class="combo__checkbox" checked>
+              <i class="fa-solid fa-star fa-lg"></i>
+            </div>
+            <div class="combo__item">
+              <input type="checkbox" class="combo__checkbox">
+              <i class="fa-solid fa-star fa-lg"></i>
+            </div>
+          </div> -->
+          <!-- <button class="game__play-button">
+            <svg class="game__play-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+              </path>
+            </svg>
+          </button> -->
+          <!-- <div class="game__buttons game__buttons_audiochallenge">
+            <button class="btn btn_audiochallenge">Отлично</button>
+            <button class="btn btn_audiochallenge">Боль</button>
+            <button class="btn btn_audiochallenge">Отказываться</button>
+            <button class="btn btn_audiochallenge">Операция</button>
+            <button class="btn btn_audiochallenge">Клерк</button>
+          </div>
+        </div> -->
+          <div class="results-container">
+            <h2 class="results-container__h2">
+              Знаю: 19
+            </h2>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <h2 class="results-container__h2">
+              Не знаю: 2
+            </h2>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+            <div class="results-row">
+              <button class="results-row__button">
+                <svg class="results-row__svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
+                  </path>
+                </svg>
+              </button>
+              <span class="results-row__word">bath</span>
+              <span class="results-row__delimiter">-</span>
+              <span class="results-row__translation">ванна</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="play-buttons">
+        <button class="btn btn_audiochallenge">Сыграть еще</button>
+        <button class="btn btn_audiochallenge">В учебник</button>
+      </div>
+    </div>
+</body>
+
+</html>
