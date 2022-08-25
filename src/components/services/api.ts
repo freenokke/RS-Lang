@@ -12,10 +12,19 @@ import {
 import { IWord, IAggregatedWord } from '../../types/words';
 
 class Api {
+  private static instance: Api;
   private domain: string;
 
   constructor() {
     this.domain = Domain.BASE;
+  }
+
+  public static getInstance(): Api {
+    if (!Api.instance) {
+      Api.instance = new Api();
+    }
+
+    return Api.instance;
   }
 
   public async getWords(group?: string, page?: string): Promise<IWord[]> {
@@ -64,6 +73,8 @@ class Api {
       body: JSON.stringify(parameters),
     });
     const data: IUserSignInResp = await res.json();
+    localStorage.setItem('userToken', `${data.token}`);
+    localStorage.setItem('userRefreshToken', `${data.refreshToken}`);
     return data;
   }
 
@@ -113,7 +124,7 @@ class Api {
     });
   }
 
-  public async getNewUserTokens(
+  private async getNewUserTokens(
     id: string,
     refreshToken: string
   ): Promise<IUserSignInResp> {
@@ -129,6 +140,27 @@ class Api {
     );
     const data: IUserSignInResp = await res.json();
     return data;
+  }
+
+  public async checkUserTokens(
+    id: string,
+    refreshToken: string
+  ): Promise<void> {
+    const res = await fetch(
+      `${this.domain}/${Path.USERS}/${id}/${Path.TOKENS}/check`,
+      {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${refreshToken}`,
+        },
+      }
+    );
+    const result: boolean = await res.json();
+
+    if (result) {
+      this.getNewUserTokens(id, refreshToken);
+    }
   }
 
   // =================== Users/Words=============
