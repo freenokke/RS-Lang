@@ -3,6 +3,7 @@ import Header from './header';
 import Page from './helpers/page';
 import Main from './main';
 import Team from './team';
+import Games from './games';
 import Audiochallenge from './audiochallenge';
 
 export default class App {
@@ -36,6 +37,10 @@ export default class App {
     } else if (pageId === Pages.about) {
       document.body.append(this.header.node);
       page = new Team(document.body);
+      page.node.id = App.currentPage;
+    } else if (pageId === Pages.games) {
+      document.body.append(this.header.node);
+      page = new Games(pageId, document.body);
       page.node.id = App.currentPage;
     } else if (pageId === Pages.audiochallenge) {
       this.header.node.remove();
