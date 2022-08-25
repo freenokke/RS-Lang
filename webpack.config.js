@@ -58,6 +58,10 @@ const baseConfig = {
           filename: 'assets/fonts/[name][ext]',
         },
       },
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
     ],
   },
   resolve: {
