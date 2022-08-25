@@ -1,0 +1,209 @@
+@import '../../assets/scss/style';
+
+//========================== hero start ========================
+.hero {
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.hero-content {
+  display: flex;
+  gap: 50px;
+
+  &__right {
+    flex-basis: 30%;
+  }
+
+  &__left {
+    flex-basis: 70%;
+  }
+
+  @media screen and (max-width: 1023px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 374px) {
+    gap: 25px;
+  }
+}
+
+
+.left-content {
+  &__title {
+    font-size: 48px;
+    font-weight: 800;
+
+    @media screen and (max-width: 1023px) {
+      text-align: center;
+      font-size: 42px;
+    }
+
+    @media screen and (max-width: 475px) {
+      font-size: 36px;
+    }
+  }
+
+  &__text {
+    span {
+      color: #FFBD12;
+    }
+
+    @media screen and (max-width: 475px) {
+      text-align: justify;
+      font-size: 16px;
+    }
+  }
+
+  @media screen and (max-width: 1023px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.right-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  &__pluses {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+
+    .okay {
+      width: 50px;
+    }
+
+    @media screen and (max-width: 1023px) {
+      flex-basis: 50%;
+      flex-direction: column-reverse;
+    }
+
+    @media screen and (max-width: 767px) {}
+  }
+
+  &__minuses {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+
+    .not-okay {
+      width: 50px;
+    }
+
+    @media screen and (max-width: 1023px) {
+      flex-basis: 50%;
+      flex-direction: column-reverse;
+    }
+  }
+
+  &__image {
+    @media screen and (max-width: 1023px) {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 1023px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 30px
+  }
+}
+
+.advantages-list {
+  &__item {
+    line-height: 35px;
+    position: relative;
+    list-style: none;
+    transition: 0.2s all;
+
+    &::before {
+      position: absolute;
+      content: "";
+      display: inline-block;
+      height: 30px;
+      top: -8px;
+      left: -40px;
+      width: 30px;
+      background-image: url(./img/checkbox.svg);
+      background-position: center;
+      background-size: contain;
+
+      @media screen and (max-width: 767px) {
+        left: -30px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    margin-top: 10px;
+
+    small {
+      position: relative;
+      top: -10px;
+    }
+
+    @media screen and (max-width: 767px) {
+      line-height: 16px;
+    }
+  }
+}
+
+//========================== hero end ===========================
+
+//============================ registration start =====================
+.registration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+
+  &__title {
+    text-align: center;
+    font-weight: 800;
+
+    @media screen and (max-width: 475px) {
+      text-align: justify;
+      font-size: 17px;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+  }
+
+  &__button {
+    background: #FFBD12;
+    border: 2px solid #18191F;
+    box-shadow: 0px 4px 0px #18191F;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 28px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.2s all;
+
+    &:focus {
+      transform: scale(0.9);
+    }
+
+    &:hover {
+      background-color: #FFD465;
+      ;
+    }
+
+    @media screen and (max-width: 475px) {
+      padding: 5px;
+      font-size: 18px;
+    }
+  }
+}
+
+//====================== registration end =============================
