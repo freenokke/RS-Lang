@@ -64,6 +64,8 @@ class Api {
       body: JSON.stringify(parameters),
     });
     const data: IUserSignInResp = await res.json();
+    localStorage.setItem('userToken', `${data.token}`);
+    localStorage.setItem('userRefreshToken', `${data.refreshToken}`);
     return data;
   }
 
@@ -128,6 +130,24 @@ class Api {
       }
     );
     const data: IUserSignInResp = await res.json();
+    return data;
+  }
+
+  public async checkUserTokens(
+    id: string,
+    refreshToken: string
+  ): Promise<boolean> {
+    const res = await fetch(
+      `${this.domain}/${Path.USERS}/${id}/${Path.TOKENS}/check`,
+      {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${refreshToken}`,
+        },
+      }
+    );
+    const data: boolean = await res.json();
     return data;
   }
 
