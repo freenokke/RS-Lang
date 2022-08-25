@@ -115,7 +115,7 @@ class Api {
     });
   }
 
-  public async getNewUserTokens(
+  private async getNewUserTokens(
     id: string,
     refreshToken: string
   ): Promise<IUserSignInResp> {
@@ -136,7 +136,7 @@ class Api {
   public async checkUserTokens(
     id: string,
     refreshToken: string
-  ): Promise<boolean> {
+  ): Promise<void> {
     const res = await fetch(
       `${this.domain}/${Path.USERS}/${id}/${Path.TOKENS}/check`,
       {
@@ -147,8 +147,11 @@ class Api {
         },
       }
     );
-    const data: boolean = await res.json();
-    return data;
+    const result: boolean = await res.json();
+
+    if (result) {
+      this.getNewUserTokens(id, refreshToken);
+    }
   }
 
   // =================== Users/Words=============
