@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./normalise.css">
+  <link rel="stylesheet" href="./header.css">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./footer.css">
+  <title>main-page</title>
+</head>
+<!-- Добавить класс _lock при открытии бургер меню -->
+<body class="">
+  <!-- Переключить overlay в display: block при открытии бургер меню -->
+  <div class="overlay"></div>
+  <header class="header-container">
+      <div class="header">
+          <div class="header-logo">
+              <img class="header-logo__image" src="./img/header/logo.png" alt="logo">
+          </div>
+          <nav class="header-menu">
+            <ul class="header-menu__list">
+              <li class="header-menu__item"><a href="#">О команде</a></li>
+            </ul>
+          </nav>
+          <div class="header-auth">
+            <img class="header-auth__icon" src="./img/header/user.svg" alt="account">
+          </div>
+          <button type="button" class="header-burger-icon"></button>
+          <!-- Добавить класс burger-menu_active -->
+          <nav class="header-menu burger-menu">
+              <button type="button" class="burger-menu__close-button"></button>
+              <ul class="burger-menu__list">
+                <li class="burger-menu__item menu-item">
+                  <a class="menu-item__link" href="#">Главная</a>
+                </li>
+                <li class="burger-menu__item menu-item">
+                  <a class="menu-item__link" href="#">
+                    <img class="menu-item__img" src="./img/header/book.svg" alt="book_icon" >
+                    <span class="menu-item__title">Учебник</span>
+                  </a>
+                </li>
+                <li class="burger-menu__item menu-item">
+                  <a class="menu-item__link" href="#">
+                    <img class="menu-item__img" src="./img/header/gamepad.svg" alt="gamepad_icon" >
+                    <span class="menu-item__title">Игры</span>
+                  </a>
+                </li>
+                <li class="burger-menu__item menu-item burger-menu__item_hidden">
+                  <a class="menu-item__link" href="#">
+                    <img class="menu-item__img" src="./img/header/chart.svg" alt="chart_icon">
+                    <span class="menu-item__title">Статистика</span>
+                  </a>
+                </li>
+                <li class="burger-menu__item menu-item">
+                  <a class="menu-item__link" href="#">
+                    <img class="menu-item__img" src="./img/header/team.svg" alt="team_icon">
+                    <span class="menu-item__title">О команде</span>
+                  </a>
+                </li>
+              </ul>
+          </nav>
+      </div>
+  </header>
+  <main class="main">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-content__left left-content">
+          <h1 class="left-content__title">Всё еще учишь английский по книгам?</h1>
+          <p class="left-content__text">
+            Команда <span>RSLang</span> позаботилась о том, чтобы твое обучение происходило максимально комфортно и интерактивно!
+          </p>
+          <p class="left-content__text">Здесь ты найдешь всё, что тебе нужно для эффективной учебы:</p>
+          <ul class="left-content__list advantages-list">
+            <li class="advantages-list__item"><small>Учебник с озвучкой, транскрипцией и примерами</small></li>
+            <li class="advantages-list__item"><small>Игра "Спринт" для изучения слов</small></li>
+            <li class="advantages-list__item"><small>Игра "Аудиовызов" для тренировки восприятия на слух</small></li>
+            <li class="advantages-list__item"><small>Статистика, чтобы фиксировать свой прогресс</small></li>
+          </ul>
+        </div>
+        <div class="hero-content__right right-content">
+          <div class="right-content__minuses">
+            <img class="right-content__image" src="./img/main/library.png" alt="library">
+            <img class="right-content__image not-okay"  src="./img/main/cancel.svg" alt="not_ok">
+          </div>
+          <div class="right-content__pluses">
+            <img class="right-content__image"  src="./img/main/graph.png" alt="graph">
+            <img class="right-content__image okay"  src="./img/main/done.svg" alt="ok">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="registration">
+      <h3 class="registration__title">Присоединяйся к сообществу людей, что перешли на новый уровень обучения с <span>RSLang</span></h3>
+      <button type="button" class="registration__button">Регистрация</button>
+      <img class="registration__image" src="./img/main/people.svg" alt="people">
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer__content">
+        <a href="https://rs.school/js/" class="footer__logo logo"><img src="./img/footer/rsschool_logo.svg" alt="logo"></a>
+        <span class="footer__date">2022</span>
+        <div class="footer__social-links social-links">
+            <a href="https://github.com/janchorny" class="social-link">
+              <img src="./img/footer/github.svg" alt="github" class="social-link__img">
+              <span class="social-link__title">janchorny</span>
+            </a>
+            <a href="https://github.com/freenokke" class="social-link">
+              <img src="./img/footer/github.svg" alt="github" class="social-link__img">
+              <span class="social-link__title">freenokke</span>
+            </a>
+            <a href="https://github.com/spherical-horse" class="social-link">
+              <img src="./img/footer/github.svg" alt="github" class="social-link__img">
+              <span class="social-link__title">spherical-horse</span>
+            </a>
+        </div>
+    </div>
+  </footer>
+</body>
+</html>
