@@ -12,10 +12,19 @@ import {
 import { IWord, IAggregatedWord } from '../../types/words';
 
 class Api {
+  private static instance: Api;
   private domain: string;
 
   constructor() {
     this.domain = Domain.BASE;
+  }
+
+  public static getInstance(): Api {
+    if (!Api.instance) {
+      Api.instance = new Api();
+    }
+
+    return Api.instance;
   }
 
   public async getWords(group?: string, page?: string): Promise<IWord[]> {
