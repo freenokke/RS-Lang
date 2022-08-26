@@ -1,0 +1,214 @@
+body {
+	height: 100%;
+	font-family: 'Montserrat', sans-serif;
+}
+
+img,
+svg {
+	display: block;
+}
+
+.btn {
+	border: 2px solid #18191F;
+	box-shadow: 0px 4px 0px #18191F;
+	border-radius: 16px;
+	font-weight: 600;
+	font-size: 18px;
+	line-height: 28px;
+	padding: 5px 10px;
+	cursor: pointer;
+	transition: 0.2s all;
+
+	&:focus {
+		transform: scale(0.95);
+	}
+}
+
+.fullscreen {
+	min-height: 100vh;
+	width: 100%;
+	position: relative;
+
+	&__icon {
+		position: absolute;
+		display: block;
+		padding: 10px;
+		top: 20px;
+		right: 20px;
+		color: white;
+		cursor: pointer;
+
+		&:hover::before {
+			position: absolute;
+			align-items: center;
+			content: "Полноэкранный режим";
+			font-weight: 400;
+			font-size: 12px;
+			padding: 5px;
+			color: white;
+			left: -160px;
+			top: -15px;
+			background-color: black;
+			display: flex;
+			transition: 0.2s all;
+		}
+	}
+}
+
+.sprint {
+	width: 100%;
+	height: 100vh;
+	background-image: url(./img/back3.svg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	// .sprint-points
+	&-points {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+
+		@media screen and (max-width: 425px) {
+			flex-direction: column;
+			padding: 10px;
+		}
+
+		&__text {
+			font-weight: 800;
+			font-size: 25px;
+
+			@media screen and (max-width: 425px) {
+				margin: 0;
+			}
+		}
+
+		&__count {
+			font-weight: 800;
+			font-size: 25px;
+			color: #FFBD12;
+		}
+	}
+
+	// .sprint-gamearea
+	&-gamearea {
+		background-color: rgba(157, 176, 204, 0.3);
+		width: 80%;
+		max-width: 700px;
+		height: 400px;
+		border: 2px solid #18191F;
+		box-shadow: 0px 4px 0px #18191F;
+		border-radius: 16px;
+		padding: 15px;
+	}
+}
+
+.points {
+	display: flex;
+}
+
+.game {
+	justify-content: center;
+	position: relative;
+	display: flex;
+	gap: 30px;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	font-weight: 600;
+
+	&__timer {
+		position: absolute;
+		top: 0;
+		right: 0;
+		;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		align-self: flex-end;
+		font-weight: 700;
+	}
+
+	&__bonus {
+		position: absolute;
+		left: 0;
+		top: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		align-self: flex-end;
+		color: #FFBD12;
+		font-weight: 700;
+	}
+
+	&__word-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 15px;
+		background-color: #474a5783;
+		padding: 8px;
+		border-radius: 12px;
+	}
+
+	&__word {
+		color: #ffffff;
+	}
+
+	&__word-translate {
+		color: #ffffff;
+	}
+
+	&__buttons {
+		display: flex;
+		gap: 50px;
+
+		.false {
+			background-color: #F95A2C;
+		}
+
+		.true {
+			background-color: #00C6AE;
+		}
+	}
+}
+
+.countdown {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background-color: #FFBD12;
+}
+
+.bonus {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background-color: #474A57;
+}
+
+.combo {
+	display: flex;
+	gap: 20px;
+
+	i {
+		color: #18191f7c;
+	}
+
+	&__checkbox {
+		display: none;
+
+		&:checked~i {
+			color: #FFBD12
+		}
+	}
+}
