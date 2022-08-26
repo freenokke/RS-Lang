@@ -26,12 +26,31 @@ a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
 
 /*-----------------Games page styles-------------------*/
+.bread-crubs {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	display: flex;
+	gap: 0.625rem;
+
+	&__main {
+		color: grey;
+	}
+
+	&__divide {}
+
+	&__actual {
+		color: #000000;
+	}
+}
 
 .games {
 	max-width: 50rem;
+	margin-top: 3.125rem;
 	padding: 1.25rem;
 	display: flex;
 	flex-direction: column;
