@@ -4,6 +4,7 @@ import Page from './helpers/page';
 import Main from './main';
 import Team from './team';
 import Audiochallenge from './audiochallenge';
+import Stats from './stats';
 import Footer from './footer';
 
 export default class App {
@@ -47,6 +48,11 @@ export default class App {
       this.footer.node.remove();
       page = new Audiochallenge(document.body);
       page.node.id = App.currentPage;
+    } else if (pageId === Pages.stats) {
+      document.body.append(this.header.node);
+      page = new Stats(document.body);
+      page.node.id = App.currentPage;
+      document.body.append(this.footer.node);
     } else {
       console.log('Unknown page');
     }

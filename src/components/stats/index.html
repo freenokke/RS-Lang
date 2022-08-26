@@ -1,0 +1,65 @@
+<div class="main">
+	<div class="bread-crubs">
+		<div class="bread-crubs__main">Главная</div>
+		<div class="bread-crubs__divide">&#8658;</div>
+		<div class="bread-crubs__actual">Статистика</div>
+	</div>
+	<div class="statistics">
+		<div class="statistics__tabs tabs-statistics">
+			<input class="tabs-statistics__input" type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+			<label class="tabs-statistics__label tabs-statistics__label--words" for="tab-btn-1">
+				<span class="tabs-statistics__header">Слова</span>
+				<img class="tabs-statistics__img" src="{{dictionaryIcon}}" alt="dictionary">
+			</label>
+			<input class="tabs-statistics__input" type="radio" name="tab-btn" id="tab-btn-2" value="">
+			<label class="tabs-statistics__label tabs-statistics__label--sprint" for="tab-btn-2">
+				<span class="tabs-statistics__header">Спринт</span>
+				<img class="tabs-statistics__img" src="{{sprintIcon}}" alt="sprinter">
+			</label>
+			<input class="tabs-statistics__input" type="radio" name="tab-btn" id="tab-btn-3" value="">
+			<label class="tabs-statistics__label tabs-statistics__label--audio-call" for="tab-btn-3">
+				<span class="tabs-statistics__header">Аудиовызов</span>
+				<img class="tabs-statistics__img" src="{{audioChallengeIcon}}" alt="headphones">
+			</label>
+			<div class="tabs-statistics__body" id="content-1">
+				<div class="tabs-statistics__top">
+					<div class="tabs-statistics__item">Количество новых слов за день: <span
+							class="tabs-statistics__new-words">0</span></div>
+					<div class="tabs-statistics__item">Количество изученных слов за день: <span
+							class="tabs-statistics__general-words">0</span></div>
+					<div class="tabs-statistics__item">Процент правильных ответов за день: <span
+							class="tabs-statistics__right-answers">&#8594;</span></div>
+				</div>
+				<div class="tabs-statistics__bottom">
+					<div class="pie animate no-round" style="--p:80;--c:purple;"> 80%</div>
+				</div>
+			</div>
+			<div class="tabs-statistics__body" id="content-2">
+				<div class="tabs-statistics__top">
+					<div class="tabs-statistics__item">Количество новых слов за день: <span
+							class="tabs-statistics__new-words-sprint">0</span></div>
+					<div class="tabs-statistics__item">Самая длинная серия правильных ответов: <span
+							class="tabs-statistics__series-lenght-sprint">0</span></div>
+					<div class="tabs-statistics__item">Процент правильных ответов: <span
+							class="tabs-statistics__right-answers-sprint">&#8594;</span></div>
+				</div>
+				<div class="tabs-statistics__bottom">
+					<div class="pie animate no-round" style="--p:60;--c:purple;"> 60%</div>
+				</div>
+			</div>
+			<div class="tabs-statistics__body" id="content-3">
+				<div class="tabs-statistics__top">
+					<div class="tabs-statistics__item">Количество новых слов за день: <span
+							class="tabs-statistics__new-words-audio-call">0</span></div>
+					<div class="tabs-statistics__item">Самая длинная серия правильных ответов: <span
+							class="tabs-statistics__series-lenght-audio-call">0</span></div>
+					<div class="tabs-statistics__item">Процент правильных ответов: <span
+							class="tabs-statistics__right-answers-audio-call"></span>&#8594;</div>
+				</div>
+				<div class="tabs-statistics__bottom">
+					<div class="pie animate no-round" style="--p:70;--c:purple;"> 70%</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
