@@ -1,7 +1,7 @@
 import Page from '../helpers/page';
-import SprintGameBgImage from './img/sprint-min.jpg';
+import SprintGameBgImage from './img/sprint.svg';
 import SprintGameActivationImage from './img/cheetah-no-bg.png';
-import AudioChallengeGameBgImage from './img/female-listening-min.jpg';
+import AudioChallengeGameBgImage from './img/female-listening.svg';
 import AudioChallengeGameActivationImage from './img/headphones-no-bg.png';
 import Template from './index.html';
 import './style.scss';
