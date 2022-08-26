@@ -40,7 +40,7 @@ export default class App {
       page.node.id = App.currentPage;
     } else if (pageId === Pages.games) {
       document.body.append(this.header.node);
-      page = new Games(pageId, document.body);
+      page = new Games(document.body);
       page.node.id = App.currentPage;
     } else if (pageId === Pages.audiochallenge) {
       this.header.node.remove();
