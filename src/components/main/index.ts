@@ -16,7 +16,7 @@ const model = {
 };
 
 export default class Main extends Page {
-  constructor(hash: string, parentNode: HTMLElement | null) {
-    super('div', [], parentNode, Template, model);
+  constructor(parentNode: HTMLElement | null) {
+    super('main', [], parentNode, Template, model);
   }
 }

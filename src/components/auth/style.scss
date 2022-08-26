@@ -1,0 +1,323 @@
+/*-----------------Page Auth styles-------------------*/
+
+.auth {
+position: fixed;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+top: 0;
+left: 0;
+opacity: 0;
+visibility: hidden;
+overflow-y: auto;
+overflow-x: hidden;
+transition: all 0.8s ease 0s;
+  
+  &:target {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	&:target &__content {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+  
+	&__area {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+	}
+
+	&__body {
+		min-height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.875rem 0.625rem;
+	}
+
+	&__content {
+		background-color: #fff;
+		color:black;
+		max-width: 28.75rem;
+		padding: 1.875rem;
+		position: relative;
+		transition: all 0.8s ease 0s;
+		opacity: 0;
+		transform: translate(0, -100%);
+		box-shadow: 0.0625rem 0.0625rem 0.625rem 0.0625rem #000;
+	}
+
+	&__close {
+		position: absolute;
+		top: 0;
+		right: 0.625rem;
+		font-size: 3rem;
+		font-weight: 700;
+		color: #000;
+		text-decoration: none;
+		transition: all 0.3s ease 0s;
+	}
+
+	&__close:hover {
+    transform: scale(1.2);
+    color: red;
+	}
+
+	&__title {
+		margin: 0 0 1em 0;
+		font-size: 1.5rem;
+		line-height: 1.2;
+		color: #323232;
+		text-align: center;
+	}
+
+	&__text {
+		font-size: 1rem;
+		line-height: 1;
+		font-weight: 200;
+		color: #323232;
+		text-align: center;
+	}
+
+  &__form {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 1.25rem 0;
+		font-size: 1.2rem;
+	}
+}
+
+.form-auth {
+
+	&__email {
+		padding: 0 0.5rem;
+		width: 70%;
+		border-radius: 0.3125rem;
+		border: 1px solid grey;
+		line-height: 2rem;
+	}
+
+	&__password {
+		padding: 0 0.5rem;
+		width: 70%;
+		border-radius: 0.3125rem;
+		border: 1px solid grey;
+		line-height: 2rem;
+	}
+
+	&__button {
+		width: 70%;
+		background-color: lightgreen;
+		line-height: 2rem;
+		border: none;
+		border-radius: 0.3125rem;
+		box-shadow: 0 2px 2px 0 #000;
+		transition: all 0.3s ease 0s;
+	}
+
+	&__button:hover {
+    background-color: rgb(28, 236, 28);
+    cursor: pointer;
+	}
+
+  &__button:active {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+
+	&__bottom {
+		display: flex;
+		justify-content: center;
+		gap: 0.625rem;
+		font-size: 1rem;
+	}
+
+	&__forget-password {}
+
+	&__forget-password-link {
+		color: #000;
+		text-decoration: none;
+	}
+
+	&__forget-password-link:hover {
+    text-decoration: underline;
+	}
+
+	&__break {}
+
+	&__registration {}
+
+	&__registration-link {
+		color: #000;
+		text-decoration: none;
+	}
+  
+	&__registration-link:hover {
+		text-decoration: underline;
+	}
+}
+
+/*-----------------Page Reg styles-------------------*/
+
+.reg {
+position: fixed;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+top: 0;
+left: 0;
+opacity: 0;
+visibility: hidden;
+overflow-y: auto;
+overflow-x: hidden;
+transition: all 0.8s ease 0s;
+  
+  &:target {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	&:target &__content {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+  
+	&__area {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+	}
+
+	&__body {
+		min-height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.875rem 0.625rem;
+	}
+
+	&__content {
+		background-color: #fff;
+		color:black;
+		max-width: 28.75rem;
+		padding: 1.875rem;
+		position: relative;
+		transition: all 0.8s ease 0s;
+		opacity: 0;
+		transform: translate(0, 100%);
+		box-shadow: 0.0625rem 0.0625rem 0.625rem 0.0625rem #000;
+	}
+
+	&__close {
+		position: absolute;
+		top: 0;
+		right: 0.625rem;
+		font-size: 3rem;
+		font-weight: 700;
+		color: #000;
+		text-decoration: none;
+		transition: all 0.3s ease 0s;
+	}
+
+	&__close:hover {
+    transform: scale(1.2);
+    color: red;
+	}
+
+	&__title {
+		margin: 0 0 1em 0;
+		font-size: 1.5rem;
+		line-height: 1.2;
+		color: #323232;
+		text-align: center;
+	}
+
+	&__text {
+		font-size: 1rem;
+		line-height: 1;
+		font-weight: 200;
+		color: #323232;
+		text-align: center;
+	}
+
+  &__form {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 1.25rem 0;
+		font-size: 1.2rem;
+	}
+}
+
+.form-reg {
+
+	&__name {
+		padding: 0 0.5rem;
+		width: 70%;
+		border-radius: 0.3125rem;
+		border: 1px solid grey;
+		line-height: 2rem;
+	}
+
+	&__email {
+		padding: 0 0.5rem;
+		width: 70%;
+		border-radius: 0.3125rem;
+		border: 1px solid grey;
+		line-height: 2rem;
+	}
+
+	&__password {
+		padding: 0 0.5rem;
+		width: 70%;
+		border-radius: 0.3125rem;
+		border: 1px solid grey;
+		line-height: 2rem;
+	}
+
+	&__button {
+		width: 70%;
+		background-color: rgb(255, 255, 124);
+		line-height: 2rem;
+		border: none;
+		border-radius: 0.3125rem;
+		box-shadow: 0 2px 2px 0 #000;
+		transition: all 0.3s ease 0s;
+	}
+
+	&__button:hover {
+		background-color: rgb(255, 255, 2);
+    cursor: pointer;
+	}
+
+  &__button:active {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+
+	&__bottom {
+		display: flex;
+		justify-content: center;
+		gap: 0.625rem;
+		font-size: 1rem;
+	}
+
+	&__back-to-existing-account {
+		color: #000;
+		text-decoration: none;
+	}
+	&__back-to-existing-account:hover {
+		text-decoration: underline;
+	}
+}

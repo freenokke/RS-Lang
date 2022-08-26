@@ -7,6 +7,7 @@ import GamesIcon from './img/gamepad.svg';
 import StatsIcon from './img/chart.svg';
 import TeamIcon from './img/team.svg';
 import './style.scss';
+import Pages from '../../enum/routing';
 
 const model = {
   logo: Logo,
@@ -26,6 +27,8 @@ export default class Header extends BaseComponent {
 
   private overlay;
 
+  private authBtn;
+
   constructor(parentNode: HTMLElement | null) {
     super('div', ['header-wrapper'], parentNode, Template, model);
     this.burgerMenuOpenButton = this.node.querySelector('.header-burger-icon');
@@ -34,6 +37,7 @@ export default class Header extends BaseComponent {
       '.burger-menu__close-button'
     );
     this.overlay = this.node.querySelector('.overlay') as HTMLElement;
+    this.authBtn = this.node.querySelector('.header-auth');
     this.initEventListeners();
   }
 
@@ -58,6 +62,9 @@ export default class Header extends BaseComponent {
       if (li) {
         this.hideBurgerMenu();
       }
+    });
+    this.authBtn?.addEventListener('click', () => {
+      window.location.hash = Pages.auth;
     });
   }
 
