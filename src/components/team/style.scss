@@ -1,0 +1,129 @@
+/*-----------------General styles-------------------*/
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.team {
+  flex: 1 1 auto;
+}
+
+/*-----------------Page Team styles-------------------*/
+.team {
+  padding: 0 0 2.5rem 0;
+  color: rgba(0, 0, 0, 0.87);
+  margin: 0;
+  font-size: 0.875rem;
+  // font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  background-color: #fafafa;
+
+  &__container {}
+
+  &__header {
+    text-align: center;
+    font-size: 2.125rem;
+    font-weight: 400;
+    line-height: 1.235;
+    letter-spacing: 0.00735em;
+  }
+
+  &__cards {
+    padding: 0 1.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 5.625rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 74.0625rem) {
+    &__cards {
+      gap: 2rem;
+    }
+  }
+
+  &__card {
+    background-color: #ffffff;
+    border-radius: 0.625rem;
+    min-height: 35.625rem;
+    box-shadow: 0.03125rem 0.03125rem 0.3125rem 0.03125rem grey;
+  }
+
+  &__card:hover {
+    box-shadow: 0.0625rem 0.0625rem 0.625rem 0.0625rem grey;
+    background-color: #fafafa;
+  }
+}
+
+.card-team {
+
+  &__img {
+    height: 18.75rem;
+    border-radius: 0.625rem 0.625rem 0 0;
+  }
+
+  &__name {
+    margin: 0.625rem 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+    text-align: center;
+  }
+
+  &__github {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  &__github:hover {
+    cursor: pointer;
+  }
+
+  &__role {
+    margin: 0.625rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    color: rgba(0, 0, 0, 0.54);
+    text-align: center;
+  }
+
+  &__result {}
+}
+
+.github-card-team {
+
+  &__img {
+    width: 1.5625rem;
+    height: 1.5625rem;
+  }
+}
+
+.result-card-team {}
+
+.card-team-result {
+
+  &__done {}
+}
