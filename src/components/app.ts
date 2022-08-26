@@ -3,6 +3,7 @@ import Header from './header';
 import Page from './helpers/page';
 import Main from './main';
 import Team from './team';
+import Wordsbook from './wordsbook';
 import Audiochallenge from './audiochallenge';
 import Footer from './footer';
 
@@ -35,6 +36,11 @@ export default class App {
     if (pageId === Pages.main) {
       document.body.append(this.header.node);
       page = new Main(pageId, document.body);
+      page.node.id = App.currentPage;
+      document.body.append(this.footer.node);
+    } else if (pageId === Pages.wordsbook) {
+      document.body.append(this.header.node);
+      page = new Wordsbook(document.body);
       page.node.id = App.currentPage;
       document.body.append(this.footer.node);
     } else if (pageId === Pages.about) {
