@@ -1,0 +1,341 @@
+$wordsbook-width: 1200px;
+$word-card-width: 390px;
+$word-card-height: 700px;
+$word-card-background: #D6FCF7;
+$pagination-button-background: #FFBD12;
+
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+body {
+  font-family: Montserrat, sans-serif;
+}
+
+.wordsbook {
+
+  max-width: $wordsbook-width;
+  margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  &__h1 {
+    margin-bottom: 40px;
+  }
+
+}
+
+.wordsbook-levels {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 40px;
+
+  &__input {
+    display: none;
+  }
+
+  &__label {
+    flex-grow: 1;
+    display: inherit;
+  }
+
+  &__button {
+    // border: 2px solid #000000;
+    background-color: #FFBD12;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 16px;
+    height: 70px;
+    width: 210px;
+    filter: opacity(0.3);
+    cursor: pointer;
+    flex-grow: 1;
+  }
+
+  &__button:hover {
+    filter: opacity(1);
+  }
+
+  &__button_active {
+    filter: opacity(1);
+  }
+
+  &__input:checked~.wordsbook-levels__button {
+    filter: opacity(1);
+  }
+
+  &__name {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &__level-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__level {
+    font-weight: 700;
+    font-size: 34px;
+  }
+
+}
+
+.wordsbook-words-wrapper {
+  display: flex;
+  gap: 15px;
+
+  @media (max-width: 620px) {
+    & {
+      flex-direction: column;
+    }
+  }
+}
+
+.wordsbook-words {
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+
+  @media (max-width: 620px) {
+    & {
+      order: 2;
+      justify-content: center;
+    }
+  }
+
+  &__radiobutton {
+    display: none;
+  }
+
+  &__label {
+    cursor: pointer;
+  }
+
+  &__word-wrapper {
+    background-color: #E9E7FC;
+    padding-left: 25px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-top: 17px;
+    border-radius: 8px;
+    width: 180px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__word-wrapper_difficult::after {
+    content: "";
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    background-color: #000;
+    right: -9px;
+    bottom: -9px;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  &__word-wrapper_learned::after {
+    content: "";
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    background-color: #1947E6;
+    right: -9px;
+    bottom: -9px;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  &__radiobutton:checked~.wordsbook-words__word-wrapper {
+    background-color: #ffbd12;
+  }
+
+}
+
+.wordsbook-description {
+
+  background-color: #E9E7FC;
+  border-radius: 8px;
+  max-height: 800px;
+
+  @media (max-width: 620px) {
+    & {
+      order: 1;
+      max-width: 390px;
+      margin: auto;
+      margin-bottom: 15px;
+    }
+  }
+
+  &__img {
+    width: 390px;
+    margin-bottom: 20px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  @media (max-width:420px) {
+    &__img {
+      width: 100%;
+    }
+  }
+
+  &__text-wrapper {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 15px;
+  }
+
+  &__h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  &__h3 {
+    margin-bottom: 10px;
+  }
+
+  &__transcription-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  &__transcription {
+    font-weight: 700;
+  }
+
+  &__transcription-play {
+    background: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  &__transcription-svg {
+    width: 20px;
+  }
+
+  &__buttons-container {
+    margin-bottom: 15px;
+  }
+
+  &__button {
+    border: none;
+    outline: none;
+    background-color: #ffbd12;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  &__meaning {
+    margin-bottom: 15px;
+  }
+
+}
+
+.pagination {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__ul {
+    display: flex;
+    gap: 10px;
+    ;
+  }
+
+  &__li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+  }
+
+  &__button:hover {
+    background-color: $pagination-button-background;
+  }
+
+  &__button_active {
+    background-color: $pagination-button-background;
+  }
+
+}
+
+.wordsbook-games {
+
+  &__wrapper {
+    display: flex;
+    gap: 15px;
+  }
+
+  &__game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    background-color: $pagination-button-background;
+    border-radius: 16px;
+    cursor: pointer;
+    padding: 16px;
+  }
+
+  &__button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  &__img {
+    width: 40px;
+  }
+
+  &__right {
+    font-weight: 700;
+    font-size: 25px;
+  }
+}
