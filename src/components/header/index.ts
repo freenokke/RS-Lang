@@ -30,14 +30,17 @@ export default class Header extends BaseComponent {
   private authBtn;
 
   constructor(parentNode: HTMLElement | null) {
-    super('div', ['header-wrapper'], parentNode, Template, model);
+    super('header', ['header-container'], parentNode, Template, model);
     this.burgerMenuOpenButton = this.node.querySelector('.header-burger-icon');
     this.burgerMenu = this.node.querySelector('.burger-menu');
     this.burgerMenuCloseButton = this.node.querySelector(
       '.burger-menu__close-button'
     );
-    this.overlay = this.node.querySelector('.overlay') as HTMLElement;
+    this.overlay = document.createElement('div');
+    this.overlay.classList.add('overlay');
+    document.body.append(this.overlay);
     this.authBtn = this.node.querySelector('.header-auth');
+
     this.initEventListeners();
   }
 
@@ -71,10 +74,12 @@ export default class Header extends BaseComponent {
   hideBurgerMenu() {
     this.burgerMenu?.classList.remove('burger-menu_active');
     this.overlay.style.display = 'none';
+    document.body.classList.remove('_lock');
   }
 
   showBurgerMenu() {
     this.burgerMenu?.classList.add('burger-menu_active');
     this.overlay.style.display = 'block';
+    document.body.classList.add('_lock');
   }
 }
