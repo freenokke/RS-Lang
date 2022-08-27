@@ -139,13 +139,16 @@ class Api {
       }
     );
     const data: IUserSignInResp = await res.json();
+    localStorage.setItem('userToken', `${data.token}`);
+    localStorage.setItem('userRefreshToken', `${data.refreshToken}`);
     return data;
   }
 
+  // eslint-disable-next-line consistent-return
   public async checkUserTokens(
     id: string,
     refreshToken: string
-  ): Promise<void> {
+  ): Promise<boolean> {
     const res = await fetch(
       `${this.domain}/${Path.USERS}/${id}/${Path.TOKENS}/check`,
       {
@@ -156,10 +159,13 @@ class Api {
         },
       }
     );
-    const result: boolean = await res.json();
-
-    if (result) {
-      this.getNewUserTokens(id, refreshToken);
+    if (res.ok) {
+      const result: boolean = await res.json();
+      if (result) {
+        this.getNewUserTokens(id, refreshToken);
+      }
+    } else {
+      return false;
     }
   }
 
