@@ -58,7 +58,7 @@ export default class App {
     } else if (pageId === Pages.audiochallenge) {
       this.header.node.remove();
       this.footer.node.remove();
-      page = new Audiochallenge(document.body);
+      page = new Audiochallenge([], 'yourhash', document.body);
       page.node.id = App.currentPage;
     } else if (pageId === Pages.sprint) {
       this.header.node.remove();
