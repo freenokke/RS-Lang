@@ -63,7 +63,7 @@ export default class App {
     } else if (pageId === Pages.sprint) {
       this.header.node.remove();
       this.footer.node.remove();
-      page = new Sprint(document.body);
+      page = new Sprint([], 'yourhash', document.body);
       page.node.id = App.currentPage;
     } else {
       console.log('Unknown page');
