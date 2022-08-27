@@ -7,6 +7,7 @@ import Wordsbook from './wordsbook';
 import Games from './games';
 import Audiochallenge from './audiochallenge';
 import Stats from './stats';
+import Sprint from './sprint';
 import Footer from './footer';
 
 export default class App {
@@ -58,7 +59,12 @@ export default class App {
     } else if (pageId === Pages.audiochallenge) {
       this.header.node.remove();
       this.footer.node.remove();
-      page = new Audiochallenge(document.body);
+      page = new Audiochallenge([], 'yourhash', document.body);
+      page.node.id = App.currentPage;
+    } else if (pageId === Pages.sprint) {
+      this.header.node.remove();
+      this.footer.node.remove();
+      page = new Sprint([], 'yourhash', document.body);
       page.node.id = App.currentPage;
     } else if (pageId === Pages.stats) {
       document.body.append(this.header.node);

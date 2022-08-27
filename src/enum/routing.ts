@@ -3,6 +3,7 @@ enum Pages {
   about = '#/about',
   audiochallenge = '#/games/audiochallenge',
   stats = '#/stats',
+  sprint = '#/games/sprint',
   wordsbook = '#/wordsbook',
   games = '#/games',
 }
