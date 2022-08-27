@@ -26,13 +26,15 @@ p {
 body {
 	font-family: Montserrat, sans-serif;
 }
-
-.wordsbook {
-
+.main {
+	overflow: hidden;
 	max-width: $wordsbook-width;
-	margin: 0 auto 2rem auto;
+	margin: 0 auto;
 	padding-left: 10px;
 	padding-right: 10px;
+}
+.wordsbook {
+  margin-bottom: 2rem;
 
 	&__h1 {
 		margin-bottom: 40px;
@@ -321,6 +323,8 @@ body {
 		border-radius: 16px;
 		cursor: pointer;
 		padding: 16px;
+		text-decoration: none;
+		color: #000;
 	}
 
 	&__button {
@@ -338,4 +342,13 @@ body {
 		font-weight: 700;
 		font-size: 25px;
 	}
+}
+
+@media (max-width:767px) {
+	.wordsbook-games {
+	
+			&__wrapper {
+				flex-wrap: wrap;
+			}
+		}
 }
