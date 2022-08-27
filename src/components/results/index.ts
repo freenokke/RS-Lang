@@ -52,7 +52,7 @@ export default class Results extends Page {
       window.location.hash = this.gameHash;
     });
     this.toWordsbookButton.addEventListener('click', () => {
-      window.location.hash = Pages.about;
+      window.location.hash = Pages.wordsbook;
     });
   }
 
