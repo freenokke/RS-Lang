@@ -3,6 +3,7 @@ import Header from './header';
 import Page from './helpers/page';
 import Main from './main';
 import Team from './team';
+import Games from './games';
 import Audiochallenge from './audiochallenge';
 import Stats from './stats';
 import Footer from './footer';
@@ -41,6 +42,11 @@ export default class App {
     } else if (pageId === Pages.about) {
       document.body.append(this.header.node);
       page = new Team(document.body);
+      page.node.id = App.currentPage;
+      document.body.append(this.footer.node);
+    } else if (pageId === Pages.games) {
+      document.body.append(this.header.node);
+      page = new Games(document.body);
       page.node.id = App.currentPage;
       document.body.append(this.footer.node);
     } else if (pageId === Pages.audiochallenge) {
