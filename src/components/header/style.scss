@@ -49,9 +49,18 @@
   }
 }
 
-.header-auth {
-  position: relative;
+.header-username {
   margin-left: auto;
+  padding: 5px;
+  &__name {
+    font-weight: 700;
+  }
+}
+
+.header-auth {
+  display: flex;
+  align-items: center;
+  position: relative;
   width: 40px;
   height: 40px;
   flex-shrink: 0;

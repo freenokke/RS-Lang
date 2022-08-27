@@ -1,5 +1,6 @@
 import { Domain, Path } from '../../enum/endpoints';
 import {
+  IGetUserResp,
   IUserCreate,
   IUserCreateResp,
   IUserSettings,
@@ -89,14 +90,11 @@ class Api {
     const data: IUserSignInResp = await res.json();
     localStorage.setItem('userToken', `${data.token}`);
     localStorage.setItem('userRefreshToken', `${data.refreshToken}`);
-    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userName', `${data.name}`);
     return data;
   }
 
-  public async getUserById(
-    id: string,
-    token: string
-  ): Promise<IUserCreateResp> {
+  public async getUserById(id: string, token: string): Promise<IGetUserResp> {
     const res = await fetch(`${this.domain}/${Path.USERS}/${id}`, {
       method: 'GET',
       headers: {
@@ -104,7 +102,7 @@ class Api {
         Authorization: `Bearer ${token}`,
       },
     });
-    const user: IUserCreateResp = await res.json();
+    const user: IGetUserResp = await res.json();
     return user;
   }
 

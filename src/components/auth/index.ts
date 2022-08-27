@@ -59,9 +59,11 @@ class Auth extends Page {
     });
     this.authForgetPasswordBtn.onclick = () => {
       this.authErrorMessage.innerHTML = '';
+      this.clearAuthInputs();
     };
     this.authRegistrationBtn.onclick = () => {
       this.authErrorMessage.innerHTML = '';
+      this.clearAuthInputs();
     };
   }
 
@@ -77,7 +79,7 @@ class Auth extends Page {
         password,
       });
       if (res.ok) {
-        this.API.signInUser({ email, password });
+        await this.API.signInUser({ email, password });
         window.location.hash = Pages.main;
         this.clearRegInputs();
         this.HEADER.changeAuthorizationIcon();

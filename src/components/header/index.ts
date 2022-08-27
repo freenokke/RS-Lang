@@ -33,6 +33,8 @@ export default class Header extends BaseComponent {
 
   private logoutBtn;
 
+  private username;
+
   constructor(parentNode: HTMLElement | null) {
     super('header', ['header-container'], parentNode, Template, model);
     this.burgerMenuOpenButton = this.node.querySelector('.header-burger-icon');
@@ -45,6 +47,7 @@ export default class Header extends BaseComponent {
     document.body.append(this.overlay);
     this.authBtn = this.node.querySelector('.login');
     this.logoutBtn = this.node.querySelector('.logout');
+    this.username = this.node.querySelector('.header-username');
 
     this.initEventListeners();
   }
@@ -93,7 +96,13 @@ export default class Header extends BaseComponent {
   }
 
   changeAuthorizationIcon() {
-    if (localStorage.getItem('isLoggedIn') === 'true') {
+    const user = localStorage.getItem('userName');
+    if (user !== null) {
+      this.username.innerHTML = `Hello, <span class="header-username__name">${user}</span>`;
+    } else {
+      this.username.innerHTML = '';
+    }
+    if (localStorage.getItem('userToken') !== null) {
       this.authBtn.classList.remove('header-auth__icon_active');
       this.logoutBtn.classList.add('header-auth__icon_active');
     } else {
