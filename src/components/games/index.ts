@@ -15,6 +15,6 @@ const model = {
 
 export default class Games extends Page {
   constructor(parentNode: HTMLElement | null) {
-    super('main', [], parentNode, Template, model);
+    super('main', ['main'], parentNode, Template, model);
   }
 }

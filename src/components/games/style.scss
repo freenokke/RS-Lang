@@ -109,8 +109,14 @@ a {
 		font-size: 1.5rem;
 	}
 
+	&__link{
+		display: flex;
+		justify-content: center;
+		width: 50%;
+	}
+
 	&__button {
-		max-width: 50%;
+		max-width: 100%;
 		transition: all 0.3s;
 		box-shadow: 0.0625rem 0.0625rem 0.3125rem 0.3125rem #000000;
 		border-radius: 1rem;
@@ -171,8 +177,14 @@ a {
 		font-size: 1.5rem;
 	}
 
+	&__link{
+		display: flex;
+		justify-content: center;
+		width: 50%;
+	}
+
 	&__button {
-		max-width: 50%;
+		max-width: 100%;
 		transition: all 0.3s;
 		box-shadow: 0.0625rem 0.0625rem 0.3125rem 0.3125rem #000000;
 		border-radius: 1rem;
@@ -290,7 +302,6 @@ a {
 	flex-direction: column;
 	justify-content: center;
 	background-color: rgba(71, 74, 87, 0.3);
-	;
 	height: 100%;
 	width: 100%;
 
