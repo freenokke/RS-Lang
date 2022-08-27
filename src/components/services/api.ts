@@ -63,6 +63,20 @@ class Api {
     return user;
   }
 
+  public async createUserResponseTracking(
+    parameters: IUserCreate
+  ): Promise<Response> {
+    const res = await fetch(`${this.domain}/${Path.USERS}`, {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(parameters),
+    });
+    return res;
+  }
+
   public async signInUser(parameters: IUserSignIn): Promise<IUserSignInResp> {
     const res = await fetch(`${this.domain}/${Path.SIGNIN}`, {
       method: 'POST',
@@ -75,6 +89,7 @@ class Api {
     const data: IUserSignInResp = await res.json();
     localStorage.setItem('userToken', `${data.token}`);
     localStorage.setItem('userRefreshToken', `${data.refreshToken}`);
+    localStorage.setItem('isLoggedIn', 'true');
     return data;
   }
 

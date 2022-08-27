@@ -20,7 +20,7 @@ export default class Main extends Page {
   private registerButton;
 
   constructor(parentNode: HTMLElement | null) {
-    super('main', [], parentNode, Template, model);
+    super('main', ['main'], parentNode, Template, model);
     this.registerButton = this.node.querySelector('.registration__button');
     this.initEventListeners();
   }

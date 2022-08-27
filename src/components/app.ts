@@ -18,7 +18,7 @@ export default class App {
     this.initEventListeners();
     this.header = new Header(null);
     this.footer = new Footer(null);
-    this.authPopup = new Auth(document.body);
+    this.authPopup = new Auth(this.header, document.body);
   }
 
   initEventListeners() {
@@ -65,5 +65,10 @@ export default class App {
     } else {
       window.location.hash = Pages.main;
     }
+    this.checkAuthorisation();
+  }
+
+  private checkAuthorisation() {
+    this.header.changeAuthorizationIcon();
   }
 }

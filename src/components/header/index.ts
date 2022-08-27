@@ -8,6 +8,7 @@ import StatsIcon from './img/chart.svg';
 import TeamIcon from './img/team.svg';
 import './style.scss';
 import Pages from '../../enum/routing';
+import LogoutIcon from './img/logout.svg';
 
 const model = {
   logo: Logo,
@@ -16,6 +17,7 @@ const model = {
   gamesIcon: GamesIcon,
   statsIcon: StatsIcon,
   teamIcon: TeamIcon,
+  logoutIcon: LogoutIcon,
 };
 
 export default class Header extends BaseComponent {
@@ -29,6 +31,8 @@ export default class Header extends BaseComponent {
 
   private authBtn;
 
+  private logoutBtn;
+
   constructor(parentNode: HTMLElement | null) {
     super('header', ['header-container'], parentNode, Template, model);
     this.burgerMenuOpenButton = this.node.querySelector('.header-burger-icon');
@@ -39,7 +43,8 @@ export default class Header extends BaseComponent {
     this.overlay = document.createElement('div');
     this.overlay.classList.add('overlay');
     document.body.append(this.overlay);
-    this.authBtn = this.node.querySelector('.header-auth');
+    this.authBtn = this.node.querySelector('.login');
+    this.logoutBtn = this.node.querySelector('.logout');
 
     this.initEventListeners();
   }
@@ -69,6 +74,10 @@ export default class Header extends BaseComponent {
     this.authBtn?.addEventListener('click', () => {
       window.location.hash = Pages.auth;
     });
+    this.logoutBtn?.addEventListener('click', () => {
+      localStorage.clear();
+      this.changeAuthorizationIcon();
+    });
   }
 
   hideBurgerMenu() {
@@ -81,5 +90,15 @@ export default class Header extends BaseComponent {
     this.burgerMenu?.classList.add('burger-menu_active');
     this.overlay.style.display = 'block';
     document.body.classList.add('_lock');
+  }
+
+  changeAuthorizationIcon() {
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      this.authBtn.classList.remove('header-auth__icon_active');
+      this.logoutBtn.classList.add('header-auth__icon_active');
+    } else {
+      this.authBtn.classList.add('header-auth__icon_active');
+      this.logoutBtn.classList.remove('header-auth__icon_active');
+    }
   }
 }

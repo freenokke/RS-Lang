@@ -39,6 +39,10 @@ transition: all 0.8s ease 0s;
 		padding: 1.875rem 0.625rem;
 	}
 
+	&__error-message {
+		text-align: center;
+	}
+
 	&__content {
 		background-color: #fff;
 		color:black;
@@ -203,6 +207,10 @@ transition: all 0.8s ease 0s;
 		align-items: center;
 		justify-content: center;
 		padding: 1.875rem 0.625rem;
+	}
+
+	&__error-message {
+		text-align: center;
 	}
 
 	&__content {
