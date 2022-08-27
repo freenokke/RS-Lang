@@ -3,7 +3,10 @@ import Header from './header';
 import Page from './helpers/page';
 import Main from './main';
 import Team from './team';
+import Wordsbook from './wordsbook';
+import Games from './games';
 import Audiochallenge from './audiochallenge';
+import Sprint from './sprint';
 import Footer from './footer';
 
 export default class App {
@@ -37,15 +40,30 @@ export default class App {
       page = new Main(pageId, document.body);
       page.node.id = App.currentPage;
       document.body.append(this.footer.node);
+    } else if (pageId === Pages.wordsbook) {
+      document.body.append(this.header.node);
+      page = new Wordsbook(document.body);
+      page.node.id = App.currentPage;
+      document.body.append(this.footer.node);
     } else if (pageId === Pages.about) {
       document.body.append(this.header.node);
       page = new Team(document.body);
+      page.node.id = App.currentPage;
+      document.body.append(this.footer.node);
+    } else if (pageId === Pages.games) {
+      document.body.append(this.header.node);
+      page = new Games(document.body);
       page.node.id = App.currentPage;
       document.body.append(this.footer.node);
     } else if (pageId === Pages.audiochallenge) {
       this.header.node.remove();
       this.footer.node.remove();
       page = new Audiochallenge(document.body);
+      page.node.id = App.currentPage;
+    } else if (pageId === Pages.sprint) {
+      this.header.node.remove();
+      this.footer.node.remove();
+      page = new Sprint([], 'yourhash', document.body);
       page.node.id = App.currentPage;
     } else {
       console.log('Unknown page');
