@@ -1,9 +1,14 @@
+import { IWord } from '../../types/words';
 import Page from '../helpers/page';
 import Template from './index.html';
 import './style.scss';
 
 export default class Audiochallenge extends Page {
-  constructor(parentNode: HTMLElement | null) {
-    super('div', [], parentNode, Template, {});
+  constructor(
+    wordsList: IWord[],
+    comebackHash: string,
+    parentNode: HTMLElement | null
+  ) {
+    super('main', ['main', 'fullscreen'], parentNode, Template, {});
   }
 }
