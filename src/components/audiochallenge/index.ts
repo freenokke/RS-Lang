@@ -4,6 +4,8 @@ import Template from './index.html';
 import './style.scss';
 
 export default class Audiochallenge extends Page {
+  private wordsList: IWord[];
+
   constructor(
     wordsList: IWord[],
     comebackHash: string,
@@ -16,5 +18,6 @@ export default class Audiochallenge extends Page {
       Template,
       {}
     );
+    this.wordsList = wordsList;
   }
 }
