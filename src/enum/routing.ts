@@ -4,6 +4,8 @@ enum Pages {
   audiochallenge = '#/games/audiochallenge',
   auth = '#/auth',
   registration = '#/reg',
+  wordsbook = '#/wordsbook',
+  games = '#/games',
 }
 
 export default Pages;
