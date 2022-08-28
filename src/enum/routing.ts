@@ -4,6 +4,8 @@ enum Pages {
   audiochallenge = '#/games/audiochallenge',
   auth = '#/auth',
   registration = '#/reg',
+  stats = '#/stats',
+  sprint = '#/games/sprint',
   wordsbook = '#/wordsbook',
   games = '#/games',
 }

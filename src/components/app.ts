@@ -67,6 +67,16 @@ export default class App {
     } else if (pageId === Pages.auth || pageId === Pages.registration) {
       this.header.node.remove();
       this.footer.node.remove();
+    } else if (pageId === Pages.sprint) {
+      this.header.node.remove();
+      this.footer.node.remove();
+      page = new Sprint([], 'yourhash', document.body);
+      page.node.id = App.currentPage;
+    } else if (pageId === Pages.stats) {
+      document.body.append(this.header.node);
+      page = new Stats(document.body);
+      page.node.id = App.currentPage;
+      document.body.append(this.footer.node);
     } else {
       console.log('Unknown page');
     }
