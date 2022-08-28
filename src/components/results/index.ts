@@ -27,7 +27,7 @@ export default class Results extends Page {
     score: number,
     gameHash: string
   ) {
-    super('main', ['fullscreen'], parentNode, Template, {
+    super('main', ['fullscreen', 'results-page'], parentNode, Template, {
       score: score.toString(),
     });
     this.knownWords = knownWords;
