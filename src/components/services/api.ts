@@ -1,5 +1,6 @@
 import { Domain, Path } from '../../enum/endpoints';
 import {
+  IGetUserResp,
   IUserCreate,
   IUserCreateResp,
   IUserSettings,
@@ -63,6 +64,20 @@ class Api {
     return user;
   }
 
+  public async createUserResponseTracking(
+    parameters: IUserCreate
+  ): Promise<Response> {
+    const res = await fetch(`${this.domain}/${Path.USERS}`, {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(parameters),
+    });
+    return res;
+  }
+
   public async signInUser(parameters: IUserSignIn): Promise<IUserSignInResp> {
     const res = await fetch(`${this.domain}/${Path.SIGNIN}`, {
       method: 'POST',
@@ -75,13 +90,11 @@ class Api {
     const data: IUserSignInResp = await res.json();
     localStorage.setItem('userToken', `${data.token}`);
     localStorage.setItem('userRefreshToken', `${data.refreshToken}`);
+    localStorage.setItem('userName', `${data.name}`);
     return data;
   }
 
-  public async getUserById(
-    id: string,
-    token: string
-  ): Promise<IUserCreateResp> {
+  public async getUserById(id: string, token: string): Promise<IGetUserResp> {
     const res = await fetch(`${this.domain}/${Path.USERS}/${id}`, {
       method: 'GET',
       headers: {
@@ -89,7 +102,7 @@ class Api {
         Authorization: `Bearer ${token}`,
       },
     });
-    const user: IUserCreateResp = await res.json();
+    const user: IGetUserResp = await res.json();
     return user;
   }
 

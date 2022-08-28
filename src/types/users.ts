@@ -46,3 +46,9 @@ export interface IUserSettings {
   wordsPerDay: number;
   optional?: { [key: string]: string | number };
 }
+
+export interface IGetUserResp {
+  id: string;
+  name: string;
+  email: string;
+}

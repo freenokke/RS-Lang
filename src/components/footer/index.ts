@@ -11,7 +11,7 @@ const model = {
 
 class Footer extends BaseComponent {
   constructor(parentNode: HTMLElement | null) {
-    super('footer', [], parentNode, Template, model);
+    super('footer', ['footer'], parentNode, Template, model);
   }
 }
 

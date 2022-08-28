@@ -49,21 +49,33 @@
   }
 }
 
-.header-auth {
-  position: relative;
+.header-username {
   margin-left: auto;
-  width: 30px;
-  height: 30px;
+  padding: 5px;
+  &__name {
+    font-weight: 700;
+  }
+}
+
+.header-auth {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   border-radius: 50%;
   padding: 5px;
   transition: .2s background;
 
   &__icon {
+    display: none;
     width: 100%;
     height: 100%;
-    display: block;
     object-fit: contain;
+    &_active {
+      display: block;
+    }
   }
 
   &:hover {
@@ -127,8 +139,8 @@
 }
 
 .header-burger-icon {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   outline: none;
   background-image: url('./img/arrow.svg');
   background-position: center center;
@@ -231,8 +243,8 @@
     position: absolute;
     left: 25px;
     top: 25px;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     outline: none;
     background-image: url('./img/cross.svg');
     background-position: center center;
