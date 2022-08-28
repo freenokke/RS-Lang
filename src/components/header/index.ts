@@ -98,7 +98,7 @@ export default class Header extends BaseComponent {
   changeAuthorizationIcon() {
     const user = localStorage.getItem('userName');
     if (user !== null) {
-      this.username.innerHTML = `Hello, <span class="header-username__name">${user}</span>`;
+      this.username.innerHTML = `<span class="header-username__name">${user}</span>`;
     } else {
       this.username.innerHTML = '';
     }

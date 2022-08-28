@@ -54,7 +54,7 @@ class Auth extends Page {
         this.clearAuthInputs();
         this.HEADER.changeAuthorizationIcon();
       } catch {
-        this.authErrorMessage.innerHTML = `Такого пользователя не существует, зарегистрируйтесь`;
+        this.authErrorMessage.innerHTML = `Пара логин-пароль некорректна`;
       }
     });
     this.authForgetPasswordBtn.onclick = () => {
