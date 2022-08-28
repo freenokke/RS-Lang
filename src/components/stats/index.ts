@@ -13,6 +13,6 @@ const model = {
 
 export default class Stats extends Page {
   constructor(parentNode: HTMLElement | null) {
-    super('main', ['main'], parentNode, Template, model);
+    super('main', ['main', 'stats-page'], parentNode, Template, model);
   }
 }

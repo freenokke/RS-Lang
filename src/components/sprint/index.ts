@@ -9,6 +9,12 @@ export default class Sprint extends Page {
     comebackHash: string,
     parentNode: HTMLElement | null
   ) {
-    super('main', ['main', 'fullscreen'], parentNode, Template, {});
+    super(
+      'main',
+      ['main', 'fullscreen', 'sprint-page'],
+      parentNode,
+      Template,
+      {}
+    );
   }
 }

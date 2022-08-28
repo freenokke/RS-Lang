@@ -4,36 +4,28 @@ $word-card-height: 700px;
 $word-card-background: #D6FCF7;
 $pagination-button-background: #FFBD12;
 
-* {
-	box-sizing: border-box;
+.wordsbook-page {
+	ul {
+		list-style-type: none;
+		padding: 0;
+	}
+	
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		margin: 0;
+	}
 }
 
-ul {
-	list-style-type: none;
-	padding: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-	margin: 0;
-}
-
-body {
-	font-family: Montserrat, sans-serif;
-}
-.main {
-	overflow: hidden;
+.wordsbook {
 	max-width: $wordsbook-width;
 	margin: 0 auto;
 	padding-left: 10px;
 	padding-right: 10px;
-}
-.wordsbook {
   margin-bottom: 2rem;
 
 	&__h1 {

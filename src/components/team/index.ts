@@ -15,6 +15,6 @@ const model = {
 
 export default class Team extends Page {
   constructor(parentNode: HTMLElement | null) {
-    super('main', ['main'], parentNode, Template, model);
+    super('main', ['main', 'team-page'], parentNode, Template, model);
   }
 }
