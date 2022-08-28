@@ -16,6 +16,7 @@ export default class App {
   private footer: Footer;
   private authPopup: Auth;
 
+  private static page: Page | null;
   private static currentPage = 'current-page';
 
   constructor() {
@@ -38,45 +39,23 @@ export default class App {
     if (element) {
       element.remove();
     }
-    let page: Page | null = null;
+    App.page = null;
     if (pageId === Pages.main) {
-      document.body.append(this.header.node);
-      page = new Main(document.body);
-      page.node.id = App.currentPage;
-      document.body.append(this.footer.node);
+      this.renderMainPage();
     } else if (pageId === Pages.wordsbook) {
-      document.body.append(this.header.node);
-      page = new Wordsbook(document.body);
-      page.node.id = App.currentPage;
-      document.body.append(this.footer.node);
+      this.renderWordsBookPage();
     } else if (pageId === Pages.about) {
-      document.body.append(this.header.node);
-      page = new Team(document.body);
-      page.node.id = App.currentPage;
-      document.body.append(this.footer.node);
+      this.renderAboutPage();
     } else if (pageId === Pages.games) {
-      document.body.append(this.header.node);
-      page = new Games(document.body);
-      page.node.id = App.currentPage;
-      document.body.append(this.footer.node);
+      this.renderGamesPage();
     } else if (pageId === Pages.audiochallenge) {
-      this.header.node.remove();
-      this.footer.node.remove();
-      page = new Audiochallenge([], 'yourhash', document.body);
-      page.node.id = App.currentPage;
+      this.renderAudiochallengePage();
     } else if (pageId === Pages.auth || pageId === Pages.registration) {
-      this.header.node.remove();
-      this.footer.node.remove();
+      this.renderAuthPage();
     } else if (pageId === Pages.sprint) {
-      this.header.node.remove();
-      this.footer.node.remove();
-      page = new Sprint([], 'yourhash', document.body);
-      page.node.id = App.currentPage;
+      this.renderSprintGame();
     } else if (pageId === Pages.stats) {
-      document.body.append(this.header.node);
-      page = new Stats(document.body);
-      page.node.id = App.currentPage;
-      document.body.append(this.footer.node);
+      this.renderStatsPage();
     } else {
       console.log('Unknown page');
     }
@@ -94,5 +73,59 @@ export default class App {
 
   private checkAuthorisation() {
     this.header.changeAuthorizationIcon();
+  }
+
+  private renderMainPage() {
+    document.body.append(this.header.node);
+    App.page = new Main(document.body);
+    App.page.node.id = App.currentPage;
+    document.body.append(this.footer.node);
+  }
+
+  private renderWordsBookPage() {
+    document.body.append(this.header.node);
+    App.page = new Wordsbook(document.body);
+    App.page.node.id = App.currentPage;
+    document.body.append(this.footer.node);
+  }
+
+  private renderAboutPage() {
+    document.body.append(this.header.node);
+    App.page = new Team(document.body);
+    App.page.node.id = App.currentPage;
+    document.body.append(this.footer.node);
+  }
+
+  private renderGamesPage() {
+    document.body.append(this.header.node);
+    App.page = new Games(document.body);
+    App.page.node.id = App.currentPage;
+    document.body.append(this.footer.node);
+  }
+
+  private renderAudiochallengePage() {
+    this.header.node.remove();
+    this.footer.node.remove();
+    App.page = new Audiochallenge([], 'yourhash', document.body);
+    App.page.node.id = App.currentPage;
+  }
+
+  private renderAuthPage() {
+    this.header.node.remove();
+    this.footer.node.remove();
+  }
+
+  private renderSprintGame() {
+    this.header.node.remove();
+    this.footer.node.remove();
+    App.page = new Sprint([], 'yourhash', document.body);
+    App.page.node.id = App.currentPage;
+  }
+
+  private renderStatsPage() {
+    document.body.append(this.header.node);
+    App.page = new Stats(document.body);
+    App.page.node.id = App.currentPage;
+    document.body.append(this.footer.node);
   }
 }

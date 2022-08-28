@@ -7,7 +7,6 @@ enum Pages {
   registration = '#/reg',
   stats = '#/stats',
   sprint = '#/games/sprint',
-  wordsbook = '#/wordsbook',
   games = '#/games',
 }
 

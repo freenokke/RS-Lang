@@ -1,27 +1,6 @@
 /*-----------------General styles-------------------*/
 
-* {
-	box-sizing: border-box;
-}
-
-html,
-body {
-	height: 100%;
-	scroll-behavior: smooth;
-}
-
-a {
-	text-decoration: none;
-}
-
-.wrapper {
-	min-height: 100%;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-}
-
-.main {
+.games-page {
 	flex: 1 1 auto;
 	display: flex;
 	justify-content: center;
@@ -54,7 +33,6 @@ a {
 	padding: 1.25rem;
 	display: flex;
 	flex-direction: column;
-	font-family: Montserrat, sans-serif;
 	font-weight: 800;
 	line-height: 1.75rem;
 	gap: 1.25rem;

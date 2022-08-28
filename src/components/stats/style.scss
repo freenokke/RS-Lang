@@ -1,29 +1,5 @@
-/*-----------------General styles-------------------*/
-* {
-	box-sizing: border-box;
-}
 
-html,
-body {
-	height: 100%;
-	font-size: 1.125rem;
-	font-family: 'Montserrat', sans-serif;
-	font-weight: 500;
-	color: #323232;
-}
-
-a {
-	text-decoration: none;
-}
-
-.wrapper {
-	min-height: 100%;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-}
-
-.main {
+.stats-page {
 	flex: 1 1 auto;
 	display: flex;
 	justify-content: center;
@@ -31,6 +7,9 @@ a {
 	flex-direction: column;
 	position: relative;
 	padding: 3.125rem 0;
+	font-weight: 500;
+	color: #323232;
+	font-size: 1.125rem;
 }
 
 /*-----------------Page Statistics styles-------------------*/
