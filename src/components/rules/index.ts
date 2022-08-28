@@ -9,7 +9,7 @@ export default class Rules extends Page {
     rules: string,
     gameHash: string
   ) {
-    super('div', ['wrapper'], parentNode, Template, {
+    super('main', ['main', 'wrapper'], parentNode, Template, {
       rules,
       gameName,
       hash: gameHash,

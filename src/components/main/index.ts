@@ -6,6 +6,7 @@ import DoneIcon from './img/done.svg';
 import PeopleIcon from './img/people_hi.svg';
 import Template from './index.html';
 import './style.scss';
+import Pages from '../../enum/routing';
 
 const model = {
   libraryIcon: LibraryIcon,
@@ -16,7 +17,17 @@ const model = {
 };
 
 export default class Main extends Page {
-  constructor(hash: string, parentNode: HTMLElement | null) {
-    super('div', [], parentNode, Template, model);
+  private registerButton;
+
+  constructor(parentNode: HTMLElement | null) {
+    super('main', ['main'], parentNode, Template, model);
+    this.registerButton = this.node.querySelector('.registration__button');
+    this.initEventListeners();
+  }
+
+  private initEventListeners() {
+    this.registerButton.addEventListener('click', () => {
+      window.location.hash = Pages.registration;
+    });
   }
 }
