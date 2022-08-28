@@ -1,0 +1,36 @@
+.results-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-bottom: 5px;
+}
+
+.results-row__button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.results-row__svg {
+  width: 20px;
+}
+
+.results-row__word {
+  font-weight: 700;
+  color: #000000;
+}
+
+.results-row__delimiter {
+  color: #000000;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.results-row__translation {
+  color: #000000;
+}
+/*# sourceMappingURL=style.css.map */
