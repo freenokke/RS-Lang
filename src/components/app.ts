@@ -120,6 +120,8 @@ export default class App {
     this.footer.node.remove();
     App.page = new Sprint([], 'yourhash', document.body);
     App.page.node.id = App.currentPage;
+    Sprint.sprintListener();
+    Sprint.startCountDown();
   }
 
   private renderStatsPage() {
