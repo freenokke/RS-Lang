@@ -8,6 +8,8 @@ enum Pages {
   stats = '#/stats',
   sprint = '#/games/sprint',
   games = '#/games',
+  rules = '#/rules',
+  results = '#/results',
 }
 
 export default Pages;

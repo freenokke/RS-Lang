@@ -5,7 +5,7 @@ import Main from './main';
 import Team from './team';
 import Wordsbook from './wordsbook';
 import Games from './games';
-import Audiochallenge from './audiochallenge';
+// import Audiochallenge from './audiochallenge';
 import Stats from './stats';
 import Sprint from './sprint';
 import Footer from './footer';
@@ -56,6 +56,8 @@ export default class App {
       this.renderSprintGame();
     } else if (pageId === Pages.stats) {
       this.renderStatsPage();
+    } else if (pageId === Pages.rules) {
+      this.renderRulesPage();
     } else {
       console.log('Unknown page');
     }
@@ -106,8 +108,8 @@ export default class App {
   private renderAudiochallengePage() {
     this.header.node.remove();
     this.footer.node.remove();
-    App.page = new Audiochallenge([], 'yourhash', document.body);
-    App.page.node.id = App.currentPage;
+    // App.page = new Audiochallenge([], 'yourhash', document.body);
+    // App.page.node.id = App.currentPage;
   }
 
   private renderAuthPage() {
@@ -127,5 +129,10 @@ export default class App {
     App.page = new Stats(document.body);
     App.page.node.id = App.currentPage;
     document.body.append(this.footer.node);
+  }
+
+  private renderRulesPage() {
+    this.header.node.remove();
+    this.footer.node.remove();
   }
 }
