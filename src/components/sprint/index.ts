@@ -7,6 +7,8 @@ export default class Sprint extends Page {
   static wrongButton: HTMLElement;
   static rightButton: HTMLElement;
   static countdownNumberEl: HTMLElement;
+  // static comboCheckbox: NodeListOf<HTMLElement>;
+  static comboCheckboxArray: Array<HTMLElement>;
 
   constructor(
     wordsList: IWord[],
@@ -23,8 +25,23 @@ export default class Sprint extends Page {
   }
 
   static sprintListener() {
+    this.comboCheckboxArray = Array.from(
+      document.querySelectorAll('.combo__checkbox')
+    );
     this.wrongButton = document.querySelector('.false');
-    this.wrongButton.addEventListener('click', () => console.log('Wrong'));
+    this.wrongButton.addEventListener('click', () => {
+      for (let i = 0; i < this.comboCheckboxArray.length; i += 1) {
+        if (i === this.comboCheckboxArray.length - 1) {
+          this.comboCheckboxArray.forEach((el) =>
+            el.removeAttribute('checked')
+          );
+          i = 0;
+        } else {
+          this.comboCheckboxArray[i].setAttribute('checked', 'checked');
+          break;
+        }
+      }
+    });
     this.rightButton = document.querySelector('.true');
     this.rightButton.addEventListener('click', () => console.log('Right'));
   }
@@ -39,4 +56,19 @@ export default class Sprint extends Page {
       this.countdownNumberEl.textContent = `${countdown}`;
     }, 1000);
   }
+
+  // static checkboxChange() {
+  //   this.comboCheckboxArray = Array.from(
+  //     document.querySelectorAll('.combo__checkbox')
+  //   );
+  //   for (let i = 0; i < this.comboCheckboxArray.length; i += 1) {
+  //     if (i === this.comboCheckboxArray.length - 1) {
+  //       this.comboCheckboxArray.forEach((el) => el.removeAttribute('checked'));
+  //       i = 0;
+  //     } else {
+  //       this.comboCheckboxArray[i].setAttribute('checked', 'checked');
+  //       break;
+  //     }
+  //   }
+  // }
 }
