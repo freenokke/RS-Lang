@@ -10,7 +10,7 @@ export default class Rules extends Page {
   private closeBtn: HTMLElement;
   private startBtn: HTMLElement;
   private closeArea: HTMLElement;
-  private wordsForGame: Promise<IWord[]>;
+  private wordsForGame: IWord[];
   private gameName;
   private rules;
 
@@ -18,7 +18,7 @@ export default class Rules extends Page {
     parentNode: HTMLElement,
     gameName: string,
     levelName: string,
-    wordsForGame: Promise<IWord[]>,
+    wordsForGame: IWord[],
     gameHash: string,
     comebackHash: string
   ) {

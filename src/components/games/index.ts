@@ -48,13 +48,13 @@ export default class Games extends Page {
   }
 
   private initSprintListeners(): void {
-    this.playSprintGameBtn.addEventListener('click', () => {
+    this.playSprintGameBtn.addEventListener('click', async () => {
       const level = Array.from(this.sprintLevelInputs).filter((item) => {
         return item.checked;
       })[0];
       const levelName = level.nextElementSibling.textContent;
       const { group } = level.dataset;
-      const wordsFOrgame = this.loadWordsByChosenGroup(group);
+      const wordsFOrgame = await this.loadWordsByChosenGroup(group);
       this.rules = new Rules(
         document.body,
         'Sprint',
@@ -67,13 +67,13 @@ export default class Games extends Page {
   }
 
   private initAudiochallengeListeners(): void {
-    this.playAudiochallengeGameBtn.addEventListener('click', () => {
+    this.playAudiochallengeGameBtn.addEventListener('click', async () => {
       const level = Array.from(this.audioCallLevelInputs).filter((item) => {
         return item.checked;
       })[0];
       const levelName = level.nextElementSibling.textContent;
       const { group } = level.dataset;
-      const wordsFOrgame = this.loadWordsByChosenGroup(group);
+      const wordsFOrgame = await this.loadWordsByChosenGroup(group);
       this.rules = new Rules(
         document.body,
         'Audiochallenge',

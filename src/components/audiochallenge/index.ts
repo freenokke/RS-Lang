@@ -26,7 +26,7 @@ export default class Audiochallenge extends Page {
   private unknownWords: IWord[];
 
   constructor(
-    gottenWords: Promise<IWord[]>,
+    gottenWords: IWord[],
     comebackHash: string,
     parentNode: HTMLElement | null
   ) {
@@ -51,8 +51,8 @@ export default class Audiochallenge extends Page {
     this.initEventsListeners();
   }
 
-  private async initGame(gottenWords: Promise<IWord[]>): Promise<void> {
-    this.initialArrayOfWords = await gottenWords;
+  private async initGame(gottenWords: IWord[]): Promise<void> {
+    this.initialArrayOfWords = gottenWords;
     this.wordsForGame = shuffle(this.initialArrayOfWords);
     this.generateStep();
   }
