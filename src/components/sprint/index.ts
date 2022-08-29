@@ -5,7 +5,7 @@ import { IWord } from '../../types/words';
 
 export default class Sprint extends Page {
   constructor(
-    wordsList: IWord[],
+    wordsList: Promise<IWord[]>,
     comebackHash: string,
     parentNode: HTMLElement | null
   ) {

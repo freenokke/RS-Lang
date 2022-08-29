@@ -21,22 +21,49 @@ export default class Games extends Page {
   private API: Api;
   private rules: Rules;
   private playAudiochallengeGameBtn;
+  private playSprintGameBtn;
   private audioCallLevelInputs: NodeListOf<HTMLInputElement>;
+  private sprintLevelInputs: NodeListOf<HTMLInputElement>;
 
   constructor(parentNode: HTMLElement | null) {
     super('main', ['main', 'games-page'], parentNode, Template, model);
+    this.API = Api.getInstance();
+
     this.playAudiochallengeGameBtn = this.node.querySelector(
       '.audio-call-games__button'
     );
-    this.API = Api.getInstance();
+    this.playSprintGameBtn = this.node.querySelector('.sprint-games__link');
     this.audioCallLevelInputs = this.node.querySelectorAll(
       'input[name="audio-call-level-input"]'
+    );
+    this.sprintLevelInputs = this.node.querySelectorAll(
+      'input[name="sprint-level-input"]'
     );
     this.initEventListeners();
   }
 
   private initEventListeners(): void {
     this.initAudiochallengeListeners();
+    this.initSprintListeners();
+  }
+
+  private initSprintListeners(): void {
+    this.playSprintGameBtn.addEventListener('click', () => {
+      const level = Array.from(this.sprintLevelInputs).filter((item) => {
+        return item.checked;
+      })[0];
+      const levelName = level.nextElementSibling.textContent;
+      const { group } = level.dataset;
+      const wordsFOrgame = this.loadWordsByChosenGroup(group);
+      this.rules = new Rules(
+        document.body,
+        'Sprint',
+        levelName,
+        wordsFOrgame,
+        Pages.audiochallenge,
+        Pages.games
+      );
+    });
   }
 
   private initAudiochallengeListeners(): void {
@@ -46,13 +73,11 @@ export default class Games extends Page {
       })[0];
       const levelName = level.nextElementSibling.textContent;
       const { group } = level.dataset;
-      const rulesText = `Вам в течение 60 секунд нужно отгадать слова, которые вы услышите.</br> 
-      Выбранный уровень: ${levelName}`;
       const wordsFOrgame = this.loadWordsByChosenGroup(group);
       this.rules = new Rules(
         document.body,
         'Audiochallenge',
-        rulesText,
+        levelName,
         wordsFOrgame,
         Pages.audiochallenge,
         Pages.games

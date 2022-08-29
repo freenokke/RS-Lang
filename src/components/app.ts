@@ -5,9 +5,7 @@ import Main from './main';
 import Team from './team';
 import Wordsbook from './wordsbook';
 import Games from './games';
-// import Audiochallenge from './audiochallenge';
 import Stats from './stats';
-import Sprint from './sprint';
 import Footer from './footer';
 import Auth from './auth';
 
@@ -108,8 +106,6 @@ export default class App {
   private renderAudiochallengePage() {
     this.header.node.remove();
     this.footer.node.remove();
-    // App.page = new Audiochallenge([], 'yourhash', document.body);
-    // App.page.node.id = App.currentPage;
   }
 
   private renderAuthPage() {
@@ -120,8 +116,6 @@ export default class App {
   private renderSprintGame() {
     this.header.node.remove();
     this.footer.node.remove();
-    App.page = new Sprint([], 'yourhash', document.body);
-    App.page.node.id = App.currentPage;
   }
 
   private renderStatsPage() {
