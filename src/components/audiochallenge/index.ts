@@ -1,4 +1,3 @@
-// import Pages from '../../enum/routing';
 import Pages from '../../enum/routing';
 import { IWord } from '../../types/words';
 import Page from '../helpers/page';
@@ -7,7 +6,6 @@ import Template from './index.html';
 import './style.scss';
 import { Domain } from '../../enum/endpoints';
 import Results from '../results';
-// import Results from '../results';
 
 function shuffle<T>(array: T[]): T[] {
   array.sort(() => Math.random() - 0.5);
@@ -25,6 +23,7 @@ export default class Audiochallenge extends Page {
   private knownWords: IWord[];
   private unknownWords: IWord[];
   private progressBlock: HTMLElement;
+  private parameters: { group: number; page: number };
 
   constructor(
     gottenWords: IWord[],
@@ -40,11 +39,17 @@ export default class Audiochallenge extends Page {
     );
     window.location.hash = Pages.audiochallenge;
     this.API = Api.getInstance();
+    this.parameters = {
+      group: gottenWords[0].group,
+      page: gottenWords[0].page,
+    };
     this.knownWords = [];
     this.unknownWords = [];
 
-    const words =
-      gottenWords.length > 20 ? gottenWords.splice(0, 20) : gottenWords;
+    // const words =
+    //   gottenWords.length > 20 ? gottenWords.splice(0, 20) : gottenWords;
+    const words = gottenWords;
+    words.length = 2;
 
     this.determineElements();
     this.renderProgress(words.length);
@@ -65,7 +70,7 @@ export default class Audiochallenge extends Page {
     const answerVariants = this.initialArrayOfWords.filter(
       (item) => item.id !== guessWord.id
     );
-    const answerVariantsCount = 4;
+    const answerVariantsCount = 1;
     const guessWordBtn = this.createGuessWordBtn(guessWord);
     const variantsBtn = this.createVariantBtns(
       answerVariants,
@@ -114,7 +119,7 @@ export default class Audiochallenge extends Page {
         this.wordsForGame = this.wordsForGame.filter(
           (word) => word.id !== guessWord.id
         );
-        this.updateProgress(item);
+        this.updateProgress(item, guessWord);
         this.answersButtonsArea.innerHTML = '';
         if (this.wordsForGame.length !== 0) {
           this.generateStep();
@@ -125,6 +130,7 @@ export default class Audiochallenge extends Page {
             this.knownWords,
             this.unknownWords,
             0,
+            this.parameters,
             Pages.audiochallenge
           );
         }
@@ -132,7 +138,7 @@ export default class Audiochallenge extends Page {
     });
   }
 
-  private updateProgress(item: HTMLElement) {
+  private updateProgress(item: HTMLElement, word: IWord) {
     const notCheckedCheckboxes = Array.from(this.progressChecboxes).filter(
       (checkbox) => !checkbox.checked
     );
@@ -141,18 +147,10 @@ export default class Audiochallenge extends Page {
     const icon = lastUnchecked.nextElementSibling as HTMLElement;
     if (item.dataset.guess === 'true') {
       icon.style.color = '#FFBD12';
-      this.knownWords.push(
-        this.initialArrayOfWords.find(
-          (value) => value.wordTranslate === item.textContent
-        )
-      );
+      this.knownWords.push(word);
     } else {
       icon.style.color = '#F95A2C';
-      this.unknownWords.push(
-        this.initialArrayOfWords.find(
-          (value) => value.wordTranslate === item.textContent
-        )
-      );
+      this.unknownWords.push(word);
     }
   }
 

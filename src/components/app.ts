@@ -28,7 +28,7 @@ export default class App {
     window.addEventListener('hashchange', () => {
       const { hash } = window.location;
       this.renderNewPage(hash);
-      console.log(window.location.hash);
+      window.console.log(window.location.hash);
     });
   }
 
@@ -55,7 +55,7 @@ export default class App {
     } else if (pageId === Pages.stats) {
       this.renderStatsPage();
     } else {
-      console.log('Unknown page');
+      window.console.log('Unknown page');
     }
   }
 

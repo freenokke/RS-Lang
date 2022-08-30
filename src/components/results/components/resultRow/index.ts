@@ -26,7 +26,7 @@ export default class ResultRow extends Page {
   private addEventListeners() {
     this.playButton.addEventListener('click', () => {
       const audio = new Audio();
-      audio.src = `${Domain.BASE}${this.audioSrc}`;
+      audio.src = `${Domain.BASE}/${this.audioSrc}`;
       audio.play();
     });
   }

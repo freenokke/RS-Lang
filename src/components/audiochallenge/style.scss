@@ -15,7 +15,10 @@
 
 	&_audiochallenge {
 		flex-grow: 1;
-		background-color:#ffffffbd
+		background-color:#ffffffbd;
+		&:hover {
+			background-color:#ffffff88;
+		}
 	}
 }
 
@@ -102,6 +105,13 @@
 		border: none;
 		outline: none;
 		cursor: pointer;
+		padding: 5px;
+    border-radius: 50%;
+    background-color: #00000029;
+		transform: 0.2s all;
+		&:hover {
+			transform: scale(1.05);
+		}
 	}
 
 	&__play-svg {
