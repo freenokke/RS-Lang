@@ -30,6 +30,7 @@ export default class Results extends Page {
     super('main', ['fullscreen', 'results-page'], parentNode, Template, {
       score: score.toString(),
     });
+    this.node.id = 'current-page';
     this.knownWords = knownWords;
     this.unknownWords = unknownWords;
     this.gameHash = gameHash;
@@ -54,13 +55,6 @@ export default class Results extends Page {
     this.toWordsbookButton.addEventListener('click', () => {
       window.location.hash = Pages.wordsbook;
     });
-    window.addEventListener(
-      'popstate',
-      () => {
-        this.node.remove();
-      },
-      { once: true }
-    );
   }
 
   private renderResults() {

@@ -49,7 +49,7 @@ export default class Audiochallenge extends Page {
     this.determineElements();
     this.renderProgress(words.length);
     this.initGame(words);
-    this.initEventsListeners();
+    // this.initEventsListeners();
   }
 
   private async initGame(gottenWords: IWord[]): Promise<void> {
@@ -168,16 +168,16 @@ export default class Audiochallenge extends Page {
     this.progressChecboxes = this.node.querySelectorAll('.combo__checkbox');
   }
 
-  private initEventsListeners(): void {
-    window.addEventListener(
-      'popstate',
-      () => {
-        this.node.remove();
-        window.history.go(-1);
-      },
-      { once: true }
-    );
-  }
+  // private initEventsListeners(): void {
+  //   // window.addEventListener(
+  //   //   'popstate',
+  //   //   () => {
+  //   //     this.node.remove();
+  //   //     window.history.go(-1);
+  //   //   },
+  //   //   { once: true }
+  //   // );
+  // }
 
   private determineElements() {
     this.answersButtonsArea = this.node.querySelector(

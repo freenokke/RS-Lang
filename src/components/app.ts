@@ -54,8 +54,6 @@ export default class App {
       this.renderSprintGame();
     } else if (pageId === Pages.stats) {
       this.renderStatsPage();
-    } else if (pageId === Pages.rules) {
-      this.renderRulesPage();
     } else {
       console.log('Unknown page');
     }
@@ -123,10 +121,5 @@ export default class App {
     App.page = new Stats(document.body);
     App.page.node.id = App.currentPage;
     document.body.append(this.footer.node);
-  }
-
-  private renderRulesPage() {
-    this.header.node.remove();
-    this.footer.node.remove();
   }
 }

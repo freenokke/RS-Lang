@@ -28,7 +28,12 @@ export default class Rules extends Page {
       hash: gameHash,
       comebackHash,
     });
-    window.location.hash = Pages.rules;
+    this.node.id = 'current-page';
+    if (gameName === 'Audiochallenge') {
+      window.location.hash = Pages.audiochallenge;
+    } else {
+      window.location.hash = Pages.sprint;
+    }
 
     this.gameName = gameName;
     this.comebackHash = comebackHash;
@@ -71,10 +76,8 @@ export default class Rules extends Page {
           document.body
         );
       }
-      game.node.id = 'game';
+      game.node.id = 'current-page';
     };
-
-    this.initGlobalListeners();
   }
 
   private determineElements(): void {
@@ -82,15 +85,5 @@ export default class Rules extends Page {
     this.closeBtn = this.node.querySelector('.audio-challenge-rules__close');
     this.startBtn = this.node.querySelector('.wave-btn');
     this.closeArea = this.node.querySelector('.audio-challenge-rules__area');
-  }
-
-  private initGlobalListeners(): void {
-    window.addEventListener(
-      'popstate',
-      () => {
-        this.node.remove();
-      },
-      { once: true }
-    );
   }
 }
