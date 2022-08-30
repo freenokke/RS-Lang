@@ -89,6 +89,13 @@ export default class Results extends Page {
       window.console.log(group, page);
       window.location.hash = Pages.wordsbook;
     });
+    window.addEventListener(
+      'popstate',
+      () => {
+        this.node.remove();
+      },
+      { once: true }
+    );
   }
 
   private renderResults() {
