@@ -189,6 +189,7 @@ class Api {
     } else {
       return false;
     }
+    return true;
   }
 
   // =================== Users/Words=============

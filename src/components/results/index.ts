@@ -48,7 +48,7 @@ export default class Results extends Page {
     this.parameters = wordsbookParameters;
 
     if (localStorage.getItem('userData') !== null) {
-      this.updateUserStatistic();
+      this.updateUserStatistic(JSON.parse(localStorage.getItem('userData')));
     }
 
     this.determineElements();
@@ -118,14 +118,57 @@ export default class Results extends Page {
     return h2;
   }
 
-  private async updateUserStatistic() {
-    const userData: ILocalStorageUserData = JSON.parse(
-      localStorage.getItem('userData')
-    );
-    const userWord = await this.API.getAllUserWords(
+  private async updateUserStatistic(userData: ILocalStorageUserData) {
+    const isTokenActive = await this.API.checkUserTokens(
       userData.userId,
-      userData.userToken
+      userData.userRefreshToken
     );
-    window.console.log(userWord);
+    window.console.log(isTokenActive);
+    if (isTokenActive) {
+      this.processKnownWords(userData);
+      // this.processUnknownWords(userData);
+      // window.console.log(userWord);
+    } else {
+      window.location.hash = Pages.auth;
+    }
+  }
+
+  private async processKnownWords(userData: ILocalStorageUserData) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const word of this.knownWords) {
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        const res = await this.API.getUserWordById(
+          userData.userId,
+          word.id,
+          userData.userToken
+        );
+        const { attempts } = res.optional;
+        const increaseAttempts = (+attempts + 1).toString();
+        this.API.updateUserWord(
+          userData.userId,
+          word.id,
+          {
+            difficulty: 'studied',
+            optional: {
+              attempts: increaseAttempts,
+            },
+          },
+          userData.userToken
+        );
+      } catch (error) {
+        this.API.createUserWords(
+          userData.userId,
+          word.id,
+          {
+            difficulty: 'studied',
+            optional: {
+              attempts: '1',
+            },
+          },
+          userData.userToken
+        );
+      }
+    }
   }
 }
