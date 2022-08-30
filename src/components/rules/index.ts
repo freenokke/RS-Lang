@@ -13,6 +13,7 @@ export default class Rules extends Page {
   private wordsForGame: IWord[];
   private gameName;
   private rules;
+  private comebackHash: string;
 
   constructor(
     parentNode: HTMLElement,
@@ -30,6 +31,7 @@ export default class Rules extends Page {
     window.location.hash = Pages.rules;
 
     this.gameName = gameName;
+    this.comebackHash = comebackHash;
     this.wordsForGame = wordsForGame;
 
     this.rules = this.node.querySelector('.audio-challenge-rules__text');
@@ -68,7 +70,7 @@ export default class Rules extends Page {
       } else {
         game = new Audiochallenge(
           this.wordsForGame,
-          Pages.games,
+          this.comebackHash,
           document.body
         );
       }

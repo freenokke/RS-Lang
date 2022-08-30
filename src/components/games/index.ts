@@ -20,8 +20,8 @@ const model = {
 export default class Games extends Page {
   private API: Api;
   private rules: Rules;
-  private playAudiochallengeGameBtn;
-  private playSprintGameBtn;
+  private playAudiochallengeGameBtn: HTMLElement;
+  private playSprintGameBtn: HTMLElement;
   private audioCallLevelInputs: NodeListOf<HTMLInputElement>;
   private sprintLevelInputs: NodeListOf<HTMLInputElement>;
 
@@ -29,16 +29,7 @@ export default class Games extends Page {
     super('main', ['main', 'games-page'], parentNode, Template, model);
     this.API = Api.getInstance();
 
-    this.playAudiochallengeGameBtn = this.node.querySelector(
-      '.audio-call-games__button'
-    );
-    this.playSprintGameBtn = this.node.querySelector('.sprint-games__link');
-    this.audioCallLevelInputs = this.node.querySelectorAll(
-      'input[name="audio-call-level-input"]'
-    );
-    this.sprintLevelInputs = this.node.querySelectorAll(
-      'input[name="sprint-level-input"]'
-    );
+    this.determineElements();
     this.initEventListeners();
   }
 
@@ -60,7 +51,7 @@ export default class Games extends Page {
         'Sprint',
         levelName,
         wordsFOrgame,
-        Pages.audiochallenge,
+        Pages.sprint,
         Pages.games
       );
     });
@@ -93,5 +84,18 @@ export default class Games extends Page {
       arrayOfpages[Math.floor(Math.random() * arrayOfpages.length)];
     const words = this.API.getWords(level, randomPage.toString());
     return words;
+  }
+
+  private determineElements() {
+    this.playAudiochallengeGameBtn = this.node.querySelector(
+      '.audio-call-games__button'
+    );
+    this.playSprintGameBtn = this.node.querySelector('.sprint-games__link');
+    this.audioCallLevelInputs = this.node.querySelectorAll(
+      'input[name="audio-call-level-input"]'
+    );
+    this.sprintLevelInputs = this.node.querySelectorAll(
+      'input[name="sprint-level-input"]'
+    );
   }
 }
