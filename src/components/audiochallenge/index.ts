@@ -24,6 +24,7 @@ export default class Audiochallenge extends Page {
   private progressChecboxes: NodeListOf<HTMLInputElement>;
   private knownWords: IWord[];
   private unknownWords: IWord[];
+  private progressBlock: HTMLElement;
 
   constructor(
     gottenWords: IWord[],
@@ -44,8 +45,10 @@ export default class Audiochallenge extends Page {
 
     const words =
       gottenWords.length > 20 ? gottenWords.splice(0, 20) : gottenWords;
-    this.initGame(words);
+
     this.determineElements();
+    this.renderProgress(words.length);
+    this.initGame(words);
     this.initEventsListeners();
   }
 
@@ -153,6 +156,18 @@ export default class Audiochallenge extends Page {
     }
   }
 
+  private renderProgress(count: number) {
+    const elementHTML = `
+    <div class="combo__item">
+      <input type="checkbox" class="combo__checkbox">
+      <i class="fa-solid fa-star fa"></i>
+    </div>`;
+    for (let index = 0; index < count; index += 1) {
+      this.progressBlock.insertAdjacentHTML('afterbegin', elementHTML);
+    }
+    this.progressChecboxes = this.node.querySelectorAll('.combo__checkbox');
+  }
+
   private initEventsListeners(): void {
     window.addEventListener(
       'popstate',
@@ -169,6 +184,6 @@ export default class Audiochallenge extends Page {
       '.game__buttons_audiochallenge'
     );
     this.playButton = this.node.querySelector('.game__play-button');
-    this.progressChecboxes = this.node.querySelectorAll('.combo__checkbox');
+    this.progressBlock = this.node.querySelector('.game__combo');
   }
 }

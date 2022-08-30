@@ -34,8 +34,8 @@ export default class Rules extends Page {
     this.comebackHash = comebackHash;
     this.wordsForGame = wordsForGame;
 
-    this.renderRulesText(gameName, levelName);
     this.determineElements();
+    this.renderRulesText(gameName, levelName);
     this.initEventListeners();
   }
 
