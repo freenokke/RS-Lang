@@ -1,19 +1,19 @@
-#countdown {
-	position: relative;
-	margin: auto;
-	margin-top: 100px;
-	height: 60px;
-	width: 60px;
-	text-align: center;
-}
+// #countdown {
+// 	position: relative;
+// 	margin: auto;
+// 	margin-top: 100px;
+// 	height: 60px;
+// 	width: 60px;
+// 	text-align: center;
+// }
 
-#countdown-number {
-	color: white;
+.countdown-number {
+  color: white;
 	display: inline-block;
 	line-height: 40px;
 }
 
-svg {
+.countdown-circle {
 	position: absolute;
 	top: 0;
 	right: 0;

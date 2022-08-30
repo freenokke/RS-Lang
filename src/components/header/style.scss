@@ -57,6 +57,12 @@
   }
 }
 
+@media(max-width: 374px){
+  .header-username {
+    margin-left: -25px;
+  }
+}
+
 .header-auth {
   display: flex;
   align-items: center;
@@ -163,6 +169,14 @@
   }
 }
 
+@media (max-width: 400px){
+
+  .header-burger-icon {
+    margin-left: 10px;
+  }
+
+}
+
 .burger-menu {
   display: block;
   width: 500px;
@@ -266,6 +280,14 @@
       transform: scale(0.9);
     }
   }
+}
+
+@media (max-width: 500px){
+
+  .burger-menu {
+      max-width: 100%;
+    }
+
 }
 
 .menu-item {
