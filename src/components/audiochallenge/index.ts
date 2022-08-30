@@ -42,7 +42,9 @@ export default class Audiochallenge extends Page {
     this.knownWords = [];
     this.unknownWords = [];
 
-    this.initGame(gottenWords);
+    const words =
+      gottenWords.length > 20 ? gottenWords.splice(0, 20) : gottenWords;
+    this.initGame(words);
     this.determineElements();
     this.initEventsListeners();
   }
