@@ -12,7 +12,7 @@ export default class Rules extends Page {
   private closeArea: HTMLElement;
   private wordsForGame: IWord[];
   private gameName;
-  private rules;
+  private rules: HTMLElement;
   private comebackHash: string;
 
   constructor(
@@ -34,15 +34,12 @@ export default class Rules extends Page {
     this.comebackHash = comebackHash;
     this.wordsForGame = wordsForGame;
 
-    this.rules = this.node.querySelector('.audio-challenge-rules__text');
-    this.closeBtn = this.node.querySelector('.audio-challenge-rules__close');
-    this.startBtn = this.node.querySelector('.wave-btn');
-    this.closeArea = this.node.querySelector('.audio-challenge-rules__area');
     this.renderRulesText(gameName, levelName);
+    this.determineElements();
     this.initEventListeners();
   }
 
-  private renderRulesText(gameName: string, levelName: string) {
+  private renderRulesText(gameName: string, levelName: string): void {
     let rules: string;
     if (gameName === 'Sprint') {
       rules = `Выберите соответсвует ли перевод предложенному слову. Выбранный уровень сложности ${levelName}`;
@@ -52,7 +49,7 @@ export default class Rules extends Page {
     this.rules.textContent = rules;
   }
 
-  private initEventListeners() {
+  private initEventListeners(): void {
     this.closeBtn.onclick = () => {
       this.node.remove();
     };
@@ -66,7 +63,7 @@ export default class Rules extends Page {
       this.node.remove();
       let game: Audiochallenge | Sprint;
       if (this.gameName === 'Sprint') {
-        game = new Sprint(this.wordsForGame, Pages.games, document.body);
+        game = new Sprint(this.wordsForGame, this.comebackHash, document.body);
       } else {
         game = new Audiochallenge(
           this.wordsForGame,
@@ -77,6 +74,17 @@ export default class Rules extends Page {
       game.node.id = 'game';
     };
 
+    this.initGlobalListeners();
+  }
+
+  private determineElements(): void {
+    this.rules = this.node.querySelector('.audio-challenge-rules__text');
+    this.closeBtn = this.node.querySelector('.audio-challenge-rules__close');
+    this.startBtn = this.node.querySelector('.wave-btn');
+    this.closeArea = this.node.querySelector('.audio-challenge-rules__area');
+  }
+
+  private initGlobalListeners(): void {
     window.addEventListener(
       'popstate',
       () => {
