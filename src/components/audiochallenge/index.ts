@@ -39,15 +39,11 @@ export default class Audiochallenge extends Page {
     );
     window.location.hash = Pages.audiochallenge;
     this.API = Api.getInstance();
-    this.answersButtonsArea = this.node.querySelector(
-      '.game__buttons_audiochallenge'
-    );
-    this.playButton = this.node.querySelector('.game__play-button');
-    this.progressChecboxes = this.node.querySelectorAll('.combo__checkbox');
     this.knownWords = [];
     this.unknownWords = [];
 
     this.initGame(gottenWords);
+    this.determineElements();
     this.initEventsListeners();
   }
 
@@ -55,17 +51,6 @@ export default class Audiochallenge extends Page {
     this.initialArrayOfWords = gottenWords;
     this.wordsForGame = shuffle(this.initialArrayOfWords);
     this.generateStep();
-  }
-
-  private initEventsListeners(): void {
-    window.addEventListener(
-      'popstate',
-      () => {
-        this.node.remove();
-        window.history.go(-1);
-      },
-      { once: true }
-    );
   }
 
   private generateStep() {
@@ -164,6 +149,24 @@ export default class Audiochallenge extends Page {
         )
       );
     }
-    console.log(this.knownWords, this.unknownWords);
+  }
+
+  private initEventsListeners(): void {
+    window.addEventListener(
+      'popstate',
+      () => {
+        this.node.remove();
+        window.history.go(-1);
+      },
+      { once: true }
+    );
+  }
+
+  private determineElements() {
+    this.answersButtonsArea = this.node.querySelector(
+      '.game__buttons_audiochallenge'
+    );
+    this.playButton = this.node.querySelector('.game__play-button');
+    this.progressChecboxes = this.node.querySelectorAll('.combo__checkbox');
   }
 }
