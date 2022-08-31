@@ -27,6 +27,9 @@ export default class Sprint extends Page {
   private countdownNumberEl: HTMLElement;
   private gameWord: HTMLElement;
   private gameWordTranslate: HTMLElement;
+  private rightButton: HTMLButtonElement;
+  private wrongButton: HTMLButtonElement;
+  private gameWordCheck: HTMLElement;
 
   constructor(
     gottenWords: IWord[],
@@ -54,11 +57,17 @@ export default class Sprint extends Page {
     const words = gottenWords;
     words.length = 2;
 
+    this.rightButton = this.node.querySelector('.true');
+    this.wrongButton = this.node.querySelector('.false');
+    this.gameWordCheck = this.node.querySelector('.game__word-check');
+
     // this.determineElements();
     // this.renderProgress(words.length);
     this.initGame(words);
     // this.initEventsListeners();
     this.startCountDown();
+    this.addClickToGame();
+    this.addIconToGame();
   }
 
   private async initGame(gottenWords: IWord[]): Promise<void> {
@@ -205,5 +214,35 @@ export default class Sprint extends Page {
     this.gameWord.textContent = `${word}`;
     this.gameWordTranslate = this.node.querySelector('.game__word-translate');
     this.gameWord.textContent = word.wordTranslate;
+  }
+
+  private addClickToGame() {
+    const audio = new Audio();
+    audio.src = `${Pages.sprint}/sound/select-click.mp3`;
+    this.rightButton.onclick = () => {
+      audio.play();
+    };
+    this.wrongButton.onclick = () => {
+      audio.play();
+    };
+  }
+
+  private addIconToGame() {
+    this.rightButton.onclick = () => {
+      this.gameWordCheck.classList.remove('game__word-check--wrong');
+      this.gameWordCheck.classList.add('game__word-check--right');
+      setTimeout(
+        () => this.gameWordCheck.classList.remove('game__word-check--right'),
+        1000
+      );
+    };
+    this.wrongButton.onclick = () => {
+      this.gameWordCheck.classList.remove('game__word-check--right');
+      this.gameWordCheck.classList.add('game__word-check--wrong');
+      setTimeout(
+        () => this.gameWordCheck.classList.remove('game__word-check--wrong'),
+        1000
+      );
+    };
   }
 }
