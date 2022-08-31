@@ -4,7 +4,7 @@ import Page from '../helpers/page';
 import Api from '../services/api';
 import Template from './index.html';
 import './style.scss';
-import { Domain } from '../../enum/endpoints';
+// import { Domain } from '../../enum/endpoints';
 import Results from '../results';
 
 function shuffleSprint<T>(array: T[]): T[] {
@@ -30,11 +30,13 @@ export default class Sprint extends Page {
   private rightButton: HTMLButtonElement;
   private wrongButton: HTMLButtonElement;
   private gameWordCheck: HTMLElement;
+  private params: { group: string; page: string };
 
   constructor(
     gottenWords: IWord[],
     comebackHash: string,
-    parentNode: HTMLElement | null
+    parentNode: HTMLElement | null,
+    params: { group: string; page: string }
   ) {
     super(
       'main',
@@ -45,17 +47,9 @@ export default class Sprint extends Page {
     );
     window.location.hash = Pages.sprint;
     this.API = Api.getInstance();
-    this.parameters = {
-      group: gottenWords[0].group,
-      page: gottenWords[0].page,
-    };
+    this.params = params;
     this.knownWords = [];
     this.unknownWords = [];
-
-    // const words =
-    //   gottenWords.length > 20 ? gottenWords.splice(0, 20) : gottenWords;
-    const words = gottenWords;
-    words.length = 2;
 
     this.rightButton = this.node.querySelector('.true');
     this.wrongButton = this.node.querySelector('.false');
@@ -63,7 +57,7 @@ export default class Sprint extends Page {
 
     // this.determineElements();
     // this.renderProgress(words.length);
-    this.initGame(words);
+    this.initGame(gottenWords);
     // this.initEventsListeners();
     this.startCountDown();
     this.addClickToGame();
@@ -76,54 +70,34 @@ export default class Sprint extends Page {
     this.generateStep();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private generateStep() {
-    const guessWord = this.wordsForGame[
-      Math.floor(Math.random() * this.wordsForGame.length)
-    ];
-    const answerVariants = this.initialArrayOfWords.filter(
-      (item) => item.id !== guessWord.id
-    );
-    const answerVariantsCount = 1;
-    const guessWordBtn = this.createGuessWordBtn(guessWord);
-    const variantsBtn = this.createVariantBtns(
-      answerVariants,
-      answerVariantsCount
-    );
-    const buttonsArray = shuffleSprint([guessWordBtn, ...variantsBtn]);
-
-    // this.addButtonsListeners(buttonsArray, guessWord);
-    this.answersButtonsArea.append(...buttonsArray);
-
-    // const audio = new Audio();
-    // audio.src = `${Domain.BASE}/${guessWord.audio}`;
-    // audio.play();
-    // this.playButton.onclick = () => {
-    // 	audio.play();
-    // };
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private createGuessWordBtn(word: IWord): HTMLElement {
-    const btn = document.createElement('button');
-    btn.setAttribute('data-guess', 'true');
-    btn.classList.add('btn', 'btn_audiochallenge');
-    btn.textContent = word.wordTranslate;
-    return btn;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private createVariantBtns(variants: IWord[], count: number): HTMLElement[] {
-    const copy = [...variants];
-    const array = [];
-    for (let i = 0; i < count; i += 1) {
-      const randomWord = shuffleSprint(copy).pop();
-      const btn = document.createElement('button');
-      btn.setAttribute('data-guess', 'false');
-      btn.classList.add('btn', 'btn_audiochallenge');
-      btn.textContent = randomWord.wordTranslate;
-      array.push(btn);
-    }
-    return array;
+    // определим слово для угадывания
+    // const word = this.wordsForGame[
+    //   Math.floor(Math.random() * this.wordsForGame.length)
+    // ];
+    //
+    // определить через Math.round(Math.random()) подставляем правильно или неправильное слово
+    // записать слово и перевод в соответствущие поля HTML
+    //
+    // убрать это слово из общего массива
+    // this.wordsForGame = this.wordsForGame.filter(
+    //   (word) => word.id !== guessWord.id
+    // );
+    //
+    // в зависимости от того правильно отгадано или нет, вывести иконку и записать
+    // это слово в опредленный массив knownwords или unknownwords
+    //
+    // обновить комбо и текущий результат
+    // если 3 подряд ПРАВИЛЬНЫХ ответа комбо увеличивается на 20, и продолжает таковым быть до следующего кобма и так далее
+    // при ошибке комбо = 20
+    //
+    // пока число слов в массиве больше 1, повторяем шаги выше
+    // запустить шаг и сделать запрос на страницу предществующую this.params.page
+    // this.API.getWords(group, words);
+    // добавить их в массив this.wordsforgame
+    //
+    // когда заканчивается время создаем инстанс страницы Result
   }
 
   // private addButtonsListeners(buttons: HTMLElement[], guessWord: IWord) {
@@ -134,15 +108,16 @@ export default class Sprint extends Page {
   // 			);
   // 			// this.updateProgress(item, guessWord);
   // 			this.answersButtonsArea.innerHTML = '';
-  // 			if (this.wordsForGame.length !== 0) {
+  // 			if (this.wordsForGame.length > 5) {
   // 				this.generateStep();
   // 			} else {
+  //        делаем запрос на страницу предществующую this.params.page
   // 				this.node.remove();
   // 				this.result = new Results(
   // 					document.body,
   // 					this.knownWords,
   // 					this.unknownWords,
-  // 					0,
+  // 					score,
   // 					this.parameters,
   // 					Pages.sprint
   // 				);
@@ -165,29 +140,6 @@ export default class Sprint extends Page {
   // 		icon.style.color = '#F95A2C';
   // 		this.unknownWords.push(word);
   // 	}
-  // }
-
-  // private renderProgress(count: number) {
-  // 	const elementHTML = `
-  //   <div class="combo__item">
-  //     <input type="checkbox" class="combo__checkbox">
-  //     <i class="fa-solid fa-star fa"></i>
-  //   </div>`;
-  // 	for (let index = 0; index < count; index += 1) {
-  // 		this.progressBlock.insertAdjacentHTML('afterbegin', elementHTML);
-  // 	}
-  // 	this.progressCheckboxes = this.node.querySelectorAll('.combo__checkbox');
-  // }
-
-  // private initEventsListeners(): void {
-  //   // window.addEventListener(
-  //   //   'popstate',
-  //   //   () => {
-  //   //     this.node.remove();
-  //   //     window.history.go(-1);
-  //   //   },
-  //   //   { once: true }
-  //   // );
   // }
 
   // private determineElements() {
@@ -218,24 +170,24 @@ export default class Sprint extends Page {
 
   private addClickToGame() {
     const audio = new Audio();
-    audio.src = `${Pages.sprint}/sound/select-click.mp3`;
-    this.rightButton.onclick = () => {
+    audio.src = `../../assets/sound/select-click.mp3`;
+    this.rightButton.addEventListener('click', () => {
       audio.play();
-    };
+    });
     this.wrongButton.onclick = () => {
       audio.play();
     };
   }
 
   private addIconToGame() {
-    this.rightButton.onclick = () => {
+    this.rightButton.addEventListener('click', () => {
       this.gameWordCheck.classList.remove('game__word-check--wrong');
       this.gameWordCheck.classList.add('game__word-check--right');
       setTimeout(
         () => this.gameWordCheck.classList.remove('game__word-check--right'),
         1000
       );
-    };
+    });
     this.wrongButton.onclick = () => {
       this.gameWordCheck.classList.remove('game__word-check--right');
       this.gameWordCheck.classList.add('game__word-check--wrong');

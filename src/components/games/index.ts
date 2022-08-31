@@ -46,13 +46,18 @@ export default class Games extends Page {
       const levelName = level.nextElementSibling.textContent;
       const { group } = level.dataset;
       const wordsFOrgame = await this.loadWordsByChosenGroup(group);
+      const { page } = wordsFOrgame[0];
       this.rules = new Rules(
         document.body,
         'Sprint',
         levelName,
         wordsFOrgame,
         Pages.sprint,
-        Pages.games
+        Pages.games,
+        {
+          group,
+          page: page.toString(),
+        }
       );
     });
   }
@@ -65,13 +70,18 @@ export default class Games extends Page {
       const levelName = level.nextElementSibling.textContent;
       const { group } = level.dataset;
       const wordsFOrgame = await this.loadWordsByChosenGroup(group);
+      const { page } = wordsFOrgame[0];
       this.rules = new Rules(
         document.body,
         'Audiochallenge',
         levelName,
         wordsFOrgame,
         Pages.audiochallenge,
-        Pages.games
+        Pages.games,
+        {
+          group,
+          page: page.toString(),
+        }
       );
     });
   }
