@@ -24,6 +24,7 @@ export default class Audiochallenge extends Page {
   private unknownWords: IWord[];
   private progressBlock: HTMLElement;
   private parameters: { group: number; page: number };
+  private fullScreenBtn: HTMLElement;
 
   constructor(
     gottenWords: IWord[],
@@ -52,7 +53,7 @@ export default class Audiochallenge extends Page {
     this.determineElements();
     this.renderProgress(words.length);
     this.initGame(words);
-    // this.initEventsListeners();
+    this.initEventsListeners();
   }
 
   private async initGame(gottenWords: IWord[]): Promise<void> {
@@ -164,16 +165,27 @@ export default class Audiochallenge extends Page {
     this.progressChecboxes = this.node.querySelectorAll('.combo__checkbox');
   }
 
-  // private initEventsListeners(): void {
-  //   // window.addEventListener(
-  //   //   'popstate',
-  //   //   () => {
-  //   //     this.node.remove();
-  //   //     window.history.go(-1);
-  //   //   },
-  //   //   { once: true }
-  //   // );
-  // }
+  private initEventsListeners(): void {
+    this.fullScreenBtn.addEventListener('click', () => {
+      if (document.fullscreen) {
+        document.exitFullscreen();
+        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = false;
+        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = true;
+      } else {
+        this.node.requestFullscreen();
+        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = true;
+        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
+      }
+    });
+    // window.addEventListener(
+    //   'popstate',
+    //   () => {
+    //     this.node.remove();
+    //     window.history.go(-1);
+    //   },
+    //   { once: true }
+    // );
+  }
 
   private determineElements() {
     this.answersButtonsArea = this.node.querySelector(
@@ -181,5 +193,6 @@ export default class Audiochallenge extends Page {
     );
     this.playButton = this.node.querySelector('.game__play-button');
     this.progressBlock = this.node.querySelector('.game__combo');
+    this.fullScreenBtn = this.node.querySelector('.fullscreen__icon');
   }
 }
