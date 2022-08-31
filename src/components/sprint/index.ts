@@ -60,7 +60,6 @@ export default class Sprint extends Page {
     this.initGame(gottenWords);
     // this.initEventsListeners();
     this.startCountDown();
-    this.addClickToGame();
     this.addIconToGame();
   }
 
@@ -168,33 +167,26 @@ export default class Sprint extends Page {
     this.gameWord.textContent = word.wordTranslate;
   }
 
-  private addClickToGame() {
-    const audio = new Audio();
-    audio.src = `../../assets/sound/select-click.mp3`;
-    this.rightButton.addEventListener('click', () => {
-      audio.play();
-    });
-    this.wrongButton.onclick = () => {
-      audio.play();
-    };
-  }
-
   private addIconToGame() {
+    const audioRight = new Audio(`../../assets/sound/select-click.mp3`);
+    const audioWrong = new Audio(`../../assets/sound/error-click.mp3`);
     this.rightButton.addEventListener('click', () => {
       this.gameWordCheck.classList.remove('game__word-check--wrong');
       this.gameWordCheck.classList.add('game__word-check--right');
+      audioRight.play();
       setTimeout(
         () => this.gameWordCheck.classList.remove('game__word-check--right'),
-        1000
+        500
       );
     });
-    this.wrongButton.onclick = () => {
+    this.wrongButton.addEventListener('click', () => {
       this.gameWordCheck.classList.remove('game__word-check--right');
       this.gameWordCheck.classList.add('game__word-check--wrong');
+      audioWrong.play();
       setTimeout(
         () => this.gameWordCheck.classList.remove('game__word-check--wrong'),
-        1000
+        500
       );
-    };
+    });
   }
 }

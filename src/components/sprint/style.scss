@@ -159,12 +159,12 @@
 
   &__word-check--right {
     background-image: url(./img/done.svg);
-    animation: checkRightOrWrong 1s ease-out;
+    animation: checkRightOrWrong 0.5s ease-out;
   }
 
   &__word-check--wrong {
     background-image: url(./img/cancel.svg);
-    animation: checkRightOrWrong 1s ease-out;
+    animation: checkRightOrWrong 0.5s ease-out;
   }
 
     @keyframes checkRightOrWrong {
