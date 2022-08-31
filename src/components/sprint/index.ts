@@ -54,6 +54,8 @@ export default class Sprint extends Page {
     this.rightButton = this.node.querySelector('.true');
     this.wrongButton = this.node.querySelector('.false');
     this.gameWordCheck = this.node.querySelector('.game__word-check');
+    this.gameWord = this.node.querySelector('.game__word');
+    this.gameWordTranslate = this.node.querySelector('.game__word-translate');
 
     // this.determineElements();
     // this.renderProgress(words.length);
@@ -72,9 +74,12 @@ export default class Sprint extends Page {
   // eslint-disable-next-line class-methods-use-this
   private generateStep() {
     // определим слово для угадывания
-    // const word = this.wordsForGame[
-    //   Math.floor(Math.random() * this.wordsForGame.length)
-    // ];
+    const word = this.wordsForGame[
+      Math.floor(Math.random() * this.wordsForGame.length)
+    ];
+    this.gameWord.textContent = word.word;
+    this.gameWordTranslate.textContent = word.wordTranslate;
+
     //
     // определить через Math.round(Math.random()) подставляем правильно или неправильное слово
     // записать слово и перевод в соответствущие поля HTML
