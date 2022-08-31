@@ -47,11 +47,17 @@ export default class Rules extends Page {
   private renderRulesText(gameName: string, levelName: string): void {
     let rules: string;
     if (gameName === 'Sprint') {
-      rules = `Выберите соответсвует ли перевод предложенному слову. Выбранный уровень сложности ${levelName}`;
+      rules = `Выберите соответсвует ли перевод предложенному слову. Выбранный уровень сложности ${levelName}.`;
     } else {
-      rules = `Вам нужно угадать слова, которые вы услышите. Выбранный уровень сложности ${levelName}`;
+      rules = `
+      Выберите соответсвует ли перевод предложенному слову.</br>
+      Выбранный уровень сложности: <b>${levelName}</b>.</br>
+      Управление осуществляется мышью или клавиатурой.</br></br>
+      Клавиши 1-5 соответствуют порядковому номеру ответа с лева на право.</br>
+      Пробел повторно воспроизводит аудио.</br>
+      Enter соответсвует кнопке "Не знаю".`;
     }
-    this.rules.textContent = rules;
+    this.rules.innerHTML = rules;
   }
 
   private initEventListeners(): void {

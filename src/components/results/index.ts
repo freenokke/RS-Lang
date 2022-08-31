@@ -88,6 +88,9 @@ export default class Results extends Page {
       const { page } = this.parameters;
       window.console.log(group, page);
       window.location.hash = Pages.wordsbook;
+      if (document.fullscreen) {
+        document.exitFullscreen();
+      }
     });
   }
 
@@ -127,7 +130,6 @@ export default class Results extends Page {
     if (isTokenActive) {
       this.processKnownWords(userData);
       this.processUnknownWords(userData);
-      // window.console.log(userWord);
     } else {
       window.location.hash = Pages.auth;
     }

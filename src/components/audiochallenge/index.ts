@@ -25,6 +25,9 @@ export default class Audiochallenge extends Page {
   private progressBlock: HTMLElement;
   private parameters: { group: number; page: number };
   private fullScreenBtn: HTMLElement;
+  private audio: HTMLAudioElement;
+  private guessWord: IWord;
+  private doNotKnowBtn: HTMLElement;
 
   constructor(
     gottenWords: IWord[],
@@ -36,7 +39,7 @@ export default class Audiochallenge extends Page {
       ['main', 'fullscreen', 'audiochallenge-page'],
       parentNode,
       Template,
-      {}
+      { comebackHash }
     );
     window.location.hash = Pages.audiochallenge;
     this.API = Api.getInstance();
@@ -63,37 +66,37 @@ export default class Audiochallenge extends Page {
   }
 
   private generateStep() {
-    const guessWord = this.wordsForGame[
+    this.guessWord = this.wordsForGame[
       Math.floor(Math.random() * this.wordsForGame.length)
     ];
     const answerVariants = this.initialArrayOfWords.filter(
-      (item) => item.id !== guessWord.id
+      (item) => item.id !== this.guessWord.id
     );
     const answerVariantsCount = 4;
-    const guessWordBtn = this.createGuessWordBtn(guessWord);
+    const guessWordBtn = this.createGuessWordBtn();
     const variantsBtn = this.createVariantBtns(
       answerVariants,
       answerVariantsCount
     );
     const buttonsArray = shuffle([guessWordBtn, ...variantsBtn]);
 
-    this.addButtonsListeners(buttonsArray, guessWord);
+    this.addButtonsListeners(buttonsArray);
     this.answersButtonsArea.append(...buttonsArray);
 
-    const audio = new Audio();
-    audio.src = `${Domain.BASE}/${guessWord.audio}`;
-    audio.play();
+    this.audio = new Audio();
+    this.audio.src = `${Domain.BASE}/${this.guessWord.audio}`;
+    this.audio.play();
     this.playButton.onclick = () => {
-      audio.play();
+      this.audio.play();
     };
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private createGuessWordBtn(word: IWord): HTMLElement {
+  private createGuessWordBtn(): HTMLElement {
     const btn = document.createElement('button');
     btn.setAttribute('data-guess', 'true');
     btn.classList.add('btn', 'btn_audiochallenge');
-    btn.textContent = word.wordTranslate;
+    btn.textContent = this.guessWord.wordTranslate;
     return btn;
   }
 
@@ -112,29 +115,34 @@ export default class Audiochallenge extends Page {
     return array;
   }
 
-  private addButtonsListeners(buttons: HTMLElement[], guessWord: IWord) {
+  private addButtonsListeners(buttons: HTMLElement[]) {
     buttons.forEach((item) => {
       item.addEventListener('click', () => {
-        this.wordsForGame = this.wordsForGame.filter(
-          (word) => word.id !== guessWord.id
-        );
-        this.updateProgress(item, guessWord);
-        this.answersButtonsArea.innerHTML = '';
-        if (this.wordsForGame.length !== 0) {
-          this.generateStep();
-        } else {
-          this.node.remove();
-          this.result = new Results(
-            document.body,
-            this.knownWords,
-            this.unknownWords,
-            0,
-            this.parameters,
-            Pages.audiochallenge
-          );
-        }
+        this.defineRightOrNot(item);
       });
     });
+  }
+
+  private defineRightOrNot(item: HTMLElement) {
+    this.wordsForGame = this.wordsForGame.filter(
+      (word) => word.id !== this.guessWord.id
+    );
+    this.updateProgress(item, this.guessWord);
+    this.answersButtonsArea.innerHTML = '';
+    if (this.wordsForGame.length !== 0) {
+      this.generateStep();
+    } else {
+      this.node.remove();
+      this.result = new Results(
+        document.body,
+        this.knownWords,
+        this.unknownWords,
+        0,
+        this.parameters,
+        Pages.audiochallenge
+      );
+      document.removeEventListener('keyup', this.keyboardHandle);
+    }
   }
 
   private updateProgress(item: HTMLElement, word: IWord) {
@@ -165,18 +173,22 @@ export default class Audiochallenge extends Page {
     this.progressChecboxes = this.node.querySelectorAll('.combo__checkbox');
   }
 
+  private determineElements() {
+    this.answersButtonsArea = this.node.querySelector(
+      '.game__buttons_audiochallenge'
+    );
+    this.playButton = this.node.querySelector('.game__play-button');
+    this.progressBlock = this.node.querySelector('.game__combo');
+    this.fullScreenBtn = this.node.querySelector('.fullscreen__icon');
+    this.doNotKnowBtn = this.node.querySelector('.btn_donotknow');
+  }
+
   private initEventsListeners(): void {
-    this.fullScreenBtn.addEventListener('click', () => {
-      if (document.fullscreen) {
-        document.exitFullscreen();
-        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = false;
-        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = true;
-      } else {
-        this.node.requestFullscreen();
-        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = true;
-        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
-      }
-    });
+    this.initFullScreenListener();
+    this.initKeyboardListeners();
+    this.doNotKnowBtn.onclick = () => {
+      this.defineRightOrNot(this.doNotKnowBtn);
+    };
     // window.addEventListener(
     //   'popstate',
     //   () => {
@@ -187,12 +199,69 @@ export default class Audiochallenge extends Page {
     // );
   }
 
-  private determineElements() {
-    this.answersButtonsArea = this.node.querySelector(
-      '.game__buttons_audiochallenge'
-    );
-    this.playButton = this.node.querySelector('.game__play-button');
-    this.progressBlock = this.node.querySelector('.game__combo');
-    this.fullScreenBtn = this.node.querySelector('.fullscreen__icon');
+  private initFullScreenListener() {
+    this.fullScreenBtn.addEventListener('click', () => {
+      if (document.fullscreen) {
+        document.exitFullscreen();
+        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = false;
+        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = true;
+      } else {
+        document.body.requestFullscreen();
+        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = true;
+        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
+      }
+    });
+  }
+
+  private initKeyboardListeners() {
+    document.addEventListener('keyup', this.keyboardHandle);
+  }
+
+  private keyboardHandle = (e: KeyboardEvent) => {
+    if (e.code === 'Digit1') {
+      const element = this.answersButtonsArea.children[0] as HTMLElement;
+      if (element) {
+        this.keyboardStep(element);
+      }
+    }
+    if (e.code === 'Digit2') {
+      const element = this.answersButtonsArea.children[1] as HTMLElement;
+      if (element) {
+        this.keyboardStep(element);
+      }
+    }
+    if (e.code === 'Digit3') {
+      const element = this.answersButtonsArea.children[2] as HTMLElement;
+      if (element) {
+        this.keyboardStep(element);
+      }
+    }
+    if (e.code === 'Digit4') {
+      const element = this.answersButtonsArea.children[3] as HTMLElement;
+      if (element) {
+        this.keyboardStep(element);
+      }
+    }
+    if (e.code === 'Digit5') {
+      const element = this.answersButtonsArea.children[4] as HTMLElement;
+      if (element) {
+        this.keyboardStep(element);
+      }
+    }
+    if (e.code === 'Space') {
+      this.audio.play();
+    }
+    if (e.code === 'Enter') {
+      this.keyboardStep(this.doNotKnowBtn);
+    }
+  };
+
+  private keyboardStep(element: HTMLElement) {
+    const btn = element;
+    btn.classList.add('push');
+    btn.onanimationend = () => {
+      btn.classList.remove('push');
+      this.defineRightOrNot(element);
+    };
   }
 }
