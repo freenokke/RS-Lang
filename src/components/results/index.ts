@@ -126,49 +126,117 @@ export default class Results extends Page {
     window.console.log(isTokenActive);
     if (isTokenActive) {
       this.processKnownWords(userData);
-      // this.processUnknownWords(userData);
+      this.processUnknownWords(userData);
       // window.console.log(userWord);
     } else {
       window.location.hash = Pages.auth;
     }
   }
 
-  private async processKnownWords(userData: ILocalStorageUserData) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const word of this.knownWords) {
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        const res = await this.API.getUserWordById(
-          userData.userId,
-          word.id,
-          userData.userToken
-        );
-        const { attempts } = res.optional;
-        const increaseAttempts = (+attempts + 1).toString();
-        this.API.updateUserWord(
-          userData.userId,
-          word.id,
-          {
-            difficulty: 'studied',
-            optional: {
-              attempts: increaseAttempts,
+  // eslint-disable-next-line max-lines-per-function
+  private processKnownWords(userData: ILocalStorageUserData) {
+    // eslint-disable-next-line max-lines-per-function
+    this.knownWords.forEach((word) => {
+      (async () => {
+        try {
+          const res = await this.API.getUserWordById(
+            userData.userId,
+            word.id,
+            userData.userToken
+          );
+          const { guessedInARow, guessed, unguessed, attempts } = res.optional;
+          const increaseRow = (+guessedInARow + 1).toString();
+          const increaseAttempts = (+attempts + 1).toString();
+          const increaseGuessed = (+guessed + 1).toString();
+          let state = res.difficulty;
+          if (state === 'hard' && increaseRow >= '5') {
+            state = 'learned';
+          } else if (state === 'studying' && increaseRow >= '3') {
+            state = 'learned';
+          }
+          this.API.updateUserWord(
+            userData.userId,
+            word.id,
+            {
+              difficulty: state,
+              optional: {
+                guessedInARow: increaseRow,
+                guessed: increaseGuessed,
+                unguessed,
+                attempts: increaseAttempts,
+              },
             },
-          },
-          userData.userToken
-        );
-      } catch (error) {
-        this.API.createUserWords(
-          userData.userId,
-          word.id,
-          {
-            difficulty: 'studied',
-            optional: {
-              attempts: '1',
+            userData.userToken
+          );
+        } catch (error) {
+          this.API.createUserWords(
+            userData.userId,
+            word.id,
+            {
+              difficulty: 'studying',
+              optional: {
+                guessedInARow: '1',
+                guessed: '1',
+                unguessed: '0',
+                attempts: '1',
+              },
             },
-          },
-          userData.userToken
-        );
-      }
-    }
+            userData.userToken
+          );
+        }
+      })();
+    });
+  }
+
+  // eslint-disable-next-line max-lines-per-function
+  private processUnknownWords(userData: ILocalStorageUserData) {
+    // eslint-disable-next-line max-lines-per-function
+    this.unknownWords.forEach((word) => {
+      (async () => {
+        try {
+          const res = await this.API.getUserWordById(
+            userData.userId,
+            word.id,
+            userData.userToken
+          );
+          const { guessed, unguessed, attempts } = res.optional;
+          const increaseAttempts = (+attempts + 1).toString();
+          const increaseUnguessed = (+unguessed + 1).toString();
+          let state = res.difficulty;
+          if (state === 'learned') {
+            state = 'stydying';
+          }
+          this.API.updateUserWord(
+            userData.userId,
+            word.id,
+            {
+              difficulty: state,
+              optional: {
+                guessedInARow: '0',
+                guessed,
+                unguessed: increaseUnguessed,
+                attempts: increaseAttempts,
+              },
+            },
+            userData.userToken
+          );
+        } catch (error) {
+          this.API.createUserWords(
+            userData.userId,
+            word.id,
+            {
+              difficulty: 'studying',
+              optional: {
+                guessedInARow: '0',
+                guessed: '0',
+                unguessed: '1',
+                attempts: '1',
+              },
+            },
+            userData.userToken
+          );
+        }
+      })();
+    });
   }
 }

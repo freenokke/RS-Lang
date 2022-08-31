@@ -46,10 +46,8 @@ export default class Audiochallenge extends Page {
     this.knownWords = [];
     this.unknownWords = [];
 
-    // const words =
-    //   gottenWords.length > 20 ? gottenWords.splice(0, 20) : gottenWords;
-    const words = gottenWords;
-    words.length = 2;
+    const words =
+      gottenWords.length > 20 ? gottenWords.splice(0, 20) : gottenWords;
 
     this.determineElements();
     this.renderProgress(words.length);
@@ -70,7 +68,7 @@ export default class Audiochallenge extends Page {
     const answerVariants = this.initialArrayOfWords.filter(
       (item) => item.id !== guessWord.id
     );
-    const answerVariantsCount = 1;
+    const answerVariantsCount = 4;
     const guessWordBtn = this.createGuessWordBtn(guessWord);
     const variantsBtn = this.createVariantBtns(
       answerVariants,
