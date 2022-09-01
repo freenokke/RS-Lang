@@ -35,6 +35,9 @@
   left: 20px;
   color: white;
   cursor: pointer;
+  border: none;
+  outline: none;
+  background: transparent;
 
   &:hover::before {
     position: absolute;
@@ -105,7 +108,7 @@
   &-gamearea {
     background-color: rgba(157, 176, 204, 0.3);
     width: 600px;
-    height: 420px;
+    height: 440px;
     border: 2px solid #18191f;
     box-shadow: 0px 4px 0px #18191f;
     border-radius: 16px;
@@ -211,8 +214,10 @@
   }
   50% {
     transform: scale(0.95);
+    box-shadow: 0px 5px 5px 5px rgba(31, 39, 45, 0.2);
   }
   100% {
     transform: scale(1);
+    box-shadow: 0px 4px 0px #18191f;
   }
 }

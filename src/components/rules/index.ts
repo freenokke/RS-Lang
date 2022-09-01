@@ -1,7 +1,9 @@
 import Pages from '../../enum/routing';
+import { ILocalStorageUserData } from '../../types/users';
 import { IWord } from '../../types/words';
 import Audiochallenge from '../audiochallenge';
 import Page from '../helpers/page';
+import Api from '../services/api';
 import Sprint from '../sprint';
 import Template from './index.html';
 import './style.scss';
@@ -14,6 +16,8 @@ export default class Rules extends Page {
   private gameName;
   private rules: HTMLElement;
   private comebackHash: string;
+  private api: Api;
+  private params: { group: string; page: string };
 
   constructor(
     parentNode: HTMLElement,
@@ -21,13 +25,16 @@ export default class Rules extends Page {
     levelName: string,
     wordsForGame: IWord[],
     gameHash: string,
-    comebackHash: string
+    comebackHash: string,
+    params: { group: string; page: string }
   ) {
     super('main', ['main', 'rules-page'], parentNode, Template, {
       gameName,
       hash: gameHash,
       comebackHash,
     });
+    this.api = Api.getInstance();
+    this.params = params;
     this.node.id = 'current-page';
     if (gameName === 'Audiochallenge') {
       window.location.hash = Pages.audiochallenge;
@@ -38,10 +45,64 @@ export default class Rules extends Page {
     this.gameName = gameName;
     this.comebackHash = comebackHash;
     this.wordsForGame = wordsForGame;
-
     this.determineElements();
     this.renderRulesText(gameName, levelName);
     this.initEventListeners();
+
+    if (localStorage.getItem('userData') === null) {
+      this.showNotification();
+    } else {
+      this.checkTokenExpiraton(JSON.parse(localStorage.getItem('userData')));
+    }
+  }
+
+  private async checkTokenExpiraton(userData: ILocalStorageUserData) {
+    const res = await this.api.checkUserTokens(
+      userData.userId,
+      userData.userRefreshToken
+    );
+    if (!res) {
+      this.showWarning();
+    }
+  }
+
+  private showWarning() {
+    const warningHTML = `
+    <div class="warning">
+      <div class="warning__icon">
+        <i class="fa-sharp fa-solid fa-circle-exclamation fa-lg"></i>
+      </div>
+      <div class="warning__text">
+        <p>Время сессии закончилось, результаты игры не будут сохранены в статистику.</p>
+        <p>Для возобновления сессии, <a href="#/auth">авторизуйтесь</a></p>
+      </div>
+    </div>
+    `;
+    this.node.insertAdjacentHTML('afterbegin', warningHTML);
+    const warning = this.node.querySelector('.warning');
+    warning.classList.add('warning_active');
+  }
+
+  private showNotification() {
+    const notificationHTML = `
+    <div class="notification">
+      <div class="notification__icon">
+        <i class="fa-solid fa-bell fa-lg"></i>
+      </div>
+      <div class="warning__text">
+        <p>Вы не авторизованы</p>
+        <p>Напоминаем, что для авторизованных пользователей доступна статистика и прогресс изучения слов</p>
+      </div>
+    </div>
+    `;
+    this.node.insertAdjacentHTML('afterbegin', notificationHTML);
+    const notification = this.node.querySelector('.notification');
+    setTimeout(() => {
+      notification.classList.add('notification_active');
+      setTimeout(() => {
+        notification.classList.remove('notification_active');
+      }, 5000);
+    }, 1500);
   }
 
   private renderRulesText(gameName: string, levelName: string): void {
@@ -53,9 +114,9 @@ export default class Rules extends Page {
       Выберите соответсвует ли перевод предложенному слову.</br>
       Выбранный уровень сложности: <b>${levelName}</b>.</br>
       Управление осуществляется мышью или клавиатурой.</br></br>
-      Клавиши 1-5 соответствуют порядковому номеру ответа с лева на право.</br>
-      Пробел повторно воспроизводит аудио.</br>
-      Enter соответсвует кнопке "Не знаю".`;
+      Выбор ответа осуществляется <b>клавишами 1-5</b></br>
+      <b>Пробел</b> повторно воспроизводит аудио.</br>
+      <b>Enter</b> соответсвует кнопке "Не знаю".`;
     }
     this.rules.innerHTML = rules;
   }
@@ -74,12 +135,18 @@ export default class Rules extends Page {
       this.node.remove();
       let game: Audiochallenge | Sprint;
       if (this.gameName === 'Sprint') {
-        game = new Sprint(this.wordsForGame, this.comebackHash, document.body);
+        game = new Sprint(
+          this.wordsForGame,
+          this.comebackHash,
+          document.body,
+          this.params
+        );
       } else {
         game = new Audiochallenge(
           this.wordsForGame,
           this.comebackHash,
-          document.body
+          document.body,
+          this.params
         );
       }
       game.node.id = 'current-page';

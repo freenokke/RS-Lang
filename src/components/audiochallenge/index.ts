@@ -23,16 +23,19 @@ export default class Audiochallenge extends Page {
   private knownWords: IWord[];
   private unknownWords: IWord[];
   private progressBlock: HTMLElement;
-  private parameters: { group: number; page: number };
   private fullScreenBtn: HTMLElement;
   private audio: HTMLAudioElement;
   private guessWord: IWord;
   private doNotKnowBtn: HTMLElement;
+  private params: { page: string; group: string };
+  private closeGameBtn: HTMLElement;
+  private comeBackHash: string;
 
   constructor(
     gottenWords: IWord[],
     comebackHash: string,
-    parentNode: HTMLElement | null
+    parentNode: HTMLElement | null,
+    params: { page: string; group: string }
   ) {
     super(
       'main',
@@ -43,10 +46,8 @@ export default class Audiochallenge extends Page {
     );
     window.location.hash = Pages.audiochallenge;
     this.API = Api.getInstance();
-    this.parameters = {
-      group: gottenWords[0].group,
-      page: gottenWords[0].page,
-    };
+    this.params = params;
+    this.comeBackHash = comebackHash;
     this.knownWords = [];
     this.unknownWords = [];
 
@@ -79,8 +80,9 @@ export default class Audiochallenge extends Page {
       answerVariantsCount
     );
     const buttonsArray = shuffle([guessWordBtn, ...variantsBtn]);
+    const numerateBtns = this.numerateButtons(buttonsArray);
 
-    this.addButtonsListeners(buttonsArray);
+    this.addButtonsListeners(numerateBtns);
     this.answersButtonsArea.append(...buttonsArray);
 
     this.audio = new Audio();
@@ -115,6 +117,19 @@ export default class Audiochallenge extends Page {
     return array;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  private numerateButtons(buttons: HTMLElement[]): HTMLElement[] {
+    let count = 1;
+    const arr = buttons.map((item) => {
+      const btn = item;
+      const text = btn.textContent;
+      btn.textContent = `${count}. ${text}`;
+      count += 1;
+      return btn;
+    });
+    return arr;
+  }
+
   private addButtonsListeners(buttons: HTMLElement[]) {
     buttons.forEach((item) => {
       item.addEventListener('click', () => {
@@ -138,7 +153,7 @@ export default class Audiochallenge extends Page {
         this.knownWords,
         this.unknownWords,
         0,
-        this.parameters,
+        this.params,
         Pages.audiochallenge
       );
       document.removeEventListener('keyup', this.keyboardHandle);
@@ -181,6 +196,7 @@ export default class Audiochallenge extends Page {
     this.progressBlock = this.node.querySelector('.game__combo');
     this.fullScreenBtn = this.node.querySelector('.fullscreen__icon');
     this.doNotKnowBtn = this.node.querySelector('.btn_donotknow');
+    this.closeGameBtn = this.node.querySelector('.close-game');
   }
 
   private initEventsListeners(): void {
@@ -189,6 +205,7 @@ export default class Audiochallenge extends Page {
     this.doNotKnowBtn.onclick = () => {
       this.defineRightOrNot(this.doNotKnowBtn);
     };
+    this.initCloseBtnListener();
     // window.addEventListener(
     //   'popstate',
     //   () => {
@@ -200,6 +217,7 @@ export default class Audiochallenge extends Page {
   }
 
   private initFullScreenListener() {
+    this.checkFullscreen();
     this.fullScreenBtn.addEventListener('click', () => {
       if (document.fullscreen) {
         document.exitFullscreen();
@@ -211,6 +229,17 @@ export default class Audiochallenge extends Page {
         (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
       }
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private initCloseBtnListener() {
+    this.closeGameBtn.onclick = () => {
+      if (document.fullscreen) {
+        document.exitFullscreen();
+      }
+      document.removeEventListener('keyup', this.keyboardHandle);
+      window.location.hash = this.comeBackHash;
+    };
   }
 
   private initKeyboardListeners() {
@@ -263,5 +292,12 @@ export default class Audiochallenge extends Page {
       btn.classList.remove('push');
       this.defineRightOrNot(element);
     };
+  }
+
+  private checkFullscreen() {
+    if (document.fullscreen) {
+      (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = true;
+      (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
+    }
   }
 }

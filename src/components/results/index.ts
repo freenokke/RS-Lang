@@ -7,6 +7,7 @@ import Pages from '../../enum/routing';
 import Audiochallenge from '../audiochallenge';
 import Api from '../services/api';
 import { ILocalStorageUserData } from '../../types/users';
+import Sprint from '../sprint';
 
 export default class Results extends Page {
   private knownWords: IWord[];
@@ -25,16 +26,20 @@ export default class Results extends Page {
 
   private scoreField: HTMLElement;
 
-  private parameters: { [i: string]: number };
+  private params: { page: string; group: string };
 
   private API: Api;
+
+  private playWithOthersWords: HTMLElement;
+
+  private fullScreenBtn: HTMLElement;
 
   constructor(
     parentNode: HTMLElement,
     knownWords: IWord[],
     unknownWords: IWord[],
     score: number,
-    wordsbookParameters: { [i: string]: number },
+    params: { page: string; group: string },
     gameHash: string
   ) {
     super('main', ['fullscreen', 'results-page'], parentNode, Template, {
@@ -45,7 +50,7 @@ export default class Results extends Page {
     this.knownWords = knownWords;
     this.unknownWords = unknownWords;
     this.gameHash = gameHash;
-    this.parameters = wordsbookParameters;
+    this.params = params;
 
     if (localStorage.getItem('userData') !== null) {
       this.updateUserStatistic(JSON.parse(localStorage.getItem('userData')));
@@ -71,25 +76,84 @@ export default class Results extends Page {
     );
     this.toWordsbookButton = this.node.querySelector('#resultsToWordsbook');
     this.resultsContainer = this.node.querySelector('.results-container');
+    this.playWithOthersWords = this.node.querySelector(
+      '#resultsPlayWithOthersWords'
+    );
+    this.fullScreenBtn = this.node.querySelector('.fullscreen__icon');
   }
 
   addEventListeners() {
     this.playOnceMoreButton.addEventListener('click', () => {
       this.node.remove();
-      const game = new Audiochallenge(
-        [...this.knownWords, ...this.unknownWords],
-        Pages.games,
-        document.body
-      );
-      game.node.id = 'current-page';
+      if (this.gameHash === Pages.audiochallenge) {
+        const game = new Audiochallenge(
+          [...this.knownWords, ...this.unknownWords],
+          Pages.games,
+          document.body,
+          this.params
+        );
+        game.node.id = 'current-page';
+      } else {
+        const game = new Sprint(
+          [...this.knownWords, ...this.unknownWords],
+          Pages.games,
+          document.body,
+          this.params
+        );
+        game.node.id = 'current-page';
+      }
     });
     this.toWordsbookButton.addEventListener('click', () => {
-      const { group } = this.parameters;
-      const { page } = this.parameters;
+      const { group } = this.params;
+      const { page } = this.params;
       window.console.log(group, page);
+      this.node.remove();
       window.location.hash = Pages.wordsbook;
       if (document.fullscreen) {
         document.exitFullscreen();
+      }
+    });
+    this.initFullScreenListener();
+    this.playWithOthersWordsListeners();
+  }
+
+  private playWithOthersWordsListeners() {
+    this.playWithOthersWords.addEventListener('click', async () => {
+      this.node.remove();
+      const words = await this.loadWordsByChosenGroup(
+        this.params.group.toString()
+      );
+      const { page, group } = words[0];
+      if (this.gameHash === Pages.audiochallenge) {
+        const game = new Audiochallenge(words, Pages.games, document.body, {
+          group: group.toString(),
+          page: page.toString(),
+        });
+        game.node.id = 'current-page';
+      } else {
+        const game = new Sprint(words, Pages.games, document.body, {
+          group: group.toString(),
+          page: page.toString(),
+        });
+        game.node.id = 'current-page';
+      }
+    });
+  }
+
+  private initFullScreenListener() {
+    if (document.fullscreen) {
+      (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = true;
+      (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
+    }
+    this.fullScreenBtn.addEventListener('click', () => {
+      if (document.fullscreen) {
+        document.exitFullscreen();
+        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = false;
+        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = true;
+      } else {
+        document.body.requestFullscreen();
+        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = true;
+        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
       }
     });
   }
@@ -126,12 +190,9 @@ export default class Results extends Page {
       userData.userId,
       userData.userRefreshToken
     );
-    window.console.log(isTokenActive);
     if (isTokenActive) {
       this.processKnownWords(userData);
       this.processUnknownWords(userData);
-    } else {
-      window.location.hash = Pages.auth;
     }
   }
 
@@ -240,5 +301,15 @@ export default class Results extends Page {
         }
       })();
     });
+  }
+
+  private async loadWordsByChosenGroup(level: string): Promise<IWord[]> {
+    const arrayOfpages = Array(30)
+      .fill('')
+      .map((item, index) => index);
+    const randomPage =
+      arrayOfpages[Math.floor(Math.random() * arrayOfpages.length)];
+    const words = this.API.getWords(level, randomPage.toString());
+    return words;
   }
 }

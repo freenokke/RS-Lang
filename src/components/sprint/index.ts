@@ -4,10 +4,12 @@ import './style.scss';
 import { IWord } from '../../types/words';
 
 export default class Sprint extends Page {
+  private params: { page: string; group: string };
   constructor(
     wordsList: IWord[],
     comebackHash: string,
-    parentNode: HTMLElement | null
+    parentNode: HTMLElement | null,
+    params: { page: string; group: string }
   ) {
     super(
       'main',
@@ -16,5 +18,6 @@ export default class Sprint extends Page {
       Template,
       {}
     );
+    this.params = params;
   }
 }
