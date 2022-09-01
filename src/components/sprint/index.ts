@@ -31,6 +31,9 @@ export default class Sprint extends Page {
   private wrongButton: HTMLButtonElement;
   private gameWordCheck: HTMLElement;
   private params: { group: string; page: string };
+  private audioRight: HTMLAudioElement;
+  private audioWrong: HTMLAudioElement;
+  private gameButtons: NodeListOf<Element>;
 
   constructor(
     gottenWords: IWord[],
@@ -51,18 +54,21 @@ export default class Sprint extends Page {
     this.knownWords = [];
     this.unknownWords = [];
 
+    this.gameButtons = this.node.querySelectorAll('.btn');
     this.rightButton = this.node.querySelector('.true');
     this.wrongButton = this.node.querySelector('.false');
     this.gameWordCheck = this.node.querySelector('.game__word-check');
     this.gameWord = this.node.querySelector('.game__word');
     this.gameWordTranslate = this.node.querySelector('.game__word-translate');
+    this.audioRight = new Audio(`../../assets/sound/select-click.mp3`);
+    this.audioWrong = new Audio(`../../assets/sound/error-click.mp3`);
 
     // this.determineElements();
     // this.renderProgress(words.length);
     this.initGame(gottenWords);
     // this.initEventsListeners();
     this.startCountDown();
-    this.addIconToGame();
+    // this.addIconToGame();
   }
 
   private async initGame(gottenWords: IWord[]): Promise<void> {
@@ -76,34 +82,57 @@ export default class Sprint extends Page {
     const word = this.wordsForGame[
       Math.floor(Math.random() * this.wordsForGame.length)
     ]; // определим слово для угадывания
-    let wordRandomTranslate; // определяем перевод формата 50/50 - или исходный или случайный
-    if (Math.round(Math.random())) {
-      wordRandomTranslate = word;
-    } else {
-      wordRandomTranslate = this.wordsForGame[
-        Math.floor(Math.random() * this.wordsForGame.length)
-      ];
-    }
+    const wordRandomTranslate: IWord = Math.round(Math.random())
+      ? word
+      : this.wordsForGame[Math.floor(Math.random() * this.wordsForGame.length)]; // определяем перевод формата 50/50 - или исходный или случайный
     this.gameWord.textContent = word.word; // записать слово и перевод в соответствущие поля HTML
     this.gameWordTranslate.textContent = wordRandomTranslate.wordTranslate;
-    this.wordsForGame = this.wordsForGame.filter(
-      (guessWord) => guessWord.id !== word.id
-    ); // убрать это слово из общего массива
-    console.log(this.wordsForGame);
-    // в зависимости от того правильно отгадано или нет, вывести иконку и записать
-    // это слово в опредленный массив knownwords или unknownwords
-    //
-    // обновить комбо и текущий результат
-    // если 3 подряд ПРАВИЛЬНЫХ ответа комбо увеличивается на 20, и продолжает таковым быть до следующего кобма и так далее
-    // при ошибке комбо = 20
-    //
-    // пока число слов в массиве больше 1, повторяем шаги выше
-    // запустить шаг и сделать запрос на страницу предществующую this.params.page
-    // this.API.getWords(group, words);
-    // добавить их в массив this.wordsforgame
-    //
-    // когда заканчивается время создаем инстанс страницы Result
+    this.gameButtons.forEach((el) =>
+      el.addEventListener('click', () => {
+        if (
+          (word.wordTranslate === wordRandomTranslate.wordTranslate &&
+            el.classList.contains('true')) ||
+          (word.wordTranslate !== wordRandomTranslate.wordTranslate &&
+            el.classList.contains('false'))
+        ) {
+          this.gameWordCheck.classList.remove('game__word-check--wrong');
+          this.gameWordCheck.classList.add('game__word-check--right');
+          this.audioRight.play();
+          setTimeout(
+            () =>
+              this.gameWordCheck.classList.remove('game__word-check--right'),
+            500
+          );
+        } else {
+          this.gameWordCheck.classList.remove('game__word-check--right');
+          this.gameWordCheck.classList.add('game__word-check--wrong');
+          this.audioWrong.play();
+          setTimeout(
+            () =>
+              this.gameWordCheck.classList.remove('game__word-check--wrong'),
+            500
+          );
+        }
+      })
+    ); // описать реакцию программы на правильный или неправильный выбор
   }
+
+  // this.wordsForGame = this.wordsForGame.filter(
+  //   (guessWord) => guessWord.id !== word.id
+  // ); // убрать это слово из общего массива
+  // в зависимости от того правильно отгадано или нет, вывести иконку и записать
+  // это слово в опредленный массив knownwords или unknownwords
+  //
+  // обновить комбо и текущий результат
+  // если 3 подряд ПРАВИЛЬНЫХ ответа комбо увеличивается на 20, и продолжает таковым быть до следующего кобма и так далее
+  // при ошибке комбо = 20
+  //
+  // пока число слов в массиве больше 1, повторяем шаги выше
+  // запустить шаг и сделать запрос на страницу предществующую this.params.page
+  // this.API.getWords(group, words);
+  // добавить их в массив this.wordsforgame
+  //
+  // когда заканчивается время создаем инстанс страницы Result
 
   // private addButtonsListeners(buttons: HTMLElement[], guessWord: IWord) {
   // 	buttons.forEach((item) => {
@@ -166,33 +195,26 @@ export default class Sprint extends Page {
     }, 1000);
   }
 
-  private fillLayoutWithGuessWords(word: IWord) {
-    this.gameWord = this.node.querySelector('.game__word');
-    this.gameWord.textContent = `${word}`;
-    this.gameWordTranslate = this.node.querySelector('.game__word-translate');
-    this.gameWord.textContent = word.wordTranslate;
-  }
-
-  private addIconToGame() {
-    const audioRight = new Audio(`../../assets/sound/select-click.mp3`);
-    const audioWrong = new Audio(`../../assets/sound/error-click.mp3`);
-    this.rightButton.addEventListener('click', () => {
-      this.gameWordCheck.classList.remove('game__word-check--wrong');
-      this.gameWordCheck.classList.add('game__word-check--right');
-      audioRight.play();
-      setTimeout(
-        () => this.gameWordCheck.classList.remove('game__word-check--right'),
-        500
-      );
-    });
-    this.wrongButton.addEventListener('click', () => {
-      this.gameWordCheck.classList.remove('game__word-check--right');
-      this.gameWordCheck.classList.add('game__word-check--wrong');
-      audioWrong.play();
-      setTimeout(
-        () => this.gameWordCheck.classList.remove('game__word-check--wrong'),
-        500
-      );
-    });
-  }
+  // private addIconToGame() {
+  //   const audioRight = new Audio(`../../assets/sound/select-click.mp3`);
+  //   const audioWrong = new Audio(`../../assets/sound/error-click.mp3`);
+  //   this.rightButton.addEventListener('click', () => {
+  //     this.gameWordCheck.classList.remove('game__word-check--wrong');
+  //     this.gameWordCheck.classList.add('game__word-check--right');
+  //     audioRight.play();
+  //     setTimeout(
+  //       () => this.gameWordCheck.classList.remove('game__word-check--right'),
+  //       500
+  //     );
+  //   });
+  //   this.wrongButton.addEventListener('click', () => {
+  //     this.gameWordCheck.classList.remove('game__word-check--right');
+  //     this.gameWordCheck.classList.add('game__word-check--wrong');
+  //     audioWrong.play();
+  //     setTimeout(
+  //       () => this.gameWordCheck.classList.remove('game__word-check--wrong'),
+  //       500
+  //     );
+  //   });
+  // }
 }
