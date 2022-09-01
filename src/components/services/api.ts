@@ -1,6 +1,7 @@
 import { Domain, Path } from '../../enum/endpoints';
 import {
   IGetUserResp,
+  ILocalStorageUserData,
   IUserCreate,
   IUserCreateResp,
   IUserSettings,
@@ -88,9 +89,13 @@ class Api {
       body: JSON.stringify(parameters),
     });
     const data: IUserSignInResp = await res.json();
-    localStorage.setItem('userToken', `${data.token}`);
-    localStorage.setItem('userRefreshToken', `${data.refreshToken}`);
-    localStorage.setItem('userName', `${data.name}`);
+    const userData: ILocalStorageUserData = {
+      userToken: data.token,
+      userRefreshToken: data.refreshToken,
+      userName: data.name,
+      userId: data.userId,
+    };
+    localStorage.setItem('userData', JSON.stringify(userData));
     return data;
   }
 
@@ -152,8 +157,12 @@ class Api {
       }
     );
     const data: IUserSignInResp = await res.json();
-    localStorage.setItem('userToken', `${data.token}`);
-    localStorage.setItem('userRefreshToken', `${data.refreshToken}`);
+    const userData: ILocalStorageUserData = JSON.parse(
+      localStorage.getItem('userData')
+    );
+    userData.userToken = data.token;
+    userData.userRefreshToken = data.refreshToken;
+    localStorage.setItem('userData', JSON.stringify(userData));
     return data;
   }
 
@@ -180,6 +189,7 @@ class Api {
     } else {
       return false;
     }
+    return true;
   }
 
   // =================== Users/Words=============

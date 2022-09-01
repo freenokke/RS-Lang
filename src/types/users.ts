@@ -52,3 +52,10 @@ export interface IGetUserResp {
   name: string;
   email: string;
 }
+
+export interface ILocalStorageUserData {
+  userToken: string;
+  userRefreshToken: string;
+  userName: string;
+  userId: string;
+}

@@ -9,6 +9,7 @@ import TeamIcon from './img/team.svg';
 import './style.scss';
 import Pages from '../../enum/routing';
 import LogoutIcon from './img/logout.svg';
+import { ILocalStorageUserData } from '../../types/users';
 
 const model = {
   logo: Logo,
@@ -96,16 +97,15 @@ export default class Header extends BaseComponent {
   }
 
   changeAuthorizationIcon() {
-    const user = localStorage.getItem('userName');
-    if (user !== null) {
-      this.username.innerHTML = `<span class="header-username__name">${user}</span>`;
-    } else {
-      this.username.innerHTML = '';
-    }
-    if (localStorage.getItem('userToken') !== null) {
+    const userData: ILocalStorageUserData = JSON.parse(
+      localStorage.getItem('userData')
+    );
+    if (userData !== null) {
+      this.username.innerHTML = `<span class="header-username__name">${userData.userName}</span>`;
       this.authBtn.classList.remove('header-auth__icon_active');
       this.logoutBtn.classList.add('header-auth__icon_active');
     } else {
+      this.username.innerHTML = '';
       this.authBtn.classList.add('header-auth__icon_active');
       this.logoutBtn.classList.remove('header-auth__icon_active');
     }

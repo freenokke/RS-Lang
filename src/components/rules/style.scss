@@ -35,7 +35,7 @@
   }
 
   &__content {
-    background-color: #fff;
+    background-color: #fff9;
     color: black;
     max-width: 50rem;
     padding: 1.875rem;
@@ -72,11 +72,11 @@
 
   &__text {
     font-size: 1.5rem;
-    text-align: center;
+    text-align: justify;
   }
 }
 
-@media (max-width: 31.25em) {
+@media (max-width: 768px) {
   .audio-challenge-rules {
 
     &__content {
@@ -167,6 +167,89 @@
   background-color: #ffffffff;
   border-radius: 44%;
   animation: waves 10s infinite linear;
+}
+
+.warning {
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border-radius: 10px;
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  gap: 8px;
+  font-size: 13px;
+  transform: translateX(-50%);
+  width: max-content;
+  background-color: #ffffffed;
+  transition: top 0.5s ease-in-out;
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    p {
+      margin: 0;
+    }
+    a {
+      color: #F95A2C;
+      &:visited {
+        color: #F95A2C;
+      }
+    }
+  }
+  &__icon {
+    color: #FFBD12;
+  }
+  &_active {
+    top: 20px;
+  }
+  @media screen and(max-width: 768px) {
+    width: 90vw;
+  }
+}
+
+.notification {
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border-radius: 10px;
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  gap: 8px;
+  font-size: 13px;
+  transform: translateX(-50%);
+  font-size: 13px;
+  width: max-content;
+  background-color: #ffffffed;
+  transition: top 0.5s ease-in-out;
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    p {
+      margin: 0;
+    }
+    a {
+      color: #F95A2C;
+      &:visited {
+        color: #F95A2C;
+      }
+    }
+  }
+  &__icon {
+    color: #FFBD12;
+  }
+  &_active {
+    top: 20px;
+  }
+  @media screen and(max-width: 768px) {
+    width: 90vw;
+  }
 }
 
 @keyframes waves {
