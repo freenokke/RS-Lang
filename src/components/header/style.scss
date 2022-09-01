@@ -35,6 +35,7 @@
   @media screen and (max-width: 375px) {
     flex-shrink: 1;
     margin-right: 15px;
+    width: 150px;
   }
 
   &__image {
@@ -42,6 +43,11 @@
     height: 100%;
     display: block;
     object-fit: contain;
+
+  @media screen and (max-width: 475px) {
+    width: 70%;
+  }
+
   }
 
   &:hover {
@@ -54,12 +60,6 @@
   padding: 5px;
   &__name {
     font-weight: 700;
-  }
-}
-
-@media(max-width: 374px){
-  .header-username {
-    margin-left: -25px;
   }
 }
 
