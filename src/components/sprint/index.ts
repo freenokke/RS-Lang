@@ -73,22 +73,23 @@ export default class Sprint extends Page {
 
   // eslint-disable-next-line class-methods-use-this
   private generateStep() {
-    // определим слово для угадывания
     const word = this.wordsForGame[
       Math.floor(Math.random() * this.wordsForGame.length)
-    ];
-    this.gameWord.textContent = word.word;
-    this.gameWordTranslate.textContent = word.wordTranslate;
-
-    //
-    // определить через Math.round(Math.random()) подставляем правильно или неправильное слово
-    // записать слово и перевод в соответствущие поля HTML
-    //
-    // убрать это слово из общего массива
-    // this.wordsForGame = this.wordsForGame.filter(
-    //   (word) => word.id !== guessWord.id
-    // );
-    //
+    ]; // определим слово для угадывания
+    let wordRandomTranslate; // определяем перевод формата 50/50 - или исходный или случайный
+    if (Math.round(Math.random())) {
+      wordRandomTranslate = word;
+    } else {
+      wordRandomTranslate = this.wordsForGame[
+        Math.floor(Math.random() * this.wordsForGame.length)
+      ];
+    }
+    this.gameWord.textContent = word.word; // записать слово и перевод в соответствущие поля HTML
+    this.gameWordTranslate.textContent = wordRandomTranslate.wordTranslate;
+    this.wordsForGame = this.wordsForGame.filter(
+      (guessWord) => guessWord.id !== word.id
+    ); // убрать это слово из общего массива
+    console.log(this.wordsForGame);
     // в зависимости от того правильно отгадано или нет, вывести иконку и записать
     // это слово в опредленный массив knownwords или unknownwords
     //
