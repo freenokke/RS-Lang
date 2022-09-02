@@ -78,14 +78,26 @@ export default class Sprint extends Page {
     this.generateStep();
   }
 
+  // private async additionalWordsToGame() {
+  //   this.wordsForGame = [...this.API.getWords(group, words)];
+  // }
+
   // eslint-disable-next-line class-methods-use-this
   private generateStep() {
     this.generateWordAndWordTranslate();
     this.checkWordAndWordTranslate();
-    this.filterGeneratedArray();
   }
 
   private generateWordAndWordTranslate() {
+    if (
+      this.knownWords.includes(this.gameGeneratedWord) ||
+      this.unknownWords.includes(this.gameGeneratedWord)
+    ) {
+      this.filterGeneratedArray();
+    }
+    // if (this.wordsForGame.length === 1) {
+    //   this.additionalWordsToGame();
+    // }
     this.gameGeneratedWord = this.wordsForGame[
       Math.floor(Math.random() * this.wordsForGame.length)
     ]; // определим слово для угадывания
@@ -107,31 +119,12 @@ export default class Sprint extends Page {
             this.gameGeneratedTranslate.wordTranslate &&
             el.classList.contains('false'))
         ) {
-          this.gameWordCheck.classList.remove('game__word-check--wrong');
-          this.gameWordCheck.classList.add('game__word-check--right');
-          this.audioRight.play();
-          setTimeout(
-            () =>
-              this.gameWordCheck.classList.remove('game__word-check--right'),
-            500
-          );
-          this.knownWords.push(this.gameGeneratedWord);
-          this.generateWordAndWordTranslate();
+          this.doIfRight();
         } else {
-          this.gameWordCheck.classList.remove('game__word-check--right');
-          this.gameWordCheck.classList.add('game__word-check--wrong');
-          this.audioWrong.play();
-          setTimeout(
-            () =>
-              this.gameWordCheck.classList.remove('game__word-check--wrong'),
-            500
-          );
-          this.unknownWords.push(this.gameGeneratedWord);
-          this.generateWordAndWordTranslate();
+          this.doIfWrong();
         }
       })
     );
-
     // описать реакцию программы на правильный или неправильный выбор
     // в зависимости от того правильно отгадано или нет, вывести иконку и записать
     // это слово в опредленный массив knownwords или unknownwords
@@ -141,6 +134,30 @@ export default class Sprint extends Page {
     this.wordsForGame = this.wordsForGame.filter(
       (guessWord) => guessWord.id !== this.gameGeneratedWord.id
     ); // убрать это слово из общего массива
+  }
+
+  private doIfRight() {
+    this.gameWordCheck.classList.remove('game__word-check--wrong');
+    this.gameWordCheck.classList.add('game__word-check--right');
+    this.audioRight.play();
+    setTimeout(
+      () => this.gameWordCheck.classList.remove('game__word-check--right'),
+      500
+    );
+    this.knownWords.push(this.gameGeneratedWord);
+    this.generateWordAndWordTranslate();
+  }
+
+  private doIfWrong() {
+    this.gameWordCheck.classList.remove('game__word-check--right');
+    this.gameWordCheck.classList.add('game__word-check--wrong');
+    this.audioWrong.play();
+    setTimeout(
+      () => this.gameWordCheck.classList.remove('game__word-check--wrong'),
+      500
+    );
+    this.unknownWords.push(this.gameGeneratedWord);
+    this.generateWordAndWordTranslate();
   }
 
   //
