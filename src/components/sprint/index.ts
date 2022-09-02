@@ -34,6 +34,8 @@ export default class Sprint extends Page {
   private audioRight: HTMLAudioElement;
   private audioWrong: HTMLAudioElement;
   private gameButtons: NodeListOf<Element>;
+  private gameGeneratedWord: IWord;
+  private gameGeneratedTranslate: IWord;
 
   constructor(
     gottenWords: IWord[],
@@ -68,7 +70,6 @@ export default class Sprint extends Page {
     this.initGame(gottenWords);
     // this.initEventsListeners();
     this.startCountDown();
-    // this.addIconToGame();
   }
 
   private async initGame(gottenWords: IWord[]): Promise<void> {
@@ -79,20 +80,31 @@ export default class Sprint extends Page {
 
   // eslint-disable-next-line class-methods-use-this
   private generateStep() {
-    const word = this.wordsForGame[
+    this.generateWordAndWordTranslate();
+    this.checkWordAndWordTranslate();
+    this.filterGeneratedArray();
+  }
+
+  private generateWordAndWordTranslate() {
+    this.gameGeneratedWord = this.wordsForGame[
       Math.floor(Math.random() * this.wordsForGame.length)
     ]; // определим слово для угадывания
-    const wordRandomTranslate: IWord = Math.round(Math.random())
-      ? word
-      : this.wordsForGame[Math.floor(Math.random() * this.wordsForGame.length)]; // определяем перевод формата 50/50 - или исходный или случайный
-    this.gameWord.textContent = word.word; // записать слово и перевод в соответствущие поля HTML
-    this.gameWordTranslate.textContent = wordRandomTranslate.wordTranslate;
+    this.gameGeneratedTranslate = Math.round(Math.random())
+      ? this.gameGeneratedWord
+      : this.wordsForGame[Math.floor(Math.random() * this.wordsForGame.length)];
+    this.gameWord.textContent = this.gameGeneratedWord.word; // записать слово и перевод в соответствущие поля HTML
+    this.gameWordTranslate.textContent = this.gameGeneratedTranslate.wordTranslate;
+  }
+
+  private checkWordAndWordTranslate() {
     this.gameButtons.forEach((el) =>
       el.addEventListener('click', () => {
         if (
-          (word.wordTranslate === wordRandomTranslate.wordTranslate &&
+          (this.gameGeneratedWord.wordTranslate ===
+            this.gameGeneratedTranslate.wordTranslate &&
             el.classList.contains('true')) ||
-          (word.wordTranslate !== wordRandomTranslate.wordTranslate &&
+          (this.gameGeneratedWord.wordTranslate !==
+            this.gameGeneratedTranslate.wordTranslate &&
             el.classList.contains('false'))
         ) {
           this.gameWordCheck.classList.remove('game__word-check--wrong');
@@ -103,6 +115,8 @@ export default class Sprint extends Page {
               this.gameWordCheck.classList.remove('game__word-check--right'),
             500
           );
+          this.knownWords.push(this.gameGeneratedWord);
+          this.generateWordAndWordTranslate();
         } else {
           this.gameWordCheck.classList.remove('game__word-check--right');
           this.gameWordCheck.classList.add('game__word-check--wrong');
@@ -112,16 +126,23 @@ export default class Sprint extends Page {
               this.gameWordCheck.classList.remove('game__word-check--wrong'),
             500
           );
+          this.unknownWords.push(this.gameGeneratedWord);
+          this.generateWordAndWordTranslate();
         }
       })
-    ); // описать реакцию программы на правильный или неправильный выбор
+    );
+
+    // описать реакцию программы на правильный или неправильный выбор
+    // в зависимости от того правильно отгадано или нет, вывести иконку и записать
+    // это слово в опредленный массив knownwords или unknownwords
   }
 
-  // this.wordsForGame = this.wordsForGame.filter(
-  //   (guessWord) => guessWord.id !== word.id
-  // ); // убрать это слово из общего массива
-  // в зависимости от того правильно отгадано или нет, вывести иконку и записать
-  // это слово в опредленный массив knownwords или unknownwords
+  private filterGeneratedArray() {
+    this.wordsForGame = this.wordsForGame.filter(
+      (guessWord) => guessWord.id !== this.gameGeneratedWord.id
+    ); // убрать это слово из общего массива
+  }
+
   //
   // обновить комбо и текущий результат
   // если 3 подряд ПРАВИЛЬНЫХ ответа комбо увеличивается на 20, и продолжает таковым быть до следующего кобма и так далее
@@ -194,27 +215,4 @@ export default class Sprint extends Page {
       this.countdownNumberEl.textContent = `${countdown}`;
     }, 1000);
   }
-
-  // private addIconToGame() {
-  //   const audioRight = new Audio(`../../assets/sound/select-click.mp3`);
-  //   const audioWrong = new Audio(`../../assets/sound/error-click.mp3`);
-  //   this.rightButton.addEventListener('click', () => {
-  //     this.gameWordCheck.classList.remove('game__word-check--wrong');
-  //     this.gameWordCheck.classList.add('game__word-check--right');
-  //     audioRight.play();
-  //     setTimeout(
-  //       () => this.gameWordCheck.classList.remove('game__word-check--right'),
-  //       500
-  //     );
-  //   });
-  //   this.wrongButton.addEventListener('click', () => {
-  //     this.gameWordCheck.classList.remove('game__word-check--right');
-  //     this.gameWordCheck.classList.add('game__word-check--wrong');
-  //     audioWrong.play();
-  //     setTimeout(
-  //       () => this.gameWordCheck.classList.remove('game__word-check--wrong'),
-  //       500
-  //     );
-  //   });
-  // }
 }
