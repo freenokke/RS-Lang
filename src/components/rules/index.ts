@@ -50,7 +50,7 @@ export default class Rules extends Page {
   private renderRulesText(gameName: string, levelName: string): void {
     let rules: string;
     if (gameName === 'Sprint') {
-      rules = `Выберите соответсвует ли перевод предложенному слову. Выбранный уровень сложности ${levelName}`;
+      rules = `Выберите соответсвует ли перевод предложенному слову. Выбранный уровень сложности ${levelName}. Вы также можете использовать клавиатуру: левая стрелка - "неверно", правая - "верно".`;
     } else {
       rules = `Вам нужно угадать слова, которые вы услышите. Выбранный уровень сложности ${levelName}`;
     }

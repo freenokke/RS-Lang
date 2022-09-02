@@ -33,7 +33,7 @@ export default class Sprint extends Page {
   private params: { group: string; page: string };
   private audioRight: HTMLAudioElement;
   private audioWrong: HTMLAudioElement;
-  private gameButtons: NodeListOf<Element>;
+  private gameButtons: NodeListOf<HTMLButtonElement>;
   private gameGeneratedWord: IWord;
   private gameGeneratedTranslate: IWord;
   private gameLongestSeries: IWord[];
@@ -94,6 +94,7 @@ export default class Sprint extends Page {
   private generateStep() {
     this.generateWordAndWordTranslate();
     this.checkWordAndWordTranslate();
+    this.checkWordByKeyboard();
   }
 
   private generateWordAndWordTranslate() {
@@ -128,14 +129,31 @@ export default class Sprint extends Page {
             el.classList.contains('false'))
         ) {
           this.doIfRight();
+          setTimeout(() => el.blur(), 100);
         } else {
           this.doIfWrong();
+          setTimeout(() => el.blur(), 100);
         }
       })
     );
     // описать реакцию программы на правильный или неправильный выбор
     // в зависимости от того правильно отгадано или нет, вывести иконку и записать
     // это слово в опредленный массив knownwords или unknownwords
+  }
+
+  private checkWordByKeyboard() {
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'ArrowRight') {
+        this.rightButton.click();
+        this.rightButton.focus();
+        setTimeout(() => this.rightButton.blur(), 300);
+      } else if (e.code === 'ArrowLeft') {
+        this.wrongButton.click();
+        this.wrongButton.focus();
+        setTimeout(() => this.wrongButton.blur(), 300);
+      }
+    });
+    // добавить управление через клавиатуру
   }
 
   private filterGeneratedArray() {
