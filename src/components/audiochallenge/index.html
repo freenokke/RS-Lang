@@ -1,30 +1,20 @@
 <div class="fullscreen__icon">
 	<i class="fa-solid fa-expand fa-xl"></i>
-	<i style="display: none;" class="fa-solid fa-compress fa-xl"></i>
+	<i class="fa-solid fa-compress fa-xl" hidden></i>
 </div>
+<button class="close-game">
+	<i class="fa-solid fa-arrow-left-long fa-xl"></i>
+</button>
 <div class="audiochallenge">
-	<div class="audiochallenge-points">
+	<!-- <div class="audiochallenge-points">
 		<h3 class="audiochallenge-points__text">Текущий результат:</h3>
 		<span class="audiochallenge-points__count">1200</span>
-	</div>
+	</div> -->
 	<div class="audiochallenge-gamearea">
 		<div class="audiochallenge-gamearea__game game">
-			<div class="game__bonus bonus">Комбо</div>
-			<div class="game__timer countdown">Время</div>
-			<div class="game__combo combo">
-				<div class="combo__item">
-					<input type="checkbox" class="combo__checkbox" checked>
-					<i class="fa-solid fa-star fa-lg"></i>
-				</div>
-				<div class="combo__item">
-					<input type="checkbox" class="combo__checkbox" checked>
-					<i class="fa-solid fa-star fa-lg"></i>
-				</div>
-				<div class="combo__item">
-					<input type="checkbox" class="combo__checkbox">
-					<i class="fa-solid fa-star fa-lg"></i>
-				</div>
-			</div>
+			<!-- <div class="game__bonus bonus">Комбо</div>
+			<div class="game__timer countdown">Время</div> -->
+			<div class="game__combo combo"></div>
 			<button class="game__play-button">
 				<svg class="game__play-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
 					<path
@@ -32,13 +22,8 @@
 					</path>
 				</svg>
 			</button>
-			<div class="game__buttons game__buttons_audiochallenge">
-				<button class="btn btn_audiochallenge">Отлично</button>
-				<button class="btn btn_audiochallenge">Боль</button>
-				<button class="btn btn_audiochallenge">Отказываться</button>
-				<button class="btn btn_audiochallenge">Операция</button>
-				<button class="btn btn_audiochallenge">Клерк</button>
-			</div>
+			<div class="game__buttons game__buttons_audiochallenge"></div>
+			<button class="btn btn_donotknow" data-guess="false">Не знаю</button>
 		</div>
 	</div>
 </div>
