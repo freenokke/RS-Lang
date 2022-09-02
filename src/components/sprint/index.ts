@@ -36,6 +36,10 @@ export default class Sprint extends Page {
   private gameButtons: NodeListOf<Element>;
   private gameGeneratedWord: IWord;
   private gameGeneratedTranslate: IWord;
+  private gameLongestSeries: IWord[];
+  private starsCheckbox: NodeListOf<HTMLInputElement>;
+  private gameBonus: HTMLElement;
+  private sprintPointsCount: HTMLElement;
 
   constructor(
     gottenWords: IWord[],
@@ -55,6 +59,7 @@ export default class Sprint extends Page {
     this.params = params;
     this.knownWords = [];
     this.unknownWords = [];
+    this.gameLongestSeries = [];
 
     this.gameButtons = this.node.querySelectorAll('.btn');
     this.rightButton = this.node.querySelector('.true');
@@ -64,6 +69,9 @@ export default class Sprint extends Page {
     this.gameWordTranslate = this.node.querySelector('.game__word-translate');
     this.audioRight = new Audio(`../../assets/sound/select-click.mp3`);
     this.audioWrong = new Audio(`../../assets/sound/error-click.mp3`);
+    this.starsCheckbox = this.node.querySelectorAll('.combo__checkbox');
+    this.gameBonus = this.node.querySelector('.game__bonus');
+    this.sprintPointsCount = this.node.querySelector('.sprint-points__count');
 
     // this.determineElements();
     // this.renderProgress(words.length);
@@ -79,7 +87,7 @@ export default class Sprint extends Page {
   }
 
   // private async additionalWordsToGame() {
-  //   this.wordsForGame = [...this.API.getWords(group, words)];
+  //   this.wordsForGame = [...this.API.getWords(group, words)]; // подтянуть новые слова, когда закончились старые
   // }
 
   // eslint-disable-next-line class-methods-use-this
@@ -145,7 +153,25 @@ export default class Sprint extends Page {
       500
     );
     this.knownWords.push(this.gameGeneratedWord);
+    this.gameLongestSeries.push(this.gameGeneratedWord); // запишем слово в самую длинную серию
     this.generateWordAndWordTranslate();
+    // eslint-disable-next-line no-unreachable-loop
+    for (let i = 0; i < this.starsCheckbox.length; i += 1) {
+      if (!this.starsCheckbox[i].hasAttribute('checked')) {
+        this.starsCheckbox[i].setAttribute('checked', 'checked');
+        break;
+      }
+    }
+    if (
+      Array.from(this.starsCheckbox).every((el) => el.hasAttribute('checked'))
+    ) {
+      this.gameBonus.textContent = `+40`;
+    } else {
+      this.gameBonus.textContent = `+20`;
+    }
+    this.sprintPointsCount.textContent = (
+      +this.sprintPointsCount.textContent + +this.gameBonus.textContent
+    ).toString();
   }
 
   private doIfWrong() {
@@ -158,6 +184,8 @@ export default class Sprint extends Page {
     );
     this.unknownWords.push(this.gameGeneratedWord);
     this.generateWordAndWordTranslate();
+    this.starsCheckbox.forEach((el) => el.removeAttribute('checked'));
+    this.gameBonus.textContent = `+20`;
   }
 
   //
