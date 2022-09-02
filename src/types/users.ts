@@ -47,9 +47,47 @@ export interface IUserWords {
 }
 
 export interface IUserStatistic {
+  learnedWords: number;
+  optional?: {
+    gameStat: {
+      audio: {
+        learnedWords: number;
+        newWords: number;
+        correctAnswers: number;
+        wrongAswers: number;
+        longestSeries: number;
+      };
+      sprint: {
+        learnedWords: number;
+        newWords: number;
+        correctAnswers: number;
+        wrongAswers: number;
+        longestSeries: number;
+      };
+    };
+  };
+}
+export interface IUserStatisticResp {
   id: string;
   learnedWords: number;
-  optional?: { [key: string]: string | number };
+  optional?: {
+    gameStat: {
+      audio: {
+        learnedWords: number;
+        newWords: number;
+        correctAnswers: number;
+        wrongAswers: number;
+        longestSeries: number;
+      };
+      sprint: {
+        learnedWords: number;
+        newWords: number;
+        correctAnswers: number;
+        wrongAswers: number;
+        longestSeries: number;
+      };
+    };
+  };
 }
 
 export interface IUserSettings {
