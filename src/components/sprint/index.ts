@@ -73,7 +73,6 @@ export default class Sprint extends Page {
     this.gameBonus = this.node.querySelector('.game__bonus');
     this.sprintPointsCount = this.node.querySelector('.sprint-points__count');
 
-    // this.determineElements();
     // this.renderProgress(words.length);
     this.initGame(gottenWords);
     // this.initEventsListeners();
@@ -168,7 +167,7 @@ export default class Sprint extends Page {
     this.audioRight.play();
     setTimeout(
       () => this.gameWordCheck.classList.remove('game__word-check--right'),
-      500
+      100
     );
     this.knownWords.push(this.gameGeneratedWord);
     this.gameLongestSeries.push(this.gameGeneratedWord); // запишем слово в самую длинную серию
@@ -190,6 +189,8 @@ export default class Sprint extends Page {
     this.sprintPointsCount.textContent = (
       +this.sprintPointsCount.textContent + +this.gameBonus.textContent
     ).toString();
+    // обновить комбо и текущий результат
+    // если 3 подряд ПРАВИЛЬНЫХ ответа комбо увеличивается на 20, и продолжает таковым быть до следующего кобма и так далее
   }
 
   private doIfWrong() {
@@ -198,19 +199,15 @@ export default class Sprint extends Page {
     this.audioWrong.play();
     setTimeout(
       () => this.gameWordCheck.classList.remove('game__word-check--wrong'),
-      500
+      100
     );
     this.unknownWords.push(this.gameGeneratedWord);
     this.generateWordAndWordTranslate();
     this.starsCheckbox.forEach((el) => el.removeAttribute('checked'));
     this.gameBonus.textContent = `+20`;
+    // при ошибке комбо = 20
   }
 
-  //
-  // обновить комбо и текущий результат
-  // если 3 подряд ПРАВИЛЬНЫХ ответа комбо увеличивается на 20, и продолжает таковым быть до следующего кобма и так далее
-  // при ошибке комбо = 20
-  //
   // пока число слов в массиве больше 1, повторяем шаги выше
   // запустить шаг и сделать запрос на страницу предществующую this.params.page
   // this.API.getWords(group, words);
@@ -244,38 +241,26 @@ export default class Sprint extends Page {
   // 	});
   // }
 
-  // private updateProgress(item: HTMLElement, word: IWord) {
-  // 	const notCheckedCheckboxes = Array.from(this.progressCheckboxes).filter(
-  // 		(checkbox) => !checkbox.checked
-  // 	);
-  // 	const lastUnchecked = notCheckedCheckboxes[0];
-  // 	lastUnchecked.checked = true;
-  // 	const icon = lastUnchecked.nextElementSibling as HTMLElement;
-  // 	if (item.dataset.guess === 'true') {
-  // 		icon.style.color = '#FFBD12';
-  // 		this.knownWords.push(word);
-  // 	} else {
-  // 		icon.style.color = '#F95A2C';
-  // 		this.unknownWords.push(word);
-  // 	}
-  // }
-
-  // private determineElements() {
-  // 	this.answersButtonsArea = this.node.querySelector(
-  // 		'.game__buttons_audiochallenge'
-  // 	);
-  // 	this.playButton = this.node.querySelector('.game__play-button');
-  // 	this.progressBlock = this.node.querySelector('.game__combo');
-  // }
-
   private startCountDown() {
     this.countdownNumberEl = this.node.querySelector('.countdown-number');
     let countdown = 60;
     this.countdownNumberEl.textContent = `${countdown}`;
     setInterval(() => {
-      /* eslint-disable-next-line no-plusplus */
+      // eslint-disable-next-line no-plusplus
       countdown = --countdown <= 0 ? 60 : countdown;
+      console.log(countdown);
       this.countdownNumberEl.textContent = `${countdown}`;
+      if (countdown === 1) {
+        this.node.remove();
+        this.result = new Results(
+          document.body,
+          this.knownWords,
+          this.unknownWords,
+          +this.sprintPointsCount.textContent,
+          this.parameters,
+          Pages.sprint
+        );
+      }
     }, 1000);
   }
 }
