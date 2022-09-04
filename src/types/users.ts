@@ -71,6 +71,7 @@ export interface IUserStatisticResp {
   id: string;
   learnedWords: number;
   optional?: {
+    lastVisited: number;
     gameStat: {
       audio: {
         learnedWords: number;

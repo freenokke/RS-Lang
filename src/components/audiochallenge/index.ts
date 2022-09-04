@@ -19,7 +19,6 @@ export default class Audiochallenge extends Page {
   private answersButtonsArea: HTMLElement;
   private playButton: HTMLElement;
   private initialArrayOfWords: IWord[];
-  private progressChecboxes: NodeListOf<HTMLInputElement>;
   private knownWords: IWord[];
   private unknownWords: IWord[];
   private progressBlock: HTMLElement;
@@ -30,6 +29,8 @@ export default class Audiochallenge extends Page {
   private params: { page: string; group: string };
   private closeGameBtn: HTMLElement;
   private comeBackHash: string;
+  private progressChecboxes: HTMLCollectionOf<Element>;
+  private longestSeries: number;
 
   constructor(
     gottenWords: IWord[],
@@ -50,6 +51,7 @@ export default class Audiochallenge extends Page {
     this.comeBackHash = comebackHash;
     this.knownWords = [];
     this.unknownWords = [];
+    this.longestSeries = 0;
 
     const words =
       gottenWords.length > 20 ? gottenWords.splice(0, 20) : gottenWords;
@@ -153,6 +155,7 @@ export default class Audiochallenge extends Page {
         this.knownWords,
         this.unknownWords,
         0,
+        this.longestSeries,
         this.params,
         Pages.audiochallenge
       );
@@ -161,15 +164,29 @@ export default class Audiochallenge extends Page {
   }
 
   private updateProgress(item: HTMLElement, word: IWord) {
-    const notCheckedCheckboxes = Array.from(this.progressChecboxes).filter(
-      (checkbox) => !checkbox.checked
+    const firstNotCheckedIndex = Array.from(this.progressChecboxes).findIndex(
+      (checkbox) => !(checkbox as HTMLInputElement).checked
     );
-    const lastUnchecked = notCheckedCheckboxes[0];
+    const lastUnchecked = this.progressChecboxes[
+      firstNotCheckedIndex
+    ] as HTMLInputElement;
     lastUnchecked.checked = true;
+    const previous = this.progressChecboxes[
+      firstNotCheckedIndex - 1
+    ] as HTMLInputElement;
+    let color: string;
+    if (previous) {
+      const iconOfPrevious = previous.nextElementSibling as Element;
+      const stylesOfPrevious = window.getComputedStyle(iconOfPrevious);
+      color = stylesOfPrevious.color;
+    }
     const icon = lastUnchecked.nextElementSibling as HTMLElement;
     if (item.dataset.guess === 'true') {
       icon.style.color = '#FFBD12';
       this.knownWords.push(word);
+      if (color === 'rgb(255, 189, 18)' || firstNotCheckedIndex === 0) {
+        this.longestSeries += 1;
+      }
     } else {
       icon.style.color = '#F95A2C';
       this.unknownWords.push(word);
@@ -185,7 +202,7 @@ export default class Audiochallenge extends Page {
     for (let index = 0; index < count; index += 1) {
       this.progressBlock.insertAdjacentHTML('afterbegin', elementHTML);
     }
-    this.progressChecboxes = this.node.querySelectorAll('.combo__checkbox');
+    this.progressChecboxes = document.getElementsByClassName('combo__checkbox');
   }
 
   private determineElements() {

@@ -111,6 +111,9 @@
 .play-buttons {
   display: flex;
   gap: 15px;
+  &_above {
+    margin-bottom: 15px;
+  }
 }
 
 .countdown {
