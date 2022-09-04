@@ -43,6 +43,8 @@
     height: 100%;
     display: block;
     object-fit: contain;
+    position: relative;
+    z-index: 1;
 
   @media screen and (max-width: 475px) {
     width: 70%;

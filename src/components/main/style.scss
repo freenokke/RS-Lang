@@ -1,4 +1,9 @@
 //========================== hero start ========================
+.main-page {
+  display: flex;
+  flex-direction: column;
+}
+
 .hero {
   width: 90%;
   height: 100%;

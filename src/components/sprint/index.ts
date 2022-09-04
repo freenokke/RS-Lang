@@ -265,3 +265,36 @@ export default class Sprint extends Page {
 // 		});
 // 	});
 // }
+
+// пока число слов в массиве больше 1, повторяем шаги выше
+// запустить шаг и сделать запрос на страницу предществующую this.params.page
+// this.API.getWords(group, words);
+// добавить их в массив this.wordsforgame
+//
+// когда заканчивается время создаем инстанс страницы Result
+
+// private addButtonsListeners(buttons: HTMLElement[], guessWord: IWord) {
+// 	buttons.forEach((item) => {
+// 		item.addEventListener('click', () => {
+// 			this.wordsForGame = this.wordsForGame.filter(
+// 				(word) => word.id !== guessWord.id
+// 			);
+// 			// this.updateProgress(item, guessWord);
+// 			this.answersButtonsArea.innerHTML = '';
+// 			if (this.wordsForGame.length > 5) {
+// 				this.generateStep();
+// 			} else {
+//        делаем запрос на страницу предществующую this.params.page
+// 				this.node.remove();
+// 				this.result = new Results(
+// 					document.body,
+// 					this.knownWords,
+// 					this.unknownWords,
+// 					score,
+// 					this.parameters,
+// 					Pages.sprint
+// 				);
+// 			}
+// 		});
+// 	});
+// }

@@ -1,4 +1,5 @@
 import Pages from '../../enum/routing';
+import { ILocalStorageUserData } from '../../types/users';
 import Header from '../header';
 import Page from '../helpers/page';
 import Api from '../services/api';
@@ -53,6 +54,7 @@ class Auth extends Page {
         window.location.hash = Pages.main;
         this.clearAuthInputs();
         this.HEADER.changeAuthorizationIcon();
+        this.createUserStatistic();
       } catch {
         this.authErrorMessage.innerHTML = `Пара логин-пароль некорректна`;
       }
@@ -83,6 +85,7 @@ class Auth extends Page {
         window.location.hash = Pages.main;
         this.clearRegInputs();
         this.HEADER.changeAuthorizationIcon();
+        this.createUserStatistic();
       } else if (res.status === 417) {
         this.regErrorMessage.innerHTML = `Пользователь с таким email уже существует`;
       } else if (res.status === 422) {
@@ -145,6 +148,57 @@ class Auth extends Page {
     this.regEmailInput.value = '';
     this.regPasswordInput.value = '';
     this.regNameInput.value = '';
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private async createUserStatistic() {
+    const userData: ILocalStorageUserData = JSON.parse(
+      localStorage.getItem('userData')
+    );
+    try {
+      const stat = await this.API.getUserStatistic(
+        userData.userId,
+        userData.userToken
+      );
+      const lastVisited = new Date(stat.optional.lastVisited).getDate();
+      const today = new Date().getDate();
+      if (today > lastVisited) {
+        throw Error('reset stat');
+      }
+    } catch {
+      const template = this.createStateTemplate();
+      this.API.updateUserStatistic(
+        userData.userId,
+        template,
+        userData.userToken
+      );
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private createStateTemplate() {
+    return {
+      learnedWords: 0,
+      optional: {
+        lastVisited: Date.now(),
+        gameStat: {
+          audio: {
+            learnedWords: 0,
+            newWords: 0,
+            correctAnswers: 0,
+            wrongAswers: 0,
+            longestSeries: 0,
+          },
+          sprint: {
+            learnedWords: 0,
+            newWords: 0,
+            correctAnswers: 0,
+            wrongAswers: 0,
+            longestSeries: 0,
+          },
+        },
+      },
+    };
   }
 }
 
