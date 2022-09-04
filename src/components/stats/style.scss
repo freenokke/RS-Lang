@@ -7,8 +7,12 @@
 	position: relative;
 	padding: 3.125rem 0;
 	font-weight: 500;
-	color: #323232;
+	color: white;
 	font-size: 1.125rem;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url('../../assets/images/stat-back.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 /*-----------------Page Statistics styles-------------------*/
@@ -33,6 +37,16 @@
 .statistics {
 	max-width: 56.25rem;
 	margin: 1.25rem;
+	a {
+		color:white;
+		&:visited {
+			color: white;
+		}
+		&:active {
+			color: white;
+		}
+		text-decoration: underline;
+	}
 
 	&__tabs {
 		max-width: 56.25rem;
@@ -71,7 +85,7 @@
 		grid-column-end: 2;
 		grid-row-start: 1;
 		grid-row-end: 2;
-		background: #F95A2C;
+		background: linear-gradient(rgba(249, 88, 44, 0.1), rgba(249, 88, 44, 0.6));
 		border: 0.125rem solid #18191F;
 		box-shadow: 0 0.25rem 0 #18191F;
 		border-radius: 1rem;
@@ -82,7 +96,7 @@
 		grid-column-end: 3;
 		grid-row-start: 1;
 		grid-row-end: 2;
-		background: #FFBD12;
+		background: linear-gradient(rgba(255, 188, 18, 0.1), rgba(255, 188, 18, 0.6));
 		border: 0.125rem solid #18191F;
 		box-shadow: 0 0.25rem 0 #18191F;
 		border-radius: 1rem;
@@ -93,7 +107,7 @@
 		grid-column-end: 4;
 		grid-row-start: 1;
 		grid-row-end: 2;
-		background: #00C6AE;
+		background: linear-gradient(rgba(0, 198, 174, 0.1), rgba(0, 198, 174, 0.6));
 		border: 0.125rem solid #18191F;
 		box-shadow: 0 0.25rem 0 #18191F;
 		border-radius: 1rem;
@@ -121,6 +135,7 @@
 		border: 0.125rem solid #18191F;
 		box-shadow: 0 0.25rem 0 #18191F;
 		border-radius: 1rem;
+		filter: drop-shadow(2px 5px 6px black);
 	}
 
 	&__top {
@@ -131,9 +146,12 @@
 		font-size: 1.2rem;
 	}
 
-	&__item span {
-		font-weight: 700;
+	&__item {
+		span {
+			font-weight: 700;
+		}
 	}
+		
 
 	&__new-words {}
 
@@ -263,15 +281,15 @@
 }
 
 #tab-btn-1:checked~#content-1 {
-	background-color: #F95A2C;
+	background-color: rgba(249, 88, 44, 0.1);
 }
 
 #tab-btn-2:checked~#content-2 {
-	background-color: #FFBD12;
+	background-color: rgba(255, 188, 18, 0.1);
 }
 
 #tab-btn-3:checked~#content-3 {
-	background-color: #00C6AE;
+	background-color: rgb(0 198 174 / 10%);
 }
 
 /*-----------------Diagram-----------------*/

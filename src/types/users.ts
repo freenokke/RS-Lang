@@ -32,13 +32,63 @@ export interface IUserWordsResp {
 
 export interface IUserWords {
   difficulty: string;
-  optional?: { [key: string]: string };
+  optional?: {
+    guessedInARow: number;
+    sprint: {
+      guessed: number;
+      unguessed: number;
+    };
+    audio: {
+      guessed: number;
+      unguessed: number;
+    };
+    attempts: number;
+  };
 }
 
 export interface IUserStatistic {
+  learnedWords: number;
+  optional?: {
+    gameStat: {
+      audio: {
+        learnedWords: number;
+        newWords: number;
+        correctAnswers: number;
+        wrongAswers: number;
+        longestSeries: number;
+      };
+      sprint: {
+        learnedWords: number;
+        newWords: number;
+        correctAnswers: number;
+        wrongAswers: number;
+        longestSeries: number;
+      };
+    };
+  };
+}
+export interface IUserStatisticResp {
   id: string;
   learnedWords: number;
-  optional?: { [key: string]: string | number };
+  optional?: {
+    lastVisited: number;
+    gameStat: {
+      audio: {
+        learnedWords: number;
+        newWords: number;
+        correctAnswers: number;
+        wrongAswers: number;
+        longestSeries: number;
+      };
+      sprint: {
+        learnedWords: number;
+        newWords: number;
+        correctAnswers: number;
+        wrongAswers: number;
+        longestSeries: number;
+      };
+    };
+  };
 }
 
 export interface IUserSettings {

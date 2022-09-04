@@ -8,6 +8,7 @@ import {
   IUserSignIn,
   IUserSignInResp,
   IUserStatistic,
+  IUserStatisticResp,
   IUserWords,
   IUserWordsResp,
 } from '../../types/users';
@@ -350,7 +351,7 @@ class Api {
   public async getUserStatistic(
     userId: string,
     token: string
-  ): Promise<IUserStatistic> {
+  ): Promise<IUserStatisticResp> {
     const res = await fetch(
       `${this.domain}/${Path.USERS}/${userId}/${Path.STAT}`,
       {
@@ -361,18 +362,15 @@ class Api {
         },
       }
     );
-    const statistic: IUserStatistic = await res.json();
+    const statistic: IUserStatisticResp = await res.json();
     return statistic;
   }
 
   public async updateUserStatistic(
     userId: string,
-    parameters: {
-      learnedWords: number;
-      optional?: { [key: string]: string | number };
-    },
+    parameters: IUserStatistic,
     token: string
-  ): Promise<IUserStatistic> {
+  ): Promise<IUserStatisticResp> {
     const res = await fetch(
       `${this.domain}/${Path.USERS}/${userId}/${Path.STAT}`,
       {
@@ -385,7 +383,7 @@ class Api {
         body: JSON.stringify(parameters),
       }
     );
-    const statistic: IUserStatistic = await res.json();
+    const statistic: IUserStatisticResp = await res.json();
     return statistic;
   }
 

@@ -6,7 +6,11 @@ import ResultRow from './components/resultRow';
 import Pages from '../../enum/routing';
 import Audiochallenge from '../audiochallenge';
 import Api from '../services/api';
-import { ILocalStorageUserData } from '../../types/users';
+import {
+  ILocalStorageUserData,
+  IUserStatistic,
+  IUserWords,
+} from '../../types/users';
 import Sprint from '../sprint';
 
 export default class Results extends Page {
@@ -34,11 +38,20 @@ export default class Results extends Page {
 
   private fullScreenBtn: HTMLElement;
 
+  private newWords: number;
+
+  private learnedWords: number;
+
+  private longestSeries: number;
+
+  private toGamesButton: HTMLElement;
+
   constructor(
     parentNode: HTMLElement,
     knownWords: IWord[],
     unknownWords: IWord[],
     score: number,
+    longestSeries: number,
     params: { page: string; group: string },
     gameHash: string
   ) {
@@ -51,9 +64,12 @@ export default class Results extends Page {
     this.unknownWords = unknownWords;
     this.gameHash = gameHash;
     this.params = params;
+    this.longestSeries = longestSeries;
+    this.newWords = 0;
+    this.learnedWords = 0;
 
     if (localStorage.getItem('userData') !== null) {
-      this.updateUserStatistic(JSON.parse(localStorage.getItem('userData')));
+      this.updateUserWords(JSON.parse(localStorage.getItem('userData')));
     }
 
     this.determineElements();
@@ -80,6 +96,7 @@ export default class Results extends Page {
       '#resultsPlayWithOthersWords'
     );
     this.fullScreenBtn = this.node.querySelector('.fullscreen__icon');
+    this.toGamesButton = this.node.querySelector('#resultsToGames');
   }
 
   addEventListeners() {
@@ -115,6 +132,7 @@ export default class Results extends Page {
     });
     this.initFullScreenListener();
     this.playWithOthersWordsListeners();
+    this.toGamesButtonListener();
   }
 
   private playWithOthersWordsListeners() {
@@ -185,122 +203,240 @@ export default class Results extends Page {
     return h2;
   }
 
-  private async updateUserStatistic(userData: ILocalStorageUserData) {
+  private async updateUserWords(userData: ILocalStorageUserData) {
     const isTokenActive = await this.API.checkUserTokens(
       userData.userId,
       userData.userRefreshToken
     );
+    const game = this.gameHash === Pages.sprint ? 'sprint' : 'audiochallenge';
     if (isTokenActive) {
-      this.processKnownWords(userData);
-      this.processUnknownWords(userData);
+      await this.processKnownWords(userData, game);
+      await this.processUnknownWords(userData, game);
+      this.processGeneralStatistic(userData, game);
     }
   }
 
   // eslint-disable-next-line max-lines-per-function
-  private processKnownWords(userData: ILocalStorageUserData) {
-    // eslint-disable-next-line max-lines-per-function
-    this.knownWords.forEach((word) => {
-      (async () => {
+  private async processKnownWords(
+    userData: ILocalStorageUserData,
+    game: string
+  ) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const word of this.knownWords) {
+      // eslint-disable-next-line no-await-in-loop
+      await (async () => {
         try {
-          const res = await this.API.getUserWordById(
-            userData.userId,
-            word.id,
-            userData.userToken
-          );
-          const { guessedInARow, guessed, unguessed, attempts } = res.optional;
-          const increaseRow = (+guessedInARow + 1).toString();
-          const increaseAttempts = (+attempts + 1).toString();
-          const increaseGuessed = (+guessed + 1).toString();
-          let state = res.difficulty;
-          if (state === 'hard' && increaseRow >= '5') {
-            state = 'learned';
-          } else if (state === 'studying' && increaseRow >= '3') {
-            state = 'learned';
-          }
-          this.API.updateUserWord(
-            userData.userId,
-            word.id,
-            {
-              difficulty: state,
-              optional: {
-                guessedInARow: increaseRow,
-                guessed: increaseGuessed,
-                unguessed,
-                attempts: increaseAttempts,
-              },
-            },
-            userData.userToken
-          );
+          const wordStat = await this.getWord(userData, word);
+          const changes = this.determineKnownWordsChanges(wordStat, game);
+          this.updateWord(userData, word, changes);
         } catch (error) {
-          this.API.createUserWords(
-            userData.userId,
-            word.id,
-            {
-              difficulty: 'studying',
-              optional: {
-                guessedInARow: '1',
-                guessed: '1',
-                unguessed: '0',
-                attempts: '1',
-              },
-            },
-            userData.userToken
-          );
+          this.createWord(userData, word, game, true);
+          this.newWords += 1;
         }
       })();
-    });
+    }
+  }
+
+  private async processUnknownWords(
+    userData: ILocalStorageUserData,
+    game: string
+  ) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const word of this.unknownWords) {
+      // eslint-disable-next-line no-await-in-loop
+      await (async () => {
+        try {
+          const wordStat = await this.getWord(userData, word);
+          const changes = this.determineUnknownWordsChanges(wordStat, game);
+          this.updateWord(userData, word, changes);
+        } catch (error) {
+          this.createWord(userData, word, game, false);
+          this.newWords += 1;
+        }
+      })();
+    }
+  }
+
+  private async getWord(userData: ILocalStorageUserData, word: IWord) {
+    const res = await this.API.getUserWordById(
+      userData.userId,
+      word.id,
+      userData.userToken
+    );
+    return res;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private determineKnownWordsChanges(
+    wordStat: IUserWords,
+    game: string
+  ): IUserWords {
+    const { guessedInARow, audio, sprint, attempts } = wordStat.optional;
+    const sprintObj = {
+      guessed: sprint.guessed,
+      unguessed: sprint.unguessed,
+    };
+    const audioObj = {
+      guessed: audio.guessed,
+      unguessed: audio.unguessed,
+    };
+    if (game === 'sprint') {
+      sprintObj.guessed += 1;
+    } else {
+      audioObj.guessed += 1;
+    }
+    const increaseRow = guessedInARow + 1;
+    const increaseAttempts = attempts + 1;
+    let state = wordStat.difficulty;
+    if (state === 'hard' && increaseRow >= 5) {
+      state = 'learned';
+      this.learnedWords += 1;
+    } else if (state === 'studying' && increaseRow >= 3) {
+      state = 'learned';
+      this.learnedWords += 1;
+    }
+    return {
+      difficulty: state,
+      optional: {
+        guessedInARow: increaseRow,
+        sprint: sprintObj,
+        audio: audioObj,
+        attempts: increaseAttempts,
+      },
+    };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private determineUnknownWordsChanges(
+    wordStat: IUserWords,
+    game: string
+  ): IUserWords {
+    const { audio, sprint, attempts } = wordStat.optional;
+    const sprintObj = {
+      guessed: sprint.guessed,
+      unguessed: sprint.unguessed,
+    };
+    const audioObj = {
+      guessed: audio.guessed,
+      unguessed: audio.unguessed,
+    };
+    if (game === 'sprint') {
+      sprintObj.unguessed += 1;
+    } else {
+      audioObj.unguessed += 1;
+    }
+    const increaseAttempts = attempts + 1;
+    let state = wordStat.difficulty;
+    if (state === 'learned') {
+      state = 'stydying';
+    }
+    return {
+      difficulty: state,
+      optional: {
+        guessedInARow: 0,
+        sprint: sprintObj,
+        audio: audioObj,
+        attempts: increaseAttempts,
+      },
+    };
+  }
+
+  private async updateWord(
+    userData: ILocalStorageUserData,
+    word: IWord,
+    changes: IUserWords
+  ) {
+    this.API.updateUserWord(
+      userData.userId,
+      word.id,
+      changes,
+      userData.userToken
+    );
+  }
+
+  private createWord(
+    userData: ILocalStorageUserData,
+    word: IWord,
+    game: string,
+    isGuessed: boolean
+  ) {
+    const template = this.generateWordStatTemplate();
+    if (game === 'sprint') {
+      if (isGuessed) {
+        template.optional.sprint.guessed = 1;
+        template.optional.guessedInARow = 1;
+      } else {
+        template.optional.sprint.unguessed = 1;
+      }
+    }
+    if (game === 'audiochallenge') {
+      if (isGuessed) {
+        template.optional.audio.guessed = 1;
+        template.optional.guessedInARow = 1;
+      } else {
+        template.optional.audio.unguessed = 1;
+      }
+    }
+
+    this.API.createUserWords(
+      userData.userId,
+      word.id,
+      template,
+      userData.userToken
+    );
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private generateWordStatTemplate() {
+    return {
+      difficulty: 'studying',
+      optional: {
+        guessedInARow: 0,
+        sprint: {
+          guessed: 0,
+          unguessed: 0,
+        },
+        audio: {
+          guessed: 0,
+          unguessed: 0,
+        },
+        attempts: 1,
+      },
+    };
   }
 
   // eslint-disable-next-line max-lines-per-function
-  private processUnknownWords(userData: ILocalStorageUserData) {
-    // eslint-disable-next-line max-lines-per-function
-    this.unknownWords.forEach((word) => {
-      (async () => {
-        try {
-          const res = await this.API.getUserWordById(
-            userData.userId,
-            word.id,
-            userData.userToken
-          );
-          const { guessed, unguessed, attempts } = res.optional;
-          const increaseAttempts = (+attempts + 1).toString();
-          const increaseUnguessed = (+unguessed + 1).toString();
-          let state = res.difficulty;
-          if (state === 'learned') {
-            state = 'stydying';
-          }
-          this.API.updateUserWord(
-            userData.userId,
-            word.id,
-            {
-              difficulty: state,
-              optional: {
-                guessedInARow: '0',
-                guessed,
-                unguessed: increaseUnguessed,
-                attempts: increaseAttempts,
-              },
-            },
-            userData.userToken
-          );
-        } catch (error) {
-          this.API.createUserWords(
-            userData.userId,
-            word.id,
-            {
-              difficulty: 'studying',
-              optional: {
-                guessedInARow: '0',
-                guessed: '0',
-                unguessed: '1',
-                attempts: '1',
-              },
-            },
-            userData.userToken
-          );
-        }
-      })();
-    });
+  private async processGeneralStatistic(
+    userData: ILocalStorageUserData,
+    game: string
+  ) {
+    const res = await this.API.getUserStatistic(
+      userData.userId,
+      userData.userToken
+    );
+    if (game === 'audiochallenge') {
+      res.optional.gameStat.audio.learnedWords += this.learnedWords;
+      res.optional.gameStat.audio.correctAnswers += this.knownWords.length;
+      res.optional.gameStat.audio.wrongAswers += this.unknownWords.length;
+      res.optional.gameStat.audio.newWords += this.newWords;
+      if (res.optional.gameStat.audio.longestSeries < this.longestSeries) {
+        res.optional.gameStat.audio.longestSeries = this.longestSeries;
+      }
+    }
+    if (game === 'sprint') {
+      res.optional.gameStat.sprint.learnedWords += this.learnedWords;
+      res.optional.gameStat.sprint.correctAnswers += this.knownWords.length;
+      res.optional.gameStat.sprint.wrongAswers += this.unknownWords.length;
+      res.optional.gameStat.sprint.newWords += this.newWords;
+      if (res.optional.gameStat.sprint.longestSeries < this.longestSeries) {
+        res.optional.gameStat.sprint.longestSeries = this.longestSeries;
+      }
+    }
+    const stat: IUserStatistic = {
+      learnedWords: res.learnedWords,
+      optional: res.optional,
+    };
+    this.API.updateUserStatistic(userData.userId, stat, userData.userToken);
   }
 
   private async loadWordsByChosenGroup(level: string): Promise<IWord[]> {
@@ -311,5 +447,15 @@ export default class Results extends Page {
       arrayOfpages[Math.floor(Math.random() * arrayOfpages.length)];
     const words = this.API.getWords(level, randomPage.toString());
     return words;
+  }
+
+  private toGamesButtonListener() {
+    this.toGamesButton.onclick = () => {
+      this.node.remove();
+      window.location.hash = Pages.games;
+      if (document.fullscreen) {
+        document.exitFullscreen();
+      }
+    };
   }
 }
