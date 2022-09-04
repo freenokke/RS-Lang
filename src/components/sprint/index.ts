@@ -19,7 +19,6 @@ export default class Sprint extends Page {
   private initialArrayOfWords: IWord[];
   private knownWords: IWord[];
   private unknownWords: IWord[];
-  private parameters: { group: number; page: number };
   private countdownNumberEl: HTMLElement;
   private gameWord: HTMLElement;
   private gameWordTranslate: HTMLElement;
@@ -37,6 +36,8 @@ export default class Sprint extends Page {
   private starsCheckbox: NodeListOf<HTMLInputElement>;
   private gameBonus: HTMLElement;
   private sprintPointsCount: HTMLElement;
+  private timerID: NodeJS.Timer;
+  private currentPage: string;
 
   constructor(
     gottenWords: IWord[],
@@ -69,8 +70,10 @@ export default class Sprint extends Page {
     this.starsCheckbox = this.node.querySelectorAll('.combo__checkbox');
     this.gameBonus = this.node.querySelector('.game__bonus');
     this.sprintPointsCount = this.node.querySelector('.sprint-points__count');
+    this.currentPage = params.page;
     this.initGame(gottenWords);
     this.startCountDown();
+    this.initEventListeners();
   }
 
   private async initGame(gottenWords: IWord[]): Promise<void> {
@@ -79,9 +82,29 @@ export default class Sprint extends Page {
     this.generateStep();
   }
 
-  // private async additionalWordsToGame() {
-  //   this.wordsForGame = [...this.API.getWords(group, words)]; // подтянуть новые слова, когда закончились старые
-  // }
+  private async additionalWordsToGame() {
+    const prevPage = +this.currentPage - 1;
+    this.currentPage = prevPage.toString();
+    if (prevPage >= 0) {
+      const words = await this.API.getWords(
+        this.params.group,
+        prevPage.toString()
+      );
+      this.wordsForGame = this.wordsForGame.concat(words);
+    } else {
+      clearInterval(this.timerID);
+      this.node.remove();
+      this.result = new Results(
+        document.body,
+        this.knownWords,
+        this.unknownWords,
+        +this.sprintPointsCount.textContent,
+        this.gameLongestSeries.length,
+        this.params,
+        Pages.sprint
+      );
+    }
+  }
 
   // eslint-disable-next-line class-methods-use-this
   private generateStep() {
@@ -90,16 +113,17 @@ export default class Sprint extends Page {
     this.checkWordByKeyboard();
   }
 
-  private generateWordAndWordTranslate() {
+  private async generateWordAndWordTranslate() {
     if (
       this.knownWords.includes(this.gameGeneratedWord) ||
       this.unknownWords.includes(this.gameGeneratedWord)
     ) {
       this.filterGeneratedArray();
     }
-    // if (this.wordsForGame.length === 1) {
-    //   this.additionalWordsToGame();
-    // }
+    if (this.wordsForGame.length === 0) {
+      console.log('сработал');
+      await this.additionalWordsToGame();
+    }
     this.gameGeneratedWord = this.wordsForGame[
       Math.floor(Math.random() * this.wordsForGame.length)
     ]; // определим слово для угадывания
@@ -137,19 +161,21 @@ export default class Sprint extends Page {
   }
 
   private checkWordByKeyboard() {
-    document.addEventListener('keydown', (e) => {
-      if (e.code === 'ArrowRight') {
-        this.rightButton.click();
-        this.rightButton.focus();
-        setTimeout(() => this.rightButton.blur(), 300);
-      } else if (e.code === 'ArrowLeft') {
-        this.wrongButton.click();
-        this.wrongButton.focus();
-        setTimeout(() => this.wrongButton.blur(), 300);
-      }
-    });
+    document.addEventListener('keydown', this.buttonHandler);
     // добавить управление через клавиатуру
   }
+
+  private buttonHandler = (e: KeyboardEvent) => {
+    if (e.code === 'ArrowRight') {
+      this.rightButton.click();
+      this.rightButton.focus();
+      setTimeout(() => this.rightButton.blur(), 300);
+    } else if (e.code === 'ArrowLeft') {
+      this.wrongButton.click();
+      this.wrongButton.focus();
+      setTimeout(() => this.wrongButton.blur(), 300);
+    }
+  };
 
   private filterGeneratedArray() {
     this.wordsForGame = this.wordsForGame.filter(
@@ -213,23 +239,38 @@ export default class Sprint extends Page {
     this.countdownNumberEl = this.node.querySelector('.countdown-number');
     let countdown = 60;
     this.countdownNumberEl.textContent = `${countdown}`;
-    const timerID = setInterval(() => {
+    this.timerID = setInterval(() => {
       // eslint-disable-next-line no-plusplus
       countdown = --countdown < 0 ? 60 : countdown;
       this.countdownNumberEl.textContent = `${countdown}`;
       if (countdown === 0) {
         this.node.remove();
+        document.removeEventListener('keydown', this.buttonHandler);
         this.result = new Results(
           document.body,
           this.knownWords,
           this.unknownWords,
           +this.sprintPointsCount.textContent,
-          this.parameters,
+          this.gameLongestSeries.length,
+          this.params,
           Pages.sprint
         );
-        clearInterval(timerID);
+        clearInterval(this.timerID);
       }
     }, 1000);
+  }
+
+  private initEventListeners() {
+    window.addEventListener(
+      'hashchange',
+      () => {
+        clearInterval(this.timerID);
+        document.removeEventListener('keydown', this.buttonHandler);
+      },
+      {
+        once: true,
+      }
+    );
   }
 }
 
