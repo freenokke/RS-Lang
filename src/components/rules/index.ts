@@ -36,6 +36,7 @@ export default class Rules extends Page {
     this.api = Api.getInstance();
     this.params = params;
     this.node.id = 'current-page';
+    this.params = params;
     if (gameName === 'Audiochallenge') {
       window.location.hash = Pages.audiochallenge;
     } else {
@@ -108,7 +109,7 @@ export default class Rules extends Page {
   private renderRulesText(gameName: string, levelName: string): void {
     let rules: string;
     if (gameName === 'Sprint') {
-      rules = `Выберите соответсвует ли перевод предложенному слову. Выбранный уровень сложности ${levelName}.`;
+      rules = `Выберите соответсвует ли перевод предложенному слову. Выбранный уровень сложности ${levelName}. Вы также можете использовать клавиатуру: левая стрелка - "неверно", правая - "верно".`;
     } else {
       rules = `
       Выберите соответсвует ли перевод предложенному слову.</br>

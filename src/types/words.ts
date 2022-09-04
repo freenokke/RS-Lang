@@ -14,7 +14,7 @@ export interface IWord {
   textMeaningTranslate: string;
   textExampleTranslate: string;
 }
-
+  
 export interface IAggregatedWord {
   paginationResults: IWord[];
   totalCount: {

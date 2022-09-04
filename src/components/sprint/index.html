@@ -5,19 +5,24 @@
 <div class="sprint">
 	<div class="sprint-points">
 		<h3 class="sprint-points__text">Текущий результат:</h3>
-		<span class="sprint-points__count">1200</span>
+		<span class="sprint-points__count">0</span>
 	</div>
 	<div class="sprint-gamearea">
 		<div class="sprint-gamearea__game game">
-			<div class="game__bonus bonus">Комбо</div>
-			<div class="game__timer countdown">Время</div>
+			<div class="game__bonus bonus">20</div>
+			<div class="game__timer countdown">
+				<div class="countdown-number"></div>
+				<svg class="countdown-circle">
+					<circle r="28" cx="30" cy="30"></circle>
+				</svg>
+			</div>
 			<div class="game__combo combo">
 				<div class="combo__item">
-					<input type="checkbox" class="combo__checkbox" checked>
+					<input type="checkbox" class="combo__checkbox">
 					<i class="fa-solid fa-star fa-lg"></i>
 				</div>
 				<div class="combo__item">
-					<input type="checkbox" class="combo__checkbox" checked>
+					<input type="checkbox" class="combo__checkbox">
 					<i class="fa-solid fa-star fa-lg"></i>
 				</div>
 				<div class="combo__item">
@@ -26,6 +31,7 @@
 				</div>
 			</div>
 			<div class="game__word-container">
+        <div class="game__word-check"></div>
 				<div class="game__word">word</div>
 				<div class="game__word-translate">word-translate</div>
 			</div>
