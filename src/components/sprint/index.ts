@@ -36,6 +36,7 @@ export default class Sprint extends Page {
   private gameButtons: NodeListOf<HTMLButtonElement>;
   private gameGeneratedWord: IWord;
   private gameGeneratedTranslate: IWord;
+  private gameSeries: IWord[];
   private gameLongestSeries: IWord[];
   private starsCheckbox: NodeListOf<HTMLInputElement>;
   private gameBonus: HTMLElement;
@@ -59,6 +60,7 @@ export default class Sprint extends Page {
     this.params = params;
     this.knownWords = [];
     this.unknownWords = [];
+    this.gameSeries = [];
     this.gameLongestSeries = [];
 
     this.gameButtons = this.node.querySelectorAll('.btn');
@@ -170,7 +172,7 @@ export default class Sprint extends Page {
       100
     );
     this.knownWords.push(this.gameGeneratedWord);
-    this.gameLongestSeries.push(this.gameGeneratedWord); // запишем слово в самую длинную серию
+    this.gameSeries.push(this.gameGeneratedWord);
     this.generateWordAndWordTranslate();
     // eslint-disable-next-line no-unreachable-loop
     for (let i = 0; i < this.starsCheckbox.length; i += 1) {
@@ -201,6 +203,11 @@ export default class Sprint extends Page {
       () => this.gameWordCheck.classList.remove('game__word-check--wrong'),
       100
     );
+    if (this.gameSeries.length > this.gameLongestSeries.length) {
+      this.gameLongestSeries = [...this.gameSeries];
+    }
+    this.gameSeries = [];
+    // console.log(this.gameLongestSeries.length); // запишем слово в самую длинную серию
     this.unknownWords.push(this.gameGeneratedWord);
     this.generateWordAndWordTranslate();
     this.starsCheckbox.forEach((el) => el.removeAttribute('checked'));
