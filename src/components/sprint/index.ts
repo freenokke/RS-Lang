@@ -16,13 +16,9 @@ export default class Sprint extends Page {
   private API: Api;
   private result: Results;
   private wordsForGame: IWord[];
-  private answersButtonsArea: HTMLElement;
-  private playButton: HTMLElement;
   private initialArrayOfWords: IWord[];
-  private progressCheckboxes: NodeListOf<HTMLInputElement>;
   private knownWords: IWord[];
   private unknownWords: IWord[];
-  private progressBlock: HTMLElement;
   private parameters: { group: number; page: number };
   private countdownNumberEl: HTMLElement;
   private gameWord: HTMLElement;
@@ -62,7 +58,6 @@ export default class Sprint extends Page {
     this.unknownWords = [];
     this.gameSeries = [];
     this.gameLongestSeries = [];
-
     this.gameButtons = this.node.querySelectorAll('.btn');
     this.rightButton = this.node.querySelector('.true');
     this.wrongButton = this.node.querySelector('.false');
@@ -74,10 +69,7 @@ export default class Sprint extends Page {
     this.starsCheckbox = this.node.querySelectorAll('.combo__checkbox');
     this.gameBonus = this.node.querySelector('.game__bonus');
     this.sprintPointsCount = this.node.querySelector('.sprint-points__count');
-
-    // this.renderProgress(words.length);
     this.initGame(gottenWords);
-    // this.initEventsListeners();
     this.startCountDown();
   }
 
@@ -129,9 +121,11 @@ export default class Sprint extends Page {
             this.gameGeneratedTranslate.wordTranslate &&
             el.classList.contains('false'))
         ) {
+          setTimeout(() => el.focus(), 100);
           this.doIfRight();
           setTimeout(() => el.blur(), 100);
         } else {
+          setTimeout(() => el.focus(), 100);
           this.doIfWrong();
           setTimeout(() => el.blur(), 100);
         }
@@ -215,39 +209,6 @@ export default class Sprint extends Page {
     // при ошибке комбо = 20
   }
 
-  // пока число слов в массиве больше 1, повторяем шаги выше
-  // запустить шаг и сделать запрос на страницу предществующую this.params.page
-  // this.API.getWords(group, words);
-  // добавить их в массив this.wordsforgame
-  //
-  // когда заканчивается время создаем инстанс страницы Result
-
-  // private addButtonsListeners(buttons: HTMLElement[], guessWord: IWord) {
-  // 	buttons.forEach((item) => {
-  // 		item.addEventListener('click', () => {
-  // 			this.wordsForGame = this.wordsForGame.filter(
-  // 				(word) => word.id !== guessWord.id
-  // 			);
-  // 			// this.updateProgress(item, guessWord);
-  // 			this.answersButtonsArea.innerHTML = '';
-  // 			if (this.wordsForGame.length > 5) {
-  // 				this.generateStep();
-  // 			} else {
-  //        делаем запрос на страницу предществующую this.params.page
-  // 				this.node.remove();
-  // 				this.result = new Results(
-  // 					document.body,
-  // 					this.knownWords,
-  // 					this.unknownWords,
-  // 					score,
-  // 					this.parameters,
-  // 					Pages.sprint
-  // 				);
-  // 			}
-  // 		});
-  // 	});
-  // }
-
   private startCountDown() {
     this.countdownNumberEl = this.node.querySelector('.countdown-number');
     let countdown = 60;
@@ -271,3 +232,36 @@ export default class Sprint extends Page {
     }, 1000);
   }
 }
+
+// пока число слов в массиве больше 1, повторяем шаги выше
+// запустить шаг и сделать запрос на страницу предществующую this.params.page
+// this.API.getWords(group, words);
+// добавить их в массив this.wordsforgame
+//
+// когда заканчивается время создаем инстанс страницы Result
+
+// private addButtonsListeners(buttons: HTMLElement[], guessWord: IWord) {
+// 	buttons.forEach((item) => {
+// 		item.addEventListener('click', () => {
+// 			this.wordsForGame = this.wordsForGame.filter(
+// 				(word) => word.id !== guessWord.id
+// 			);
+// 			// this.updateProgress(item, guessWord);
+// 			this.answersButtonsArea.innerHTML = '';
+// 			if (this.wordsForGame.length > 5) {
+// 				this.generateStep();
+// 			} else {
+//        делаем запрос на страницу предществующую this.params.page
+// 				this.node.remove();
+// 				this.result = new Results(
+// 					document.body,
+// 					this.knownWords,
+// 					this.unknownWords,
+// 					score,
+// 					this.parameters,
+// 					Pages.sprint
+// 				);
+// 			}
+// 		});
+// 	});
+// }
