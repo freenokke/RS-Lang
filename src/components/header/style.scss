@@ -25,6 +25,9 @@
   align-items: center;
   margin: 0 auto;
   width: 90%;
+  @media screen and (max-width: 400px) {
+    width: 95%;
+  }
 }
 
 .header-logo {
@@ -32,10 +35,10 @@
   height: 90px;
   flex-shrink: 0;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 400px) {
     flex-shrink: 1;
     margin-right: 15px;
-    width: 150px;
+    width: 100px;
   }
 
   &__image {
@@ -62,6 +65,9 @@
   padding: 5px;
   &__name {
     font-weight: 700;
+  }
+  @media screen and (max-width: 400px) {
+    margin-left: 0;
   }
 }
 
@@ -165,18 +171,14 @@
     cursor: pointer;
     background-color: #FFBD12;
   }
-
+  
   &:focus {
     transform: scale(0.9);
   }
-}
 
-@media (max-width: 400px){
-
-  .header-burger-icon {
-    margin-left: 10px;
+  @media screen and (max-width: 400px) {
+    margin-left: auto;
   }
-
 }
 
 .burger-menu {
