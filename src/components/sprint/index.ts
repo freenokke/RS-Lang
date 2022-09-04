@@ -245,12 +245,11 @@ export default class Sprint extends Page {
     this.countdownNumberEl = this.node.querySelector('.countdown-number');
     let countdown = 60;
     this.countdownNumberEl.textContent = `${countdown}`;
-    setInterval(() => {
+    const timerID = setInterval(() => {
       // eslint-disable-next-line no-plusplus
-      countdown = --countdown <= 0 ? 60 : countdown;
-      console.log(countdown);
+      countdown = --countdown < 0 ? 60 : countdown;
       this.countdownNumberEl.textContent = `${countdown}`;
-      if (countdown === 1) {
+      if (countdown === 0) {
         this.node.remove();
         this.result = new Results(
           document.body,
@@ -260,6 +259,7 @@ export default class Sprint extends Page {
           this.parameters,
           Pages.sprint
         );
+        clearInterval(timerID);
       }
     }, 1000);
   }
