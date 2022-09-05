@@ -82,6 +82,10 @@
   border-radius: 50%;
   padding: 5px;
   transition: .2s background;
+  @media screen and (max-width: 475px) {
+    width: 30px;
+    height: 30px;
+  }
 
   &__icon {
     display: none;
