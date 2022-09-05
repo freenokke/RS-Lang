@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable max-lines-per-function */
 import H1 from './components/h1';
 import Level from './components/level';
 import LevelsWrapper from './components/levelsWrapper';
@@ -224,6 +226,17 @@ export default class View {
               true
             )
           );
+        } else if (word.userWord?.difficulty === 'studying') {
+          this.words.push(
+            new Word(
+              this.wordsWrapper.node,
+              word,
+              isChecked,
+              handler,
+              false,
+              false
+            )
+          );
         }
       } else {
         this.words.push(
@@ -367,7 +380,7 @@ export default class View {
           new PaginationLi(this.paginationUl.node, item, isActive, handler)
         );
       });
-    this.updateGameButtons(words, params);
+      this.updateGameButtons(words, params);
     }
   }
 }

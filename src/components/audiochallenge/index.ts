@@ -1,5 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 import Pages from '../../enum/routing';
-import { IWord } from '../../types/words';
+import { IWord, IWordWithDifficulty } from '../../types/words';
 import Page from '../helpers/page';
 import Api from '../services/api';
 import Template from './index.html';
@@ -15,16 +16,16 @@ function shuffle<T>(array: T[]): T[] {
 export default class Audiochallenge extends Page {
   private API: Api;
   private result: Results;
-  private wordsForGame: IWord[];
+  private wordsForGame: IWord[] & IWordWithDifficulty[];
   private answersButtonsArea: HTMLElement;
   private playButton: HTMLElement;
-  private initialArrayOfWords: IWord[];
-  private knownWords: IWord[];
-  private unknownWords: IWord[];
+  private initialArrayOfWords: IWord[] & IWordWithDifficulty[];
+  private knownWords: IWordWithDifficulty[] & IWord[];
+  private unknownWords: IWordWithDifficulty[] & IWord[];
   private progressBlock: HTMLElement;
   private fullScreenBtn: HTMLElement;
   private audio: HTMLAudioElement;
-  private guessWord: IWord;
+  private guessWord: IWord & IWordWithDifficulty;
   private doNotKnowBtn: HTMLElement;
   private params: { page: string; group: string };
   private closeGameBtn: HTMLElement;
@@ -33,7 +34,7 @@ export default class Audiochallenge extends Page {
   private longestSeries: number;
 
   constructor(
-    gottenWords: IWord[],
+    gottenWords: IWord[] & IWordWithDifficulty[],
     comebackHash: string,
     parentNode: HTMLElement | null,
     params: { page: string; group: string }
@@ -62,7 +63,9 @@ export default class Audiochallenge extends Page {
     this.initEventsListeners();
   }
 
-  private async initGame(gottenWords: IWord[]): Promise<void> {
+  private async initGame(
+    gottenWords: IWord[] & IWordWithDifficulty[]
+  ): Promise<void> {
     this.initialArrayOfWords = gottenWords;
     this.wordsForGame = shuffle(this.initialArrayOfWords);
     this.generateStep();
@@ -72,9 +75,17 @@ export default class Audiochallenge extends Page {
     this.guessWord = this.wordsForGame[
       Math.floor(Math.random() * this.wordsForGame.length)
     ];
-    const answerVariants = this.initialArrayOfWords.filter(
-      (item) => item.id !== this.guessWord.id
-    );
+    let answerVariants;
+    if (this.guessWord._id) {
+      answerVariants = (this
+        .initialArrayOfWords as IWordWithDifficulty[]).filter(
+        (item) => item._id !== this.guessWord._id
+      );
+    } else {
+      answerVariants = this.initialArrayOfWords.filter(
+        (item) => item.id !== this.guessWord.id
+      );
+    }
     const answerVariantsCount = 4;
     const guessWordBtn = this.createGuessWordBtn();
     const variantsBtn = this.createVariantBtns(
@@ -105,7 +116,10 @@ export default class Audiochallenge extends Page {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private createVariantBtns(variants: IWord[], count: number): HTMLElement[] {
+  private createVariantBtns(
+    variants: IWord[] | IWordWithDifficulty[],
+    count: number
+  ): HTMLElement[] {
     const copy = [...variants];
     const array = [];
     for (let i = 0; i < count; i += 1) {
@@ -141,9 +155,12 @@ export default class Audiochallenge extends Page {
   }
 
   private defineRightOrNot(item: HTMLElement) {
-    this.wordsForGame = this.wordsForGame.filter(
-      (word) => word.id !== this.guessWord.id
-    );
+    this.wordsForGame = this.wordsForGame.filter((word) => {
+      if ((word as IWordWithDifficulty)._id) {
+        return (word as IWordWithDifficulty)._id !== this.guessWord._id;
+      }
+      return word.id !== this.guessWord.id;
+    });
     this.updateProgress(item, this.guessWord);
     this.answersButtonsArea.innerHTML = '';
     if (this.wordsForGame.length !== 0) {
@@ -163,7 +180,7 @@ export default class Audiochallenge extends Page {
     }
   }
 
-  private updateProgress(item: HTMLElement, word: IWord) {
+  private updateProgress(item: HTMLElement, word: IWord | IWordWithDifficulty) {
     const firstNotCheckedIndex = Array.from(this.progressChecboxes).findIndex(
       (checkbox) => !(checkbox as HTMLInputElement).checked
     );

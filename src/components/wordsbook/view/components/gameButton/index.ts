@@ -1,33 +1,36 @@
+/* eslint-disable no-underscore-dangle */
 import Pages from '../../../../../enum/routing';
-import { IWord } from '../../../../../types/words';
+import { IWord, IWordWithDifficulty } from '../../../../../types/words';
 import Page from '../../../../helpers/page';
 import Rules from '../../../../rules';
+import Api from '../../../../services/api';
 import Template from './index.html';
 
 export default class GameButton extends Page {
-  private gottenWords: IWord[];
+  private gottenWords: IWordWithDifficulty[];
 
   private params: { group: string; page: string };
   private audiochallengeBtn: HTMLElement;
   private sprintBtn: HTMLElement;
   private rules: Rules;
   private name: string;
+  private API: Api;
 
   constructor(
     parentNode: HTMLElement,
     name: string,
     image: string,
-    words: IWord[],
+    words: IWordWithDifficulty[] & IWord[],
     params: { group: string; page: string }
   ) {
     super('div', ['wordsbook-games__game'], parentNode, Template, {
       name,
       image,
     });
+    this.API = Api.getInstance();
     this.name = name;
-
-    this.gottenWords = words;
     this.params = params;
+    this.gottenWords = words;
     this.initListeners();
   }
 
@@ -66,9 +69,9 @@ export default class GameButton extends Page {
       case '1':
         return 'A2 Elementary';
       case '2':
-        return 'B1 Intermediate';
+        return 'B1 Pre-Intermediate';
       case '3':
-        return 'B2 Pre-Intermediate';
+        return 'B2 Intermediate';
       case '4':
         return 'C1 Advanced';
       case '5':
