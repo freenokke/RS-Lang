@@ -56,6 +56,10 @@ export default class Stats extends Page {
         localStorage.getItem('userData')
       );
       try {
+        await this.api.checkUserTokens(
+          userData.userId,
+          userData.userRefreshToken
+        );
         const stat = await this.api.getUserStatistic(
           userData.userId,
           userData.userToken

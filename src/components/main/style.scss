@@ -49,6 +49,7 @@
   }
 
   &__text {
+    max-width: 950px;
     span {
       color: #FFBD12;
     }
@@ -70,6 +71,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
 
   &__pluses {
     gap: 20px;
@@ -84,8 +86,6 @@
       flex-basis: 50%;
       flex-direction: column-reverse;
     }
-
-    @media screen and (max-width: 767px) {}
   }
 
   &__minuses {
