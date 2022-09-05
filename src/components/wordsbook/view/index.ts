@@ -326,7 +326,7 @@ export default class View {
       );
       wordCard.classList.add('wordsbook-words__word-wrapper_difficult');
       const wordCopy = word;
-      wordCopy.userWord.difficulty = 'hard';
+      wordCopy.userWord = { difficulty: 'hard' };
       this.updateWord(word);
     };
   }
@@ -366,7 +366,7 @@ export default class View {
       );
       wordCard.classList.remove('wordsbook-words__word-wrapper_difficult');
       const wordCopy = word;
-      wordCopy.userWord.difficulty = 'studying';
+      wordCopy.userWord = { difficulty: 'studying' };
       this.updateWord(wordCopy);
     };
   }
@@ -406,7 +406,7 @@ export default class View {
       );
       wordCard.classList.add('wordsbook-words__word-wrapper_learned');
       const wordCopy = word;
-      wordCopy.userWord.difficulty = 'learned';
+      wordCopy.userWord = { difficulty: 'learned' };
       this.updateWord(wordCopy);
     };
   }
@@ -446,7 +446,7 @@ export default class View {
       );
       wordCard.classList.remove('wordsbook-words__word-wrapper_learned');
       const wordCopy = word;
-      wordCopy.userWord.difficulty = 'studying';
+      wordCopy.userWord = { difficulty: 'studying' };
       this.updateWord(wordCopy);
     };
   }
