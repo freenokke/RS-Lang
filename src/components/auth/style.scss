@@ -96,7 +96,14 @@ transition: all 0.8s ease 0s;
 		padding: 1.25rem 0;
 		font-size: 1.2rem;
 	}
+
+    @media (max-width: 25rem) {
+      &__form {
+        font-size: 0.8rem;
+      }
+    }
 }
+
 
 .form-auth {
 
@@ -266,6 +273,12 @@ transition: all 0.8s ease 0s;
 		padding: 1.25rem 0;
 		font-size: 1.2rem;
 	}
+
+  @media (max-width: 25rem) {
+    &__form {
+      font-size: 0.8rem;
+    }
+  }
 }
 
 .form-reg {

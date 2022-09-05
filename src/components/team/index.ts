@@ -1,10 +1,10 @@
 import Page from '../helpers/page';
 import './style.scss';
 import Template from './index.html';
-import MaximPhoto from './assets/maksim_photo_multi.webp';
+import MaximPhoto from './assets/MaksimPicture.jpg';
 import GithubIcon from './assets/github_icon.svg';
-import ArtemPhoto from './assets/artem_photo_multi.webp';
-import JanPhoto from './assets/jan_photo_multi.webp';
+import ArtemPhoto from './assets/ArtemPicture.jpg';
+import JanPhoto from './assets/JanPicture.jpg';
 
 const model = {
   maximPhoto: MaximPhoto,
