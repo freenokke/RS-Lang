@@ -60,6 +60,7 @@
 .sprint-games {
 	position: relative;
 	overflow-x: hidden;
+	overflow-y: hidden;
 
 	&__complexity {
 		position: absolute;
@@ -136,6 +137,7 @@
 .audio-call-games {
 	position: relative;
 	overflow-x: hidden;
+	overflow-y: hidden;
 
 	&__complexity {
 		position: absolute;

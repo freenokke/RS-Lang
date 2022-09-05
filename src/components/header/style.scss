@@ -17,6 +17,9 @@
 // ========================= header start =======================================
 .header-container {
   height: 65px;
+  @media screen and (max-width: 475px) {
+    height: 38px;
+  }
 }
 
 .header {
@@ -24,7 +27,7 @@
   align-items: center;
   margin: 0 auto;
   width: 90%;
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 475px) {
     width: 95%;
   }
 }
@@ -34,10 +37,11 @@
   height: 90px;
   flex-shrink: 0;
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 475px) {
     flex-shrink: 1;
     margin-right: 15px;
-    width: 100px;
+    width: 115px;
+    height: 40px;
   }
 
   &__image {
@@ -47,6 +51,9 @@
     object-fit: contain;
     position: relative;
     z-index: 1;
+    @media screen and (max-width: 475px) {
+      bottom: -7px;
+    }
   }
 
   &:hover {
@@ -60,7 +67,7 @@
   &__name {
     font-weight: 700;
   }
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 475px) {
     margin-left: 0;
   }
 }
@@ -170,8 +177,11 @@
     transform: scale(0.9);
   }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 475px) {
     margin-left: auto;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
   }
 }
 
@@ -296,6 +306,11 @@
 
     &:focus {
       transform: scale(0.9);
+    }
+
+    @media screen and (max-width: 475px) {
+      width: 30px;
+      height: 30px;
     }
   }
 }
