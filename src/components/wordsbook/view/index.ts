@@ -197,19 +197,39 @@ export default class View {
       if (word.userWord?.difficulty) {
         if (word.userWord?.difficulty === 'hard') {
           this.words.push(
-            new Word(this.wordsWrapper.node, word, isChecked, handler, true, false)
+            new Word(
+              this.wordsWrapper.node,
+              word,
+              isChecked,
+              handler,
+              true,
+              false
+            )
           );
         } else if (word.userWord?.difficulty === 'learned') {
           this.words.push(
-            new Word(this.wordsWrapper.node, word, isChecked, handler, false, true)
+            new Word(
+              this.wordsWrapper.node,
+              word,
+              isChecked,
+              handler,
+              false,
+              true
+            )
           );
         }
       } else {
         this.words.push(
-          new Word(this.wordsWrapper.node, word, isChecked, handler, false, false)
-        )
+          new Word(
+            this.wordsWrapper.node,
+            word,
+            isChecked,
+            handler,
+            false,
+            false
+          )
+        );
       }
-
     });
     this.updateWord(words[0]);
   }
@@ -235,9 +255,12 @@ export default class View {
               await this.api.updateUserWord(
                 View.userData.userId,
                 word._id,
-                { difficulty: wordStat.difficulty, optional: wordStat.optional },
+                {
+                  difficulty: wordStat.difficulty,
+                  optional: wordStat.optional,
+                },
                 View.userData.userToken
-              )
+              );
             } catch {
               const test = await this.api.createUserWords(
                 View.userData.userId,
@@ -247,7 +270,9 @@ export default class View {
               );
               console.log(test);
             }
-            const wordCard = this.wordsWrapper.node.querySelector(`[data-id="${word._id}"]`);
+            const wordCard = this.wordsWrapper.node.querySelector(
+              `[data-id="${word._id}"]`
+            );
             wordCard.classList.add('wordsbook-words__word-wrapper_difficult');
           },
         },
@@ -264,9 +289,12 @@ export default class View {
               await this.api.updateUserWord(
                 View.userData.userId,
                 word._id,
-                { difficulty: wordStat.difficulty, optional: wordStat.optional },
+                {
+                  difficulty: wordStat.difficulty,
+                  optional: wordStat.optional,
+                },
                 View.userData.userToken
-              )
+              );
             } catch {
               const test = await this.api.createUserWords(
                 View.userData.userId,
@@ -276,7 +304,9 @@ export default class View {
               );
               console.log(test);
             }
-            const wordCard = this.wordsWrapper.node.querySelector(`[data-id="${word._id}"]`);
+            const wordCard = this.wordsWrapper.node.querySelector(
+              `[data-id="${word._id}"]`
+            );
             wordCard.classList.add('wordsbook-words__word-wrapper_learned');
           },
         },
@@ -294,7 +324,7 @@ export default class View {
 
   private static createUserWordTemplate(difficulty: string) {
     return {
-      difficulty: difficulty,
+      difficulty,
       optional: {
         guessedInARow: 0,
         sprint: {
@@ -305,15 +335,20 @@ export default class View {
           guessed: 0,
           unguessed: 0,
         },
-        attempts: 0
+        attempts: 0,
       },
-    }
+    };
   }
 
-  updatePaginator(currentPage: number, handler: (page: number) => void, words: IWordWithDifficulty[], params: {
-    group: string,
-    page: string
-  }) {
+  updatePaginator(
+    currentPage: number,
+    handler: (page: number) => void,
+    words: IWordWithDifficulty[],
+    params: {
+      group: string;
+      page: string;
+    }
+  ) {
     this.paginationUl.node.innerHTML = '';
     this.paginationItems = [];
     if (params.group !== '6') {

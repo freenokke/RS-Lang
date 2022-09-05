@@ -49,7 +49,7 @@ export default class Model {
         '',
         currentWordsCount,
         filter
-      )
+      );
       this.words = difficultyWords[0].paginatedResults;
     } else {
       this.words = await this.api.getWords(

@@ -7,7 +7,11 @@ import './style.scss';
 import Api from '../services/api';
 import View from './view';
 import Model from './model';
-import { IAggregatedWordResponse, IWord, IWordWithDifficulty } from '../../types/words';
+import {
+  IAggregatedWordResponse,
+  IWord,
+  IWordWithDifficulty,
+} from '../../types/words';
 
 // const model = {
 //   mapIcon: MapIcon,
@@ -45,10 +49,15 @@ export default class Wordsbook extends Page {
   init() {
     this.view.initLevels(this.handleLevelUpdate);
     // this.isUserAuthenticated = localStorage.getItem('')
-    this.view.updatePaginator(this.page + 1, this.handlePaginatorUpdate, this.mod.words, {
-      group: this.mod.currentLevel.toString(),
-      page: this.mod.currentPage.toString(),
-    });
+    this.view.updatePaginator(
+      this.page + 1,
+      this.handlePaginatorUpdate,
+      this.mod.words,
+      {
+        group: this.mod.currentLevel.toString(),
+        page: this.mod.currentPage.toString(),
+      }
+    );
   }
 
   private handleLevelUpdate = (level: number) => {
@@ -65,10 +74,15 @@ export default class Wordsbook extends Page {
   };
 
   private handlePageUpdate = (page: number) => {
-    this.view.updatePaginator(page, this.handlePaginatorUpdate, this.mod.words, {
-      group: this.mod.currentLevel.toString(),
-      page: this.mod.currentPage.toString(),
-    });
+    this.view.updatePaginator(
+      page,
+      this.handlePaginatorUpdate,
+      this.mod.words,
+      {
+        group: this.mod.currentLevel.toString(),
+        page: this.mod.currentPage.toString(),
+      }
+    );
   };
 
   private handlePaginatorUpdate = (page: number) => {

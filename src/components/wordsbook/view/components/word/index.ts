@@ -41,10 +41,14 @@ export default class Word extends Page {
   init() {
     this.input = this.node.querySelector('.wordsbook-words__radiobutton');
     if (this.isChecked) this.input.setAttribute('checked', 'checked');
-    this.wordWrapper = this.node.querySelector('.wordsbook-words__word-wrapper');
+    this.wordWrapper = this.node.querySelector(
+      '.wordsbook-words__word-wrapper'
+    );
     this.wordWrapper.setAttribute('data-id', this.word._id);
-    if (this.isDifficult) this.wordWrapper.classList.add('wordsbook-words__word-wrapper_difficult');
-    if (this.isLearned) this.wordWrapper.classList.add('wordsbook-words__word-wrapper_learned');
+    if (this.isDifficult)
+      this.wordWrapper.classList.add('wordsbook-words__word-wrapper_difficult');
+    if (this.isLearned)
+      this.wordWrapper.classList.add('wordsbook-words__word-wrapper_learned');
   }
 
   initEventListeners() {
