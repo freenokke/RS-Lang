@@ -27,8 +27,6 @@
 		color: grey;
 	}
 
-	&__divide {}
-
 	&__actual {
 		color: #000000;
 	}
@@ -151,25 +149,6 @@
 			font-weight: 700;
 		}
 	}
-		
-
-	&__new-words {}
-
-	&__general-words {}
-
-	&__right-answers {}
-
-	&__new-words-sprint {}
-
-	&__right-answers-sprint {}
-
-	&__series-lenght-sprint {}
-
-	&__new-words-audio-call {}
-
-	&__right-answers-audio-call {}
-
-	&__series-lenght-audio-call {}
 }
 
 @media(max-width: 48em) {

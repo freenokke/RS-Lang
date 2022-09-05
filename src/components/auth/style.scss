@@ -150,8 +150,6 @@ transition: all 0.8s ease 0s;
 		font-size: 1rem;
 	}
 
-	&__forget-password {}
-
 	&__forget-password-link {
 		color: #000;
 		text-decoration: none;
@@ -160,10 +158,6 @@ transition: all 0.8s ease 0s;
 	&__forget-password-link:hover {
     text-decoration: underline;
 	}
-
-	&__break {}
-
-	&__registration {}
 
 	&__registration-link {
 		color: #000;
