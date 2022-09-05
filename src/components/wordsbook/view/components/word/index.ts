@@ -44,6 +44,7 @@ export default class Word extends Page {
     this.wordWrapper = this.node.querySelector(
       '.wordsbook-words__word-wrapper'
     );
+    // eslint-disable-next-line no-underscore-dangle
     this.wordWrapper.setAttribute('data-id', this.word._id);
     if (this.isDifficult)
       this.wordWrapper.classList.add('wordsbook-words__word-wrapper_difficult');

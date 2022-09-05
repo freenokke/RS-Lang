@@ -173,27 +173,30 @@ export default class View {
     this.levels = [];
     levels.forEach((level) => {
       const isChecked = level.level === 0;
-      this.levels.push(
-        new Level(
-          this.levelsWrapper.node,
-          level.level,
-          level.label,
-          level.text,
-          level.start,
-          level.end,
-          isChecked,
-          handler
-        )
-      );
+      if (localStorage.getItem('userData') || !level.needsAuth) {
+        this.levels.push(
+          new Level(
+            this.levelsWrapper.node,
+            level.level,
+            level.label,
+            level.text,
+            level.start,
+            level.end,
+            isChecked,
+            handler
+          )
+        );
+      }
     });
   }
 
+  // eslint-disable-next-line max-lines-per-function
   updateWords(words: IWordWithDifficulty[], handler: (word: IWord) => void) {
     this.words = [];
     this.wordsWrapper.node.innerHTML = '';
+    // eslint-disable-next-line max-lines-per-function
     words.forEach((word, idx) => {
       const isChecked = idx === 0;
-      console.log(word.userWord?.difficulty);
       if (word.userWord?.difficulty) {
         if (word.userWord?.difficulty === 'hard') {
           this.words.push(
@@ -217,6 +220,17 @@ export default class View {
               true
             )
           );
+        } else if (word.userWord?.difficulty === 'studying') {
+          this.words.push(
+            new Word(
+              this.wordsWrapper.node,
+              word,
+              isChecked,
+              handler,
+              false,
+              false
+            )
+          );
         }
       } else {
         this.words.push(
@@ -236,6 +250,8 @@ export default class View {
 
   updateWord(word: IWordWithDifficulty) {
     this.wordsbookDescriptionWrapper.node.innerHTML = '';
+    const isHard = word.userWord?.difficulty === 'hard';
+    const isLearned = word.userWord?.difficulty === 'learned';
     this.word = new WordsbookDescription(
       this.wordsbookDescriptionWrapper.node,
       word
@@ -243,72 +259,16 @@ export default class View {
     if (View.isUserAuthenticated) {
       [
         {
-          text: 'В сложные',
-          handler: async () => {
-            try {
-              const wordStat = await this.api.getUserWordById(
-                View.userData.userId,
-                word._id,
-                View.userData.userToken
-              );
-              wordStat.difficulty = 'hard';
-              await this.api.updateUserWord(
-                View.userData.userId,
-                word._id,
-                {
-                  difficulty: wordStat.difficulty,
-                  optional: wordStat.optional,
-                },
-                View.userData.userToken
-              );
-            } catch {
-              const test = await this.api.createUserWords(
-                View.userData.userId,
-                word._id,
-                View.createUserWordTemplate('hard'),
-                View.userData.userToken
-              );
-              console.log(test);
-            }
-            const wordCard = this.wordsWrapper.node.querySelector(
-              `[data-id="${word._id}"]`
-            );
-            wordCard.classList.add('wordsbook-words__word-wrapper_difficult');
-          },
+          text: isHard ? 'Удалить из сложных' : 'В сложные',
+          handler: isHard
+            ? this.hardWordDeleteHandler(word)
+            : this.hardWordAddHandler(word),
         },
         {
-          text: 'В изученные',
-          handler: async () => {
-            try {
-              const wordStat = await this.api.getUserWordById(
-                View.userData.userId,
-                word._id,
-                View.userData.userToken
-              );
-              wordStat.difficulty = 'learned';
-              await this.api.updateUserWord(
-                View.userData.userId,
-                word._id,
-                {
-                  difficulty: wordStat.difficulty,
-                  optional: wordStat.optional,
-                },
-                View.userData.userToken
-              );
-            } catch {
-              const test = await this.api.createUserWords(
-                View.userData.userId,
-                word._id,
-                View.createUserWordTemplate('learned'),
-                View.userData.userToken
-              );
-              console.log(test);
-            }
-            const wordCard = this.wordsWrapper.node.querySelector(
-              `[data-id="${word._id}"]`
-            );
-            wordCard.classList.add('wordsbook-words__word-wrapper_learned');
-          },
+          text: isLearned ? 'Удалить из изученных' : 'В изученные',
+          handler: isLearned
+            ? this.learnedWordDeleteHandler(word)
+            : this.learnedWordAddHandler(word),
         },
       ].forEach((button) => {
         this.descriptionButtons.push(
@@ -320,6 +280,166 @@ export default class View {
         );
       });
     }
+  }
+
+  private hardWordAddHandler(word: IWordWithDifficulty) {
+    return async () => {
+      try {
+        const wordStat = await this.api.getUserWordById(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          View.userData.userToken
+        );
+        wordStat.difficulty = 'hard';
+        await this.api.updateUserWord(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          {
+            difficulty: wordStat.difficulty,
+            optional: wordStat.optional,
+          },
+          View.userData.userToken
+        );
+      } catch {
+        await this.api.createUserWords(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          View.createUserWordTemplate('hard'),
+          View.userData.userToken
+        );
+      }
+      const wordCard = this.wordsWrapper.node.querySelector(
+        // eslint-disable-next-line no-underscore-dangle
+        `[data-id="${word._id}"]`
+      );
+      wordCard.classList.add('wordsbook-words__word-wrapper_difficult');
+      const wordCopy = word;
+      wordCopy.userWord.difficulty = 'hard';
+      this.updateWord(word);
+    };
+  }
+
+  private hardWordDeleteHandler(word: IWordWithDifficulty) {
+    return async () => {
+      try {
+        const wordStat = await this.api.getUserWordById(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          View.userData.userToken
+        );
+        wordStat.difficulty = 'studying';
+        await this.api.updateUserWord(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          {
+            difficulty: wordStat.difficulty,
+            optional: wordStat.optional,
+          },
+          View.userData.userToken
+        );
+      } catch {
+        await this.api.createUserWords(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          View.createUserWordTemplate('studying'),
+          View.userData.userToken
+        );
+      }
+      const wordCard = this.wordsWrapper.node.querySelector(
+        // eslint-disable-next-line no-underscore-dangle
+        `[data-id="${word._id}"]`
+      );
+      wordCard.classList.remove('wordsbook-words__word-wrapper_difficult');
+      const wordCopy = word;
+      wordCopy.userWord.difficulty = 'studying';
+      this.updateWord(wordCopy);
+    };
+  }
+
+  private learnedWordAddHandler(word: IWordWithDifficulty) {
+    return async () => {
+      try {
+        const wordStat = await this.api.getUserWordById(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          View.userData.userToken
+        );
+        wordStat.difficulty = 'learned';
+        await this.api.updateUserWord(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          {
+            difficulty: wordStat.difficulty,
+            optional: wordStat.optional,
+          },
+          View.userData.userToken
+        );
+      } catch {
+        await this.api.createUserWords(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          View.createUserWordTemplate('learned'),
+          View.userData.userToken
+        );
+      }
+      const wordCard = this.wordsWrapper.node.querySelector(
+        // eslint-disable-next-line no-underscore-dangle
+        `[data-id="${word._id}"]`
+      );
+      wordCard.classList.add('wordsbook-words__word-wrapper_learned');
+      const wordCopy = word;
+      wordCopy.userWord.difficulty = 'learned';
+      this.updateWord(wordCopy);
+    };
+  }
+
+  private learnedWordDeleteHandler(word: IWordWithDifficulty) {
+    return async () => {
+      try {
+        const wordStat = await this.api.getUserWordById(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          View.userData.userToken
+        );
+        wordStat.difficulty = 'studying';
+        await this.api.updateUserWord(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          {
+            difficulty: wordStat.difficulty,
+            optional: wordStat.optional,
+          },
+          View.userData.userToken
+        );
+      } catch {
+        await this.api.createUserWords(
+          View.userData.userId,
+          // eslint-disable-next-line no-underscore-dangle
+          word._id,
+          View.createUserWordTemplate('studying'),
+          View.userData.userToken
+        );
+      }
+      const wordCard = this.wordsWrapper.node.querySelector(
+        // eslint-disable-next-line no-underscore-dangle
+        `[data-id="${word._id}"]`
+      );
+      wordCard.classList.remove('wordsbook-words__word-wrapper_learned');
+      const wordCopy = word;
+      wordCopy.userWord.difficulty = 'studying';
+      this.updateWord(wordCopy);
+    };
   }
 
   private static createUserWordTemplate(difficulty: string) {

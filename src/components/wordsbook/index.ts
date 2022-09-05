@@ -7,11 +7,7 @@ import './style.scss';
 import Api from '../services/api';
 import View from './view';
 import Model from './model';
-import {
-  IAggregatedWordResponse,
-  IWord,
-  IWordWithDifficulty,
-} from '../../types/words';
+import { IWord, IWordWithDifficulty } from '../../types/words';
 
 // const model = {
 //   mapIcon: MapIcon,

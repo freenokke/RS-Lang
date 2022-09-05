@@ -26,14 +26,8 @@ export default class PaginationLi extends Page {
     if (this.value !== null) {
       if (this.value === '<') {
         this.button = PaginationLi.createButton(this.value);
-        this.button.addEventListener('click', () => {
-          console.log('PreviousPage', this.value);
-        });
       } else if (this.value === '>') {
         this.button = PaginationLi.createButton(this.value);
-        this.button.addEventListener('click', () => {
-          console.log('NextPage');
-        });
       } else {
         this.button = PaginationLi.createButton(this.value);
         this.button.addEventListener('click', () => {
