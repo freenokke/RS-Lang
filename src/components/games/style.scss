@@ -5,6 +5,10 @@
 	justify-content: center;
 	align-items: center;
 	position: relative;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../../assets/images/games-back3.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 /*-----------------Games page styles-------------------*/
@@ -218,8 +222,8 @@
 			cursor: pointer;
 			position: absolute;
 			top: 0;
-			right: -40px;
-			width: 40px;
+			right: -60px;
+			width: 60px;
 			height: 100%;
 			background-color: rgba(71, 74, 87, 0.6);
 			display: flex;
@@ -252,8 +256,8 @@
 			cursor: pointer;
 			position: absolute;
 			top: 0;
-			left: -40px;
-			width: 40px;
+			left: -60px;
+			width: 60px;
 			height: 100%;
 			background-color: rgba(71, 74, 87, 0.6);
 			display: flex;
