@@ -1,7 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 import Page from '../helpers/page';
 import Template from './index.html';
 import './style.scss';
-import { IWord } from '../../types/words';
+import { IWord, IWordWithDifficulty } from '../../types/words';
 import ResultRow from './components/resultRow';
 import Pages from '../../enum/routing';
 import Audiochallenge from '../audiochallenge';
@@ -14,9 +15,9 @@ import {
 import Sprint from '../sprint';
 
 export default class Results extends Page {
-  private knownWords: IWord[];
+  private knownWords: IWordWithDifficulty[] & IWord[];
 
-  private unknownWords: IWord[];
+  private unknownWords: IWordWithDifficulty[] & IWord[];
 
   private playOnceMoreButton: HTMLButtonElement;
 
@@ -48,8 +49,8 @@ export default class Results extends Page {
 
   constructor(
     parentNode: HTMLElement,
-    knownWords: IWord[],
-    unknownWords: IWord[],
+    knownWords: IWordWithDifficulty[] & IWord[],
+    unknownWords: IWordWithDifficulty[] & IWord[],
     score: number,
     longestSeries: number,
     params: { page: string; group: string },
@@ -264,10 +265,13 @@ export default class Results extends Page {
     }
   }
 
-  private async getWord(userData: ILocalStorageUserData, word: IWord) {
+  private async getWord(
+    userData: ILocalStorageUserData,
+    word: IWordWithDifficulty & IWord
+  ) {
     const res = await this.API.getUserWordById(
       userData.userId,
-      word.id,
+      word._id ? word._id : word.id,
       userData.userToken
     );
     return res;
@@ -335,7 +339,7 @@ export default class Results extends Page {
     const increaseAttempts = attempts + 1;
     let state = wordStat.difficulty;
     if (state === 'learned') {
-      state = 'stydying';
+      state = 'studying';
     }
     return {
       difficulty: state,
@@ -350,12 +354,12 @@ export default class Results extends Page {
 
   private async updateWord(
     userData: ILocalStorageUserData,
-    word: IWord,
+    word: IWordWithDifficulty & IWord,
     changes: IUserWords
   ) {
     this.API.updateUserWord(
       userData.userId,
-      word.id,
+      word._id ? word._id : word.id,
       changes,
       userData.userToken
     );
@@ -363,7 +367,7 @@ export default class Results extends Page {
 
   private createWord(
     userData: ILocalStorageUserData,
-    word: IWord,
+    word: IWordWithDifficulty & IWord,
     game: string,
     isGuessed: boolean
   ) {
@@ -387,7 +391,7 @@ export default class Results extends Page {
 
     this.API.createUserWords(
       userData.userId,
-      word.id,
+      word._id ? word._id : word.id,
       template,
       userData.userToken
     );

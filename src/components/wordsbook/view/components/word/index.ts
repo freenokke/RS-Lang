@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { IWord, IWordWithDifficulty } from '../../../../../types/words';
 import Page from '../../../../helpers/page';
 import Template from './index.html';
