@@ -16,7 +16,7 @@ export interface IWord {
 }
 
 export interface IAggregatedWord {
-  paginationResults: IWord[];
+  paginatedResults: IAggregatedWordResponse[];
   totalCount: {
     count: number;
   }[];

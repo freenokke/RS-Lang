@@ -1,7 +1,7 @@
 import { lastPage } from '../config';
 
 const getPaginator = (currentPage: number) => {
-  const res = ['<', '1'];
+  const res = ['1'];
   if (currentPage < 5) {
     const arr = [...Array(4).keys()].map((x) => (x + 2).toString());
     res.push(...arr, null, lastPage.toString());
@@ -19,7 +19,6 @@ const getPaginator = (currentPage: number) => {
     const arr = [...Array(4).keys()].map((x) => (x + lastPage - 3).toString());
     res.push(...arr);
   }
-  res.push('>');
   return res;
 };
 

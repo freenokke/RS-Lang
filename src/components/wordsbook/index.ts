@@ -7,7 +7,11 @@ import './style.scss';
 import Api from '../services/api';
 import View from './view';
 import Model from './model';
-import { IWord } from '../../types/words';
+import {
+  IAggregatedWordResponse,
+  IWord,
+  IWordWithDifficulty,
+} from '../../types/words';
 
 // const model = {
 //   mapIcon: MapIcon,
@@ -60,7 +64,7 @@ export default class Wordsbook extends Page {
     this.mod.updateLevel(level);
   };
 
-  private handleWordsUpdate = (words: IWord[]) => {
+  private handleWordsUpdate = (words: IWordWithDifficulty[]) => {
     this.view.updateWords(words, this.handleWordUpdate);
     this.mod.updateWord(words[0]);
   };

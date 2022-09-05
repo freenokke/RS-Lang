@@ -37,10 +37,26 @@ export default class Model {
   }
 
   async onLevelOrPageUpdated() {
-    this.words = await this.api.getWords(
-      this.currentLevel.toString(),
-      this.currentPage.toString()
-    );
+    if (localStorage.getItem('userData')) {
+      let filter = `{"$and":[{"page": ${this.currentPage}, "group":${this.currentLevel}}]}`;
+      if (this.currentLevel === 6) filter = `{"userWord.difficulty": "hard"}`;
+      let currentWordsCount = '20';
+      if (this.currentLevel === 6) currentWordsCount = '';
+      const difficultyWords = await this.api.getUserAggregatedWords(
+        JSON.parse(localStorage.getItem('userData')).userId,
+        JSON.parse(localStorage.getItem('userData')).userToken,
+        '',
+        '',
+        currentWordsCount,
+        filter
+      );
+      this.words = difficultyWords[0].paginatedResults;
+    } else {
+      this.words = await this.api.getWords(
+        this.currentLevel.toString(),
+        this.currentPage.toString()
+      );
+    }
     this.updateWords(this.words);
   }
 
