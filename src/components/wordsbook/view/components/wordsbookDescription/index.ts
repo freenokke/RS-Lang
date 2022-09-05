@@ -8,6 +8,8 @@ export default class WordsbookDescription extends Page {
 
   private playButton: HTMLButtonElement;
 
+  public buttonsContainer: HTMLDivElement;
+
   constructor(parentNode: HTMLElement, word: IWord) {
     // Эта обертка нужна по техническим причинам. НЕ УДАЛЯТЬ!!!
 
@@ -29,6 +31,9 @@ export default class WordsbookDescription extends Page {
   init() {
     this.playButton = this.node.querySelector(
       '.wordsbook-description__transcription-play'
+    );
+    this.buttonsContainer = this.node.querySelector(
+      '.wordsbook-description__buttons-container'
     );
   }
 
