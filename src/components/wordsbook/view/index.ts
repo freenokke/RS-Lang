@@ -140,16 +140,23 @@ export default class View {
     this.gamesWrapper = new GamesWrapper(this.wordsbookWrapper.node);
     this.h2 = new H2(this.gamesWrapper.node);
     this.gameButtonsWrapper = new GameButtonsWrapper(this.gamesWrapper.node);
-    this.initGameButtons();
   }
 
-  initGameButtons() {
+  updateGameButtons(words: IWord[], params: { group: string; page: string }) {
+    this.gameButtonsWrapper.node.innerHTML = '';
+    this.gameButtons.length = 0;
     [
       { name: 'Спринт', image: CheetahImg },
       { name: 'Аудиовызов', image: HeadphonesImg },
     ].forEach((game) => {
       this.gameButtons.push(
-        new GameButton(this.gameButtonsWrapper.node, game.name, game.image)
+        new GameButton(
+          this.gameButtonsWrapper.node,
+          game.name,
+          game.image,
+          words,
+          params
+        )
       );
     });
   }
@@ -193,7 +200,12 @@ export default class View {
     );
   }
 
-  updatePaginator(currentPage: number, handler: (page: number) => void) {
+  updatePaginator(
+    currentPage: number,
+    handler: (page: number) => void,
+    words: IWord[],
+    params: { group: string; page: string }
+  ) {
     this.paginationUl.node.innerHTML = '';
     this.paginationItems = [];
     const pagination = getPaginator(currentPage);
@@ -204,5 +216,6 @@ export default class View {
         new PaginationLi(this.paginationUl.node, item, isActive, handler)
       );
     });
+    this.updateGameButtons(words, params);
   }
 }
