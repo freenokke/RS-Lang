@@ -30,6 +30,10 @@ export default class App {
       this.renderNewPage(hash);
       window.console.log(window.location.hash);
     });
+
+    window.addEventListener('load', () => {
+      console.log('loaded');
+    });
   }
 
   renderNewPage(pageId: string) {

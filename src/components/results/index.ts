@@ -174,6 +174,13 @@ export default class Results extends Page {
         (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
       }
     });
+    window.addEventListener(
+      'popstate',
+      () => {
+        this.node.remove();
+      },
+      { once: true }
+    );
   }
 
   private renderResults() {

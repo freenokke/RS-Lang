@@ -16,8 +16,10 @@
 
 // ========================= header start =======================================
 .header-container {
-  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
   height: 65px;
+  @media screen and (max-width: 475px) {
+    height: 38px;
+  }
 }
 
 .header {
@@ -25,6 +27,9 @@
   align-items: center;
   margin: 0 auto;
   width: 90%;
+  @media screen and (max-width: 475px) {
+    width: 95%;
+  }
 }
 
 .header-logo {
@@ -32,9 +37,11 @@
   height: 90px;
   flex-shrink: 0;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 475px) {
     flex-shrink: 1;
     margin-right: 15px;
+    width: 115px;
+    height: 40px;
   }
 
   &__image {
@@ -44,6 +51,9 @@
     object-fit: contain;
     position: relative;
     z-index: 1;
+    @media screen and (max-width: 475px) {
+      bottom: -7px;
+    }
   }
 
   &:hover {
@@ -57,6 +67,9 @@
   &__name {
     font-weight: 700;
   }
+  @media screen and (max-width: 475px) {
+    margin-left: 0;
+  }
 }
 
 .header-auth {
@@ -69,6 +82,10 @@
   border-radius: 50%;
   padding: 5px;
   transition: .2s background;
+  @media screen and (max-width: 475px) {
+    width: 30px;
+    height: 30px;
+  }
 
   &__icon {
     display: none;
@@ -159,26 +176,53 @@
     cursor: pointer;
     background-color: #FFBD12;
   }
-
+  
   &:focus {
     transform: scale(0.9);
+  }
+
+  @media screen and (max-width: 475px) {
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
   }
 }
 
 .burger-menu {
   display: block;
-  width: 500px;
+  width: 400px;
   position: fixed;
   top: 0;
-  right: -500px;
+  right: -400px;
   height: 100%;
-  background-color: #ffffff;
+  background-color: #f1d775;
   overflow-y: auto;
-  transition: 0.3s right ease-out;
+  height: 100%;
+  z-index: 10;
+  @media screen and (max-width: 400px) {
+    width: 320px;
+    right: -320px;
+  }
 
   &_active {
-    right: 0;
-    z-index: 10;
+    animation-name: slide-in;
+    animation-timing-function: ease-in;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    @media screen and (max-width: 400px) {
+      animation-name: slide-in_mobile;
+    }
+  }
+
+  &_not-active {
+    animation-name: slide-out;
+    animation-timing-function: ease-out;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    @media screen and (max-width: 400px) {
+      animation-name: slide-out_mobile;
+    }
   }
 
   // burger-menu__list
@@ -267,7 +311,20 @@
     &:focus {
       transform: scale(0.9);
     }
+
+    @media screen and (max-width: 475px) {
+      width: 30px;
+      height: 30px;
+    }
   }
+}
+
+@media (max-width: 500px){
+
+  .burger-menu {
+      max-width: 100%;
+    }
+
 }
 
 .menu-item {
@@ -291,6 +348,42 @@
   // menu-item__img
   &__img {
     width: 100%;
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    right: -400px
+  }
+  100% {
+    right: 0px
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    right: 0px
+  }
+  100% {
+    right: -400px
+  }
+}
+
+@keyframes slide-in_mobile {
+  0% {
+    right: -320px
+  }
+  100% {
+    right: 0px
+  }
+}
+
+@keyframes slide-out_mobile {
+  0% {
+    right: 0px
+  }
+  100% {
+    right: -320px
   }
 }
 

@@ -61,14 +61,7 @@ export default class Header extends BaseComponent {
     this.burgerMenuCloseButton?.addEventListener('click', () => {
       this.hideBurgerMenu();
     });
-    document.addEventListener('click', (e) => {
-      const isClickInsideMenu = this.burgerMenu.contains(
-        e.target as HTMLElement
-      );
-      if (!isClickInsideMenu) {
-        this.hideBurgerMenu();
-      }
-    });
+
     this.burgerMenu?.addEventListener('click', (e) => {
       const li = (e.target as HTMLElement).closest('li.menu-item');
       if (li) {
@@ -86,14 +79,21 @@ export default class Header extends BaseComponent {
 
   hideBurgerMenu() {
     this.burgerMenu?.classList.remove('burger-menu_active');
+    this.burgerMenu?.classList.add('burger-menu_not-active');
     this.overlay.style.display = 'none';
     document.body.classList.remove('_lock');
+    (this.burgerMenu as HTMLElement).onanimationend = () => {
+      this.burgerMenu?.classList.remove('burger-menu_not-active');
+    };
+    document.removeEventListener('click', this.isClickInsideMenu);
   }
 
   showBurgerMenu() {
+    this.burgerMenu?.classList.remove('burger-menu_not-active');
     this.burgerMenu?.classList.add('burger-menu_active');
     this.overlay.style.display = 'block';
     document.body.classList.add('_lock');
+    document.addEventListener('click', this.isClickInsideMenu);
   }
 
   changeAuthorizationIcon() {
@@ -110,4 +110,13 @@ export default class Header extends BaseComponent {
       this.logoutBtn.classList.remove('header-auth__icon_active');
     }
   }
+
+  private isClickInsideMenu = (ev: MouseEvent) => {
+    const isClickInsideMenu = this.burgerMenu.contains(
+      ev.target as HTMLElement
+    );
+    if (!isClickInsideMenu) {
+      this.hideBurgerMenu();
+    }
+  };
 }
