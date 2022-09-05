@@ -38,6 +38,9 @@ export default class Sprint extends Page {
   private sprintPointsCount: HTMLElement;
   private timerID: NodeJS.Timer;
   private currentPage: string;
+  private fullScreenBtn: HTMLElement;
+  private closeGameBtn: HTMLElement;
+  private comeBackHash: string;
 
   constructor(
     gottenWords: IWord[],
@@ -45,16 +48,13 @@ export default class Sprint extends Page {
     parentNode: HTMLElement | null,
     params: { group: string; page: string }
   ) {
-    super(
-      'main',
-      ['main', 'fullscreen', 'sprint-page'],
-      parentNode,
-      Template,
-      {}
-    );
+    super('main', ['main', 'fullscreen', 'sprint-page'], parentNode, Template, {
+      comebackHash,
+    });
     window.location.hash = Pages.sprint;
     this.API = Api.getInstance();
     this.params = params;
+    this.comeBackHash = comebackHash;
     this.knownWords = [];
     this.unknownWords = [];
     this.gameSeries = [];
@@ -74,6 +74,10 @@ export default class Sprint extends Page {
     this.initGame(gottenWords);
     this.startCountDown();
     this.initEventListeners();
+    this.fullScreenBtn = this.node.querySelector('.fullscreen__icon');
+    this.initFullScreenListener();
+    this.closeGameBtn = this.node.querySelector('.close-game');
+    this.initCloseBtnListener();
   }
 
   private async initGame(gottenWords: IWord[]): Promise<void> {
@@ -272,70 +276,37 @@ export default class Sprint extends Page {
       }
     );
   }
+
+  private initFullScreenListener() {
+    this.checkFullscreen();
+    this.fullScreenBtn.addEventListener('click', () => {
+      if (document.fullscreen) {
+        document.exitFullscreen();
+        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = false;
+        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = true;
+      } else {
+        document.body.requestFullscreen();
+        (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = true;
+        (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
+      }
+    });
+  }
+
+  private checkFullscreen() {
+    if (document.fullscreen) {
+      (this.fullScreenBtn.firstElementChild as HTMLElement).hidden = true;
+      (this.fullScreenBtn.lastElementChild as HTMLElement).hidden = false;
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private initCloseBtnListener() {
+    this.closeGameBtn.onclick = () => {
+      if (document.fullscreen) {
+        document.exitFullscreen();
+      }
+      // document.removeEventListener('keyup', this.keyboardHandle);
+      window.location.hash = this.comeBackHash;
+    };
+  }
 }
-
-// пока число слов в массиве больше 1, повторяем шаги выше
-// запустить шаг и сделать запрос на страницу предществующую this.params.page
-// this.API.getWords(group, words);
-// добавить их в массив this.wordsforgame
-//
-// когда заканчивается время создаем инстанс страницы Result
-
-// private addButtonsListeners(buttons: HTMLElement[], guessWord: IWord) {
-// 	buttons.forEach((item) => {
-// 		item.addEventListener('click', () => {
-// 			this.wordsForGame = this.wordsForGame.filter(
-// 				(word) => word.id !== guessWord.id
-// 			);
-// 			// this.updateProgress(item, guessWord);
-// 			this.answersButtonsArea.innerHTML = '';
-// 			if (this.wordsForGame.length > 5) {
-// 				this.generateStep();
-// 			} else {
-//        делаем запрос на страницу предществующую this.params.page
-// 				this.node.remove();
-// 				this.result = new Results(
-// 					document.body,
-// 					this.knownWords,
-// 					this.unknownWords,
-// 					score,
-// 					this.parameters,
-// 					Pages.sprint
-// 				);
-// 			}
-// 		});
-// 	});
-// }
-
-// пока число слов в массиве больше 1, повторяем шаги выше
-// запустить шаг и сделать запрос на страницу предществующую this.params.page
-// this.API.getWords(group, words);
-// добавить их в массив this.wordsforgame
-//
-// когда заканчивается время создаем инстанс страницы Result
-
-// private addButtonsListeners(buttons: HTMLElement[], guessWord: IWord) {
-// 	buttons.forEach((item) => {
-// 		item.addEventListener('click', () => {
-// 			this.wordsForGame = this.wordsForGame.filter(
-// 				(word) => word.id !== guessWord.id
-// 			);
-// 			// this.updateProgress(item, guessWord);
-// 			this.answersButtonsArea.innerHTML = '';
-// 			if (this.wordsForGame.length > 5) {
-// 				this.generateStep();
-// 			} else {
-//        делаем запрос на страницу предществующую this.params.page
-// 				this.node.remove();
-// 				this.result = new Results(
-// 					document.body,
-// 					this.knownWords,
-// 					this.unknownWords,
-// 					score,
-// 					this.parameters,
-// 					Pages.sprint
-// 				);
-// 			}
-// 		});
-// 	});
-// }
