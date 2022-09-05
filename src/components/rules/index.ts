@@ -1,6 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 import Pages from '../../enum/routing';
 import { ILocalStorageUserData } from '../../types/users';
-import { IWord } from '../../types/words';
+import { IWord, IWordWithDifficulty } from '../../types/words';
 import Audiochallenge from '../audiochallenge';
 import Page from '../helpers/page';
 import Api from '../services/api';
@@ -12,7 +13,7 @@ export default class Rules extends Page {
   private closeBtn: HTMLElement;
   private startBtn: HTMLElement;
   private closeArea: HTMLElement;
-  private wordsForGame: IWord[];
+  private wordsForGame: IWordWithDifficulty[] & IWord[];
   private gameName;
   private rules: HTMLElement;
   private comebackHash: string;
@@ -23,7 +24,7 @@ export default class Rules extends Page {
     parentNode: HTMLElement,
     gameName: string,
     levelName: string,
-    wordsForGame: IWord[],
+    wordsForGame: IWordWithDifficulty[] & IWord[],
     gameHash: string,
     comebackHash: string,
     params: { group: string; page: string }
@@ -42,10 +43,13 @@ export default class Rules extends Page {
     } else {
       window.location.hash = Pages.sprint;
     }
-
     this.gameName = gameName;
     this.comebackHash = comebackHash;
-    this.wordsForGame = wordsForGame;
+    if (localStorage.getItem('userData') !== null) {
+      this.wordsForGame = this.filterLearned(wordsForGame);
+    } else {
+      this.wordsForGame = wordsForGame;
+    }
     this.determineElements();
     this.renderRulesText(gameName, levelName);
     this.initEventListeners();
@@ -55,6 +59,19 @@ export default class Rules extends Page {
     } else {
       this.checkTokenExpiraton(JSON.parse(localStorage.getItem('userData')));
     }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private filterLearned(
+    words: IWordWithDifficulty[] & IWord[]
+  ): IWordWithDifficulty[] & IWord[] {
+    const filtered = words.filter((word) => {
+      if (word._id) {
+        return word.userWord.difficulty !== 'learned';
+      }
+      return word;
+    });
+    return filtered;
   }
 
   private async checkTokenExpiraton(userData: ILocalStorageUserData) {

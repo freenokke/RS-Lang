@@ -14,9 +14,18 @@ export interface IWord {
   textMeaningTranslate: string;
   textExampleTranslate: string;
 }
-  
+
+export interface IWordWithDifficulty extends IWord {
+  userWord?: Record<string, string>;
+  _id?: string;
+}
+
+export interface IAggregatedWordResponse extends IWord {
+  userWord: Record<string, string>;
+}
+
 export interface IAggregatedWord {
-  paginationResults: IWord[];
+  paginatedResults: IAggregatedWordResponse[];
   totalCount: {
     count: number;
   }[];
