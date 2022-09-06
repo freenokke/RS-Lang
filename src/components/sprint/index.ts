@@ -1,5 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 import Pages from '../../enum/routing';
-import { IWord } from '../../types/words';
+import { IWord, IWordWithDifficulty } from '../../types/words';
 import Page from '../helpers/page';
 import Api from '../services/api';
 import Template from './index.html';
@@ -15,10 +16,10 @@ function shuffleSprint<T>(array: T[]): T[] {
 export default class Sprint extends Page {
   private API: Api;
   private result: Results;
-  private wordsForGame: IWord[];
-  private initialArrayOfWords: IWord[];
-  private knownWords: IWord[];
-  private unknownWords: IWord[];
+  private wordsForGame: IWordWithDifficulty[] & IWord[];
+  private initialArrayOfWords: IWordWithDifficulty[] & IWord[];
+  private knownWords: IWordWithDifficulty[] & IWord[];
+  private unknownWords: IWordWithDifficulty[] & IWord[];
   private countdownNumberEl: HTMLElement;
   private gameWord: HTMLElement;
   private gameWordTranslate: HTMLElement;
@@ -29,10 +30,10 @@ export default class Sprint extends Page {
   private audioRight: HTMLAudioElement;
   private audioWrong: HTMLAudioElement;
   private gameButtons: NodeListOf<HTMLButtonElement>;
-  private gameGeneratedWord: IWord;
+  private gameGeneratedWord: IWordWithDifficulty & IWord;
   private gameGeneratedTranslate: IWord;
-  private gameSeries: IWord[];
-  private gameLongestSeries: IWord[];
+  private gameSeries: IWordWithDifficulty[] & IWord[];
+  private gameLongestSeries: IWordWithDifficulty[] & IWord[];
   private starsCheckbox: NodeListOf<HTMLInputElement>;
   private gameBonus: HTMLElement;
   private sprintPointsCount: HTMLElement;
@@ -43,7 +44,7 @@ export default class Sprint extends Page {
   private comeBackHash: string;
 
   constructor(
-    gottenWords: IWord[],
+    gottenWords: IWordWithDifficulty[] & IWord[],
     comebackHash: string,
     parentNode: HTMLElement | null,
     params: { group: string; page: string }
@@ -80,7 +81,9 @@ export default class Sprint extends Page {
     this.initCloseBtnListener();
   }
 
-  private async initGame(gottenWords: IWord[]): Promise<void> {
+  private async initGame(
+    gottenWords: IWordWithDifficulty[] & IWord[]
+  ): Promise<void> {
     this.initialArrayOfWords = gottenWords;
     this.wordsForGame = shuffleSprint(this.initialArrayOfWords);
     this.generateStep();
@@ -125,7 +128,6 @@ export default class Sprint extends Page {
       this.filterGeneratedArray();
     }
     if (this.wordsForGame.length === 0) {
-      console.log('сработал');
       await this.additionalWordsToGame();
     }
     this.gameGeneratedWord = this.wordsForGame[
@@ -182,9 +184,12 @@ export default class Sprint extends Page {
   };
 
   private filterGeneratedArray() {
-    this.wordsForGame = this.wordsForGame.filter(
-      (guessWord) => guessWord.id !== this.gameGeneratedWord.id
-    ); // убрать это слово из общего массива
+    this.wordsForGame = this.wordsForGame.filter((guessWord) => {
+      if (guessWord._id) {
+        return guessWord._id !== this.gameGeneratedWord._id;
+      }
+      return guessWord.id !== this.gameGeneratedWord.id;
+    }); // убрать это слово из общего массива
   }
 
   private doIfRight() {
