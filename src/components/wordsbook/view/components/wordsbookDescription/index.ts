@@ -1,6 +1,7 @@
 import { Domain } from '../../../../../enum/endpoints';
-import { IWord } from '../../../../../types/words';
+import { IWordWithDifficulty } from '../../../../../types/words';
 import Page from '../../../../helpers/page';
+import Api from '../../../../services/api';
 import Template from './index.html';
 
 export default class WordsbookDescription extends Page {
@@ -10,7 +11,11 @@ export default class WordsbookDescription extends Page {
 
   public buttonsContainer: HTMLDivElement;
 
-  constructor(parentNode: HTMLElement, word: IWord) {
+  private textWrapper: HTMLDivElement;
+
+  private api: Api;
+
+  constructor(parentNode: HTMLElement, word: IWordWithDifficulty) {
     // Эта обертка нужна по техническим причинам. НЕ УДАЛЯТЬ!!!
 
     super('div', [], parentNode, Template, {
@@ -24,6 +29,7 @@ export default class WordsbookDescription extends Page {
       textExampleTranslation: word.textExampleTranslate,
     });
     this.word = word;
+    this.api = Api.getInstance();
     this.init();
     this.initEventListeners();
   }
@@ -35,6 +41,36 @@ export default class WordsbookDescription extends Page {
     this.buttonsContainer = this.node.querySelector(
       '.wordsbook-description__buttons-container'
     );
+    this.textWrapper = this.node.querySelector(
+      '.wordsbook-description__text-wrapper'
+    );
+    this.showWordStats();
+  }
+
+  private async showWordStats() {
+    try {
+      if (localStorage.getItem('userData')) {
+        // console.log(this.word);
+        const wordStat = await this.api.getUserWordById(
+          JSON.parse(localStorage.getItem('userData')).userId,
+          // eslint-disable-next-line no-underscore-dangle
+          this.word._id,
+          JSON.parse(localStorage.getItem('userData')).userToken
+        );
+        if (wordStat.optional) {
+          const audioElement = document.createElement('p');
+          audioElement.innerHTML = `</br><b>Аудиовызов</b>: угадано <b>${wordStat.optional.audio.guessed}</b>,
+        не угадано <b>${wordStat.optional.audio.unguessed}</b></br></br>`;
+          this.textWrapper.append(audioElement);
+          const sprintElement = document.createElement('p');
+          sprintElement.innerHTML = `<b>Спринт</b>: угадано <b>${wordStat.optional.sprint.guessed}</b>,
+         не угадано <b>${wordStat.optional.sprint.unguessed}</b>`;
+          this.textWrapper.append(sprintElement);
+        }
+      }
+    } catch {
+      console.log('Not found');
+    }
   }
 
   initEventListeners() {
