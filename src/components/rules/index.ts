@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable no-underscore-dangle */
 import Pages from '../../enum/routing';
 import { ILocalStorageUserData } from '../../types/users';
@@ -67,7 +68,9 @@ export default class Rules extends Page {
   ): IWordWithDifficulty[] & IWord[] {
     const filtered = words.filter((word) => {
       if (word._id) {
-        return word.userWord.difficulty !== 'learned';
+        if (word.userWord) {
+          return word.userWord.difficulty !== 'learned';
+        }
       }
       return word;
     });
