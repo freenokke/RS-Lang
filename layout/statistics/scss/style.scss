@@ -1,0 +1,364 @@
+@import 'normalize';
+
+/*-----------------General styles-------------------*/
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+	font-size: 1.125rem;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
+	color: #323232;
+}
+
+a {
+	text-decoration: none;
+}
+
+.wrapper {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.main {
+	flex: 1 1 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	position: relative;
+	padding: 3.125rem 0;
+}
+
+/*-----------------Page Statistics styles-------------------*/
+.bread-crubs {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+  display: flex;
+  gap: 0.625rem;
+
+	&__main {
+		color: grey;
+	}
+
+	&__divide {}
+
+	&__actual {
+		color: #000000;
+	}
+}
+
+.statistics {
+max-width: 56.25rem;
+margin: 1.25rem;
+
+	&__tabs {
+    max-width: 56.25rem;;
+    display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		row-gap: 1.25rem;
+		column-gap: 1.25rem;
+	}
+}
+
+.tabs-statistics {
+
+	&__input {
+		display: none;
+	}
+
+	&__label {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 0.625rem 0;
+		transition: all 0.3s;
+	}
+
+	&__label:hover,
+  &__label:active {
+		cursor: pointer;
+	}
+
+	&__label--words {
+		grid-column-start: 1;
+		grid-column-end: 2;
+		grid-row-start: 1;
+		grid-row-end: 2;
+		background: #F95A2C;
+		border: 0.125rem solid #18191F;
+		box-shadow: 0 0.25rem 0 #18191F;
+		border-radius: 1rem;
+	}
+
+	&__label--sprint {
+		grid-column-start: 2;
+		grid-column-end: 3;
+		grid-row-start: 1;
+		grid-row-end: 2;
+		background: #FFBD12;
+		border: 0.125rem solid #18191F;
+		box-shadow: 0 0.25rem 0 #18191F;
+		border-radius: 1rem;
+	}
+
+	&__label--audio-call {
+		grid-column-start: 3;
+		grid-column-end: 4;
+		grid-row-start: 1;
+		grid-row-end: 2;
+		background: #00C6AE;
+		border: 0.125rem solid #18191F;
+		box-shadow: 0 0.25rem 0 #18191F;
+		border-radius: 1rem;
+	}
+
+	&__header {
+		font-size: 1.2rem;
+		font-weight: 500;
+	}
+
+	&__img {
+		width: 50%;
+	}
+
+	&__body {
+		display: none;
+		padding: 0.625rem;
+		grid-column-start: 1;
+		grid-column-end: 4;
+		grid-row-start: 2;
+		grid-row-end: 3;
+		justify-content: center;
+		align-items: center;
+		gap: 1.5rem;
+		border: 0.125rem solid #18191F;
+		box-shadow: 0 0.25rem 0 #18191F;
+		border-radius: 1rem;
+		}
+
+	&__top {
+		flex: 0 1 50%;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		font-size: 1.2rem;
+	}
+
+	&__item span {
+		font-weight: 700;
+	}
+
+	&__new-words {}
+
+	&__general-words {}
+
+	&__right-answers {}
+
+	&__new-words-sprint {}
+
+	&__right-answers-sprint {}
+
+	&__series-lenght-sprint {}
+
+	&__new-words-audio-call {}
+
+	&__right-answers-audio-call {}
+
+	&__series-lenght-audio-call {}
+}
+
+@media(max-width: 48em){
+
+.statistics {
+
+	&__tabs {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+		}
+	}
+
+.tabs-statistics {
+
+		&__label--words {
+			grid-column-start: 1;
+			grid-column-end: 2;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		&__label--sprint {
+			grid-column-start: 1;
+			grid-column-end: 2;
+			grid-row-start: 2;
+			grid-row-end: 3;
+		}
+
+		&__label--audio-call {
+			grid-column-start: 1;
+			grid-column-end: 2;
+			grid-row-start: 3;
+			grid-row-end: 4;
+		}
+
+		&__body {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 4;
+			flex-direction: column;
+			justify-content: flex-start;
+		}
+	}
+}
+
+@media(max-width: 25em) {
+
+	.statistics {
+
+		&__tabs {
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: 9.375rem 1fr;
+		}
+	}
+
+.tabs-statistics {
+
+		&__label--words {
+			grid-column-start: 1;
+			grid-column-end: 1;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		&__label--sprint {
+			grid-column-start: 2;
+			grid-column-end: 3;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		&__label--audio-call {
+			grid-column-start: 3;
+			grid-column-end: 4;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		&__body {
+			grid-column-start: 1;
+			grid-column-end: 4;
+			grid-row-start: 2;
+			grid-row-end: 3;
+			flex-direction: row;
+			justify-content: center;
+		}
+		
+		&__header {
+			font-size: 0.8rem;
+		}
+
+		&__item {
+			font-size: 0.8rem;
+		}
+	}
+}
+
+#tab-btn-1:checked~#content-1,
+#tab-btn-2:checked~#content-2,
+#tab-btn-3:checked~#content-3 {
+	display: flex;
+}
+
+#tab-btn-1:checked~.tabs-statistics__label--words,
+#tab-btn-2:checked~.tabs-statistics__label--sprint,
+#tab-btn-3:checked~.tabs-statistics__label--audio-call {
+	transform: scale(1.1);
+}
+
+#tab-btn-1:checked~#content-1 {
+	background-color: #F95A2C;
+}
+
+#tab-btn-2:checked~#content-2 {
+	background-color: #FFBD12;
+}
+
+#tab-btn-3:checked~#content-3{
+	background-color: #00C6AE;
+}
+
+/*-----------------Diagram-----------------*/
+// https: codepen.io/t_afif/pen/XWaPXZO
+
+@property --p {
+	syntax: '<number>';
+	inherits: true;
+	initial-value: 1;
+}
+
+.pie {
+	--p: 20;
+	--b: 22px;
+	--c: darkred;
+	--w: 150px;
+
+	width: var(--w);
+	aspect-ratio: 1;
+	position: relative;
+	display: inline-grid;
+	margin: 5px;
+	place-content: center;
+	font-size: 25px;
+	font-weight: bold;
+	font-family: sans-serif;
+}
+
+.pie:before,
+.pie:after {
+	content: "";
+	position: absolute;
+	border-radius: 50%;
+}
+
+.pie:before {
+	inset: 0;
+	background:
+		radial-gradient(farthest-side, var(--c) 98%, #0000) top/var(--b) var(--b) no-repeat,
+		conic-gradient(var(--c) calc(var(--p)*1%), #0000 0);
+	-webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
+	mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
+}
+
+.pie:after {
+	inset: calc(50% - var(--b)/2);
+	background: var(--c);
+	transform: rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+
+.animate {
+	animation: p 1s .5s both;
+}
+
+.no-round:before {
+	background-size: 0 0, auto;
+}
+
+.no-round:after {
+	content: none;
+}
+
+@keyframes p {
+	from {
+		--p: 0
+	}
+}

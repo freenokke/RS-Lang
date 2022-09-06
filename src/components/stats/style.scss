@@ -1,0 +1,339 @@
+
+.stats-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	position: relative;
+	padding: 3.125rem 0;
+	font-weight: 500;
+	color: white;
+	font-size: 1.125rem;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url('../../assets/images/stat-back.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+/*-----------------Page Statistics styles-------------------*/
+.bread-crubs {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	display: flex;
+	gap: 0.625rem;
+
+	&__main {
+		color: grey;
+	}
+
+	&__actual {
+		color: #000000;
+	}
+}
+
+.statistics {
+	text-align: center;
+	max-width: 56.25rem;
+	margin: 1.25rem;
+	a {
+		color:white;
+		&:visited {
+			color: white;
+		}
+		&:active {
+			color: white;
+		}
+		text-decoration: underline;
+	}
+
+	&__tabs {
+		max-width: 56.25rem;
+		;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		row-gap: 1.25rem;
+		column-gap: 1.25rem;
+	}
+}
+
+.tabs-statistics {
+
+	&__input {
+		display: none;
+	}
+
+	&__label {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 0.625rem 0;
+		transition: all 0.3s;
+	}
+
+	&__label:hover,
+	&__label:active {
+		cursor: pointer;
+	}
+
+	&__label--words {
+		grid-column-start: 1;
+		grid-column-end: 2;
+		grid-row-start: 1;
+		grid-row-end: 2;
+		background: linear-gradient(rgba(249, 88, 44, 0.3), rgba(249, 88, 44, 1));
+		border: 0.125rem solid #18191F;
+		box-shadow: 0 0.25rem 0 #18191F;
+		border-radius: 1rem;
+	}
+
+	&__label--sprint {
+		grid-column-start: 2;
+		grid-column-end: 3;
+		grid-row-start: 1;
+		grid-row-end: 2;
+		background: linear-gradient(rgba(255, 188, 18, 0.3), rgba(255, 188, 18, 1));
+		border: 0.125rem solid #18191F;
+		box-shadow: 0 0.25rem 0 #18191F;
+		border-radius: 1rem;
+	}
+
+	&__label--audio-call {
+		grid-column-start: 3;
+		grid-column-end: 4;
+		grid-row-start: 1;
+		grid-row-end: 2;
+		background: linear-gradient(rgba(0, 198, 174, 0.3), rgba(0, 198, 174, 1));
+		border: 0.125rem solid #18191F;
+		box-shadow: 0 0.25rem 0 #18191F;
+		border-radius: 1rem;
+	}
+
+	&__header {
+		font-size: 1.2rem;
+		font-weight: 500;
+	}
+
+	&__img {
+		width: 50%;
+	}
+
+	&__body {
+		display: none;
+		padding: 0.625rem;
+		grid-column-start: 1;
+		grid-column-end: 4;
+		grid-row-start: 2;
+		grid-row-end: 3;
+		justify-content: center;
+		align-items: center;
+		gap: 1.5rem;
+		border: 0.125rem solid #18191F;
+		box-shadow: 0 0.25rem 0 #18191F;
+		border-radius: 1rem;
+	}
+
+	&__top {
+		flex: 0 1 50%;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		font-size: 1.2rem;
+	}
+
+	&__item {
+		span {
+			font-weight: 700;
+		}
+	}
+}
+
+@media(max-width: 48em) {
+
+	.statistics {
+
+		&__tabs {
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: repeat(3, 1fr);
+		}
+	}
+
+	.tabs-statistics {
+
+		&__label--words {
+			grid-column-start: 1;
+			grid-column-end: 2;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		&__label--sprint {
+			grid-column-start: 1;
+			grid-column-end: 2;
+			grid-row-start: 2;
+			grid-row-end: 3;
+		}
+
+		&__label--audio-call {
+			grid-column-start: 1;
+			grid-column-end: 2;
+			grid-row-start: 3;
+			grid-row-end: 4;
+		}
+
+		&__body {
+			grid-column-start: 2;
+			grid-column-end: 3;
+			grid-row-start: 1;
+			grid-row-end: 4;
+			flex-direction: column;
+			justify-content: flex-start;
+		}
+	}
+}
+
+@media(max-width: 25em) {
+
+	.statistics {
+
+		&__tabs {
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: 5.5rem 1fr;
+		}
+	}
+
+	.tabs-statistics {
+
+		&__label--words {
+			grid-column-start: 1;
+			grid-column-end: 1;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		&__label--sprint {
+			grid-column-start: 2;
+			grid-column-end: 3;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		&__label--audio-call {
+			grid-column-start: 3;
+			grid-column-end: 4;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		&__body {
+			grid-column-start: 1;
+			grid-column-end: 4;
+			grid-row-start: 2;
+			grid-row-end: 3;
+			flex-direction: row;
+			justify-content: center;
+			font-size: 0.6rem;
+		}
+
+		&__header {
+			font-size: 0.8rem;
+		}
+	}
+}
+
+#tab-btn-1:checked~#content-1,
+#tab-btn-2:checked~#content-2,
+#tab-btn-3:checked~#content-3 {
+	display: flex;
+}
+
+#tab-btn-1:checked~.tabs-statistics__label--words,
+#tab-btn-2:checked~.tabs-statistics__label--sprint,
+#tab-btn-3:checked~.tabs-statistics__label--audio-call {
+	transform: scale(1.1);
+}
+
+#tab-btn-1:checked~#content-1 {
+	background-color: rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 8px 15px 10px rgb(249 88 44);
+}
+
+#tab-btn-2:checked~#content-2 {
+	background-color: rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 8px 15px 10px rgb(255, 188, 18);
+}
+
+#tab-btn-3:checked~#content-3 {
+	background-color: rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 8px 15px 10px rgb(0 198 174);
+	
+}
+
+/*-----------------Diagram-----------------*/
+// https: codepen.io/t_afif/pen/XWaPXZO
+
+@property --p {
+	syntax: '<number>';
+	inherits: true;
+	initial-value: 1;
+}
+
+.pie {
+	--p: 20;
+	--b: 22px;
+	--c: darkred;
+	--w: 150px;
+
+	width: var(--w);
+	aspect-ratio: 1;
+	position: relative;
+	display: inline-grid;
+	margin: 5px;
+	place-content: center;
+	font-size: 25px;
+	font-weight: bold;
+	font-family: sans-serif;
+}
+
+.pie:before,
+.pie:after {
+	content: "";
+	position: absolute;
+	border-radius: 50%;
+}
+
+.pie:before {
+	inset: 0;
+	background:
+		radial-gradient(farthest-side, var(--c) 98%, #0000) top/var(--b) var(--b) no-repeat,
+		conic-gradient(var(--c) calc(var(--p)*1%), #0000 0);
+	-webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
+	mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
+}
+
+.pie:after {
+	inset: calc(50% - var(--b)/2);
+	background: var(--c);
+	transform: rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+
+.animate {
+	animation: p 1s .5s both;
+}
+
+.no-round:before {
+	background-size: 0 0, auto;
+}
+
+.no-round:after {
+	content: none;
+}
+
+@keyframes p {
+	from {
+		--p: 0
+	}
+}

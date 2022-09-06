@@ -1,0 +1,54 @@
+{
+    "name": "rslang",
+    "version": "1.0.0",
+    "description": "",
+    "main": "webpack.base.config.js",
+    "scripts": {
+        "start": "webpack serve --open --config ./webpack.config.js --env mode=dev",
+        "build": "webpack --config ./webpack.config.js --env mode=prod",
+        "build:dev": "webpack --config ./webpack.config.js --env mode=dev",
+        "lint": "eslint . --ext .ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "keywords": [],
+    "author": "Aleh Serhiyenia",
+    "license": "ISC",
+    "homepage": "",
+    "devDependencies": {
+        "@types/webpack-env": "^1.17.0",
+        "@typescript-eslint/eslint-plugin": "^5.31.0",
+        "@typescript-eslint/parser": "^5.31.0",
+        "clean-webpack-plugin": "^3.0.0",
+        "copy-webpack-plugin": "^7.0.0",
+        "css-loader": "^5.1.0",
+        "eslint": "^8.20.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-airbnb-typescript": "^17.0.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-prettier": "^3.4.0",
+        "eslint-webpack-plugin": "^3.2.0",
+        "html-loader": "^4.1.0",
+        "html-webpack-plugin": "^5.2.0",
+        "mini-css-extract-plugin": "^2.6.1",
+        "postcss": "^8.4.14",
+        "postcss-loader": "^7.0.0",
+        "postcss-preset-env": "^7.7.2",
+        "prettier": "2.2.1",
+        "sass": "^1.53.0",
+        "sass-loader": "^13.0.2",
+        "style-loader": "^2.0.0",
+        "ts-loader": "^9.3.1",
+        "typescript": "^4.7.4",
+        "webpack": "^5.37.1",
+        "webpack-cli": "^4.5.0",
+        "webpack-dev-server": "^3.11.3",
+        "webpack-merge": "^5.7.3"
+    },
+    "dependencies": {
+        "normalize.css": "^8.0.1"
+    }
+}

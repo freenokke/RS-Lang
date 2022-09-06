@@ -1,0 +1,51 @@
+<div class="header">
+  <a href="#/main">
+    <div class="header-logo">
+      <img class="header-logo__image" src="{{logo}}" alt="logo">
+    </div>
+  </a>
+  <nav class="header-menu">
+    <ul class="header-menu__list">
+      <li class="header-menu__item"><a href="#/about">О команде</a></li>
+    </ul>
+  </nav>
+  <div class="header-username"></div>
+  <div class="header-auth">
+    <img class="header-auth__icon login header-auth__icon_active" src="{{authIcon}}" alt="account">
+    <img class="header-auth__icon logout" src="{{logoutIcon}}" alt="account">
+  </div>
+  <button type="button" class="header-burger-icon"></button>
+  <!-- Добавить класс burger-menu_active -->
+  <nav class="header-menu burger-menu">
+    <button type="button" class="burger-menu__close-button"></button>
+    <ul class="burger-menu__list">
+      <li class="burger-menu__item menu-item">
+        <a class="menu-item__link" href="#/main">Главная</a>
+      </li>
+      <li class="burger-menu__item menu-item">
+        <a class="menu-item__link" href="#/wordsbook">
+          <img class="menu-item__img" src="{{wordsbookIcon}}" alt="book_icon">
+          <span class="menu-item__title">Учебник</span>
+        </a>
+      </li>
+      <li class="burger-menu__item menu-item">
+        <a class="menu-item__link" href="#/games">
+          <img class="menu-item__img" src="{{gamesIcon}}" alt="gamepad_icon">
+          <span class="menu-item__title">Игры</span>
+        </a>
+      </li>
+      <li class="burger-menu__item menu-item burger-menu__item_hidden">
+        <a class="menu-item__link" href="#/stats">
+          <img class="menu-item__img" src="{{statsIcon}}" alt="chart_icon">
+          <span class="menu-item__title">Статистика</span>
+        </a>
+      </li>
+      <li class="burger-menu__item menu-item">
+        <a class="menu-item__link" href="#/about">
+          <img class="menu-item__img" src="{{teamIcon}}" alt="team_icon">
+          <span class="menu-item__title">О команде</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

@@ -1,0 +1,63 @@
+.wordsbook-levels {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 40px;
+
+  &__input {
+    display: none;
+  }
+
+  &__label {
+    flex-grow: 1;
+    display: inherit;
+  }
+
+  &__button {
+    // border: 2px solid #000000;
+    background-color: #FFBD12;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 16px;
+    height: 70px;
+    width: 210px;
+    filter: opacity(0.3);
+    cursor: pointer;
+    flex-grow: 1;
+  }
+
+  &__button:hover {
+    filter: opacity(1);
+  }
+
+  &__button_active {
+    filter: opacity(1);
+  }
+
+  &__input:checked~.wordsbook-levels__button {
+    filter: opacity(1);
+  }
+
+  &__name {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &__level-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__level {
+    font-weight: 700;
+    font-size: 34px;
+  }
+
+}

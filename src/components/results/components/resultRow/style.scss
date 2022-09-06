@@ -1,0 +1,33 @@
+.results-row {
+
+	display: flex;
+	align-items: center;
+	padding-bottom: 5px;
+
+	&__button {
+		background-color: transparent;
+		border: none;
+		outline: none;
+		cursor: pointer;
+	}
+
+	&__svg {
+		width: 20px;
+	}
+
+	&__word {
+		font-weight: 700;
+		color: #000000;
+	}
+
+	&__delimiter {
+		color: #000000;
+		margin-right: 5px;
+		margin-left: 5px;
+	}
+
+	&__translation {
+		color: #000000;
+	}
+
+}
