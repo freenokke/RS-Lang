@@ -23,6 +23,7 @@ import GameButton from './components/gameButton';
 import GameButtonsWrapper from './components/gameButtonsWrapper';
 import DescriptionButton from './components/descriptionButton';
 import Api from '../../services/api';
+import { IUserWords } from '../../../types/users';
 
 const levels = [
   {
@@ -159,7 +160,10 @@ export default class View {
     return JSON.parse(localStorage.getItem('userData'));
   }
 
-  updateGameButtons(words: IWord[], params: { group: string; page: string }) {
+  updateGameButtons(
+    words: IWordWithDifficulty[],
+    params: { group: string; page: string }
+  ) {
     this.gameButtonsWrapper.node.innerHTML = '';
     this.gameButtons.length = 0;
     [
@@ -293,6 +297,7 @@ export default class View {
 
   private hardWordAddHandler(word: IWordWithDifficulty) {
     return async () => {
+      let userWord: IUserWords;
       try {
         const wordStat = await this.api.getUserWordById(
           View.userData.userId,
@@ -301,7 +306,7 @@ export default class View {
           View.userData.userToken
         );
         wordStat.difficulty = 'hard';
-        await this.api.updateUserWord(
+        userWord = await this.api.updateUserWord(
           View.userData.userId,
           // eslint-disable-next-line no-underscore-dangle
           word._id,
@@ -311,14 +316,16 @@ export default class View {
           },
           View.userData.userToken
         );
+        // console.log(userWord);
       } catch {
-        await this.api.createUserWords(
+        userWord = await this.api.createUserWords(
           View.userData.userId,
           // eslint-disable-next-line no-underscore-dangle
           word._id,
           View.createUserWordTemplate('hard'),
           View.userData.userToken
         );
+        // console.log(test);
       }
       const wordCard = this.wordsWrapper.node.querySelector(
         // eslint-disable-next-line no-underscore-dangle
@@ -326,8 +333,12 @@ export default class View {
       );
       wordCard.classList.add('wordsbook-words__word-wrapper_difficult');
       const wordCopy = word;
-      wordCopy.userWord = { difficulty: 'hard' };
-      this.updateWord(word);
+      // console.log(userWord);
+      wordCopy.userWord = {
+        difficulty: userWord.difficulty,
+      };
+      wordCopy.optional = userWord.optional;
+      this.updateWord(wordCopy);
     };
   }
 

@@ -18,6 +18,8 @@ export default class Word extends Page {
 
   private isLearned: boolean = false;
 
+  private textWrapper: HTMLDivElement;
+
   constructor(
     parentNode: HTMLElement,
     word: IWordWithDifficulty,

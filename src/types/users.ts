@@ -26,7 +26,18 @@ export interface IUserSignInResp {
 export interface IUserWordsResp {
   id: string;
   difficulty: string;
-  optional?: { [key: string]: string };
+  optional?: {
+    guessedInARow: number;
+    sprint: {
+      guessed: number;
+      unguessed: number;
+    };
+    audio: {
+      guessed: number;
+      unguessed: number;
+    };
+    attempts: number;
+  };
   wordId: string;
 }
 

@@ -41,7 +41,7 @@ export default class Model {
       let filter = `{"$and":[{"page": ${this.currentPage}, "group":${this.currentLevel}}]}`;
       if (this.currentLevel === 6) filter = `{"userWord.difficulty": "hard"}`;
       let currentWordsCount = '20';
-      if (this.currentLevel === 6) currentWordsCount = '';
+      if (this.currentLevel === 6) currentWordsCount = '200';
       const difficultyWords = await this.api.getUserAggregatedWords(
         JSON.parse(localStorage.getItem('userData')).userId,
         JSON.parse(localStorage.getItem('userData')).userToken,
