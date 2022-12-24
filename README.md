@@ -1,4 +1,5 @@
-# Deploy: **https://rslang-freenokke.netlify.app/**
+# Deploy: 
+* **https://rslang-freenokke.netlify.app/**
 # Информация о проекте
 Проект финального задания курса JavaScript/Front-end 2022Q1
 
